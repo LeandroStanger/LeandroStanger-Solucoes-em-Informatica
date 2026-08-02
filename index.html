@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Leandro Stanger — Soluções em Informática</title>
+
+    <!-- Font Awesome 7.3.0 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.0/css/all.css" />
+
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+    <!-- jsPDF para geração de PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
+
+    <!-- particles.js -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="img/Logo.png" />
+
+    <!-- CSS principal -->
+    <link rel="stylesheet" href="style.css" />
+
+    <!-- Estilos extras para a seção de Criação de Sites -->
+    <style>
+        /* ============================================================
+           CRIAÇÃO DE SITES - NOVOS ESTILOS PARA TEXTOS AMPLIADOS
+           ============================================================ */
+        .criacao-site__grupo {
+            margin-top: 12px;
+        }
+
+        .criacao-site__grupo-titulo {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--color-white);
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .criacao-site__grupo-titulo i {
+            color: var(--color-primary-light);
+            font-size: 1.1rem;
+        }
+
+        .criacao-site__beneficios--grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 6px 16px;
+        }
+
+        .criacao-site__beneficios--grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 6px 20px;
+        }
+
+        .criacao-site__beneficios--grid-3 li,
+        .criacao-site__beneficios--grid-2 li {
+            font-size: 0.9rem;
+            color: var(--color-text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .criacao-site__beneficios--grid-3 li i,
+        .criacao-site__beneficios--grid-2 li i {
+            color: var(--color-primary);
+            width: 18px;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .criacao-site__destaque {
+            font-size: 1.05rem;
+            color: var(--color-text-secondary);
+            background: rgba(16, 185, 129, 0.06);
+            padding: 12px 16px;
+            border-radius: var(--radius-md);
+            border-left: 4px solid var(--color-primary);
+            margin: 8px 0 12px;
+        }
+
+        .criacao-site__destaque strong {
+            color: var(--color-primary-light);
+        }
+
+        .criacao-site__destaque i {
+            color: var(--color-primary);
+            margin-right: 8px;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .criacao-site__beneficios--grid-3,
+            .criacao-site__beneficios--grid-2 {
+                grid-template-columns: 1fr 1fr;
+                gap: 4px 12px;
+            }
+        }
+
+        @media (max-width: 520px) {
+            .criacao-site__beneficios--grid-3,
+            .criacao-site__beneficios--grid-2 {
+                grid-template-columns: 1fr;
+                gap: 4px 0;
+            }
+        }
+
+        /* ============================================================
+           PARTICLES.JS - CONTÊINER
+           ============================================================ */
+        #particles-js {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .hero .hero__content {
+            position: relative;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ============================================================
+    HEADER / NAVEGAÇÃO (fixo)
+    ============================================================ -->
+    <header class="header" id="topo">
+        <nav class="nav">
+            <a href="#inicio" class="nav__logo" id="logoLink">
+                <img src="img/Logo.png" alt="Leandro Stanger Soluções em Informática" class="nav__logo-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+                <span class="nav__logo-fallback" style="display:none;">
+                    <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+                        <rect width="36" height="36" rx="8" fill="#10b981" />
+                        <text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" fill="#0d1117" font-weight="800" font-size="18" font-family="Inter,sans-serif">LS</text>
+                    </svg>
+                    <span class="nav__brand-text">Leandro Stanger</span>
+                </span>
+            </a>
+
+            <ul class="nav__links" id="navLinks">
+                <li><a href="#servicos" class="nav__link active-link">Serviços</a></li>
+                <li><a href="#formatacao" class="nav__link">Formatação</a></li>
+                <li><a href="#recuperacao" class="nav__link">Recuperação</a></li>
+                <li><a href="#limpeza" class="nav__link">Limpeza</a></li>
+                <li><a href="#criacao-site" class="nav__link">Criação de Sites</a></li>
+                <li><a href="#contato" class="nav__link">Contato</a></li>
+                <li>
+                    <a href="https://wa.me/5548996446508" target="_blank" rel="noopener" class="nav__cta-btn">
+                        <i class="fa-brands fa-whatsapp"></i> WhatsApp
+                    </a>
+                </li>
+            </ul>
+
+            <button class="nav__mobile-toggle" id="mobileToggle" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+
+    <!-- ============================================================
+    HERO (com particles.js)
+    ============================================================ -->
+    <section class="hero" id="inicio">
+        <!-- Container para partículas -->
+        <div id="particles-js"></div>
+
+        <div class="hero__bg"></div>
+        <div class="hero__content">
+            <span class="hero__badge"><i class="fa-solid fa-laptop"></i> Assistência Técnica Profissional</span>
+            <h1 class="hero__title">Leandro Stanger <br /><span class="hero__highlight">Soluções em Informática</span></h1>
+            <p class="hero__subtitle">
+                Formatação, reparos, recuperação de dados e muito mais. <br />
+                Atendimento ágil, confiável e com preço justo em <strong>Nova Veneza - SC</strong>.
+            </p>
+            <div class="hero__actions">
+                <a href="#servicos" class="btn btn--primary">Ver Serviços</a>
+                <a href="https://wa.me/5548996446508" target="_blank" rel="noopener" class="btn btn--outline">
+                    <i class="fa-brands fa-whatsapp"></i> Falar no WhatsApp
+                </a>
+            </div>
+        </div>
+        <div class="hero__scroll-indicator">
+            <span>Role para baixo</span>
+            <i class="fa-solid fa-chevron-down"></i>
+        </div>
+    </section>
+
+    <!-- ============================================================
+    SEÇÃO: SERVIÇOS
+    ============================================================ -->
+    <section class="services" id="servicos">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-header__tag">Nossos Serviços</span>
+                <h2 class="section-header__title">Soluções completas para o seu equipamento</h2>
+                <p class="section-header__desc">Clique nas categorias abaixo para filtrar os serviços</p>
+            </div>
+
+            <div class="filter-tabs" id="filterTabs">
+                <button class="filter-tab filter-tab--active" data-filter="all">
+                    <i class="fa-solid fa-layer-group"></i> Todos
+                </button>
+                <button class="filter-tab" data-filter="formatacao">
+                    <i class="fa-solid fa-desktop"></i> Formatação
+                </button>
+                <button class="filter-tab" data-filter="educacional">
+                    <i class="fa-solid fa-graduation-cap"></i> Educacional
+                </button>
+                <button class="filter-tab" data-filter="gamer">
+                    <i class="fa-solid fa-gamepad"></i> Gamer
+                </button>
+                <button class="filter-tab" data-filter="hardware">
+                    <i class="fa-solid fa-microchip"></i> Hardware
+                </button>
+                <button class="filter-tab" data-filter="limpeza">
+                    <i class="fa-solid fa-broom"></i> Limpeza
+                </button>
+                <button class="filter-tab" data-filter="software">
+                    <i class="fa-solid fa-shield-virus"></i> Software
+                </button>
+                <button class="filter-tab" data-filter="suporte">
+                    <i class="fa-solid fa-headset"></i> Suporte
+                </button>
+                <button class="filter-tab" data-filter="dados">
+                    <i class="fa-solid fa-database"></i> Recuperação
+                </button>
+                <button class="filter-tab" data-filter="criacao_site">
+                    <i class="fa-solid fa-globe"></i> Sites
+                </button>
+            </div>
+
+            <div class="services-grid" id="servicesGrid"></div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+    SEÇÃO: TIPOS DE FORMAÇÃO
+    ============================================================ -->
+    <section class="tipos-formatacao-section" id="formatacao">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-header__tag"><i class="fa-solid fa-desktop"></i> Escolha o tipo de formatação</span>
+                <h2 class="section-header__title">Formatação para todas as necessidades</h2>
+                <p class="section-header__desc">Selecione o tipo de formatação desejado e depois o sistema operacional</p>
+            </div>
+
+            <div class="filter-tabs" id="tipoFormatacaoTabs">
+                <button class="filter-tab" data-tipo="go">
+                    <i class="fa-solid fa-rocket"></i> Formatação Go
+                </button>
+                <button class="filter-tab filter-tab--active" data-tipo="standard">
+                    <i class="fa-solid fa-desktop"></i> Formatação Standard
+                </button>
+                <button class="filter-tab" data-tipo="educacional">
+                    <i class="fa-solid fa-graduation-cap"></i> Formatação Educacional
+                </button>
+                <button class="filter-tab" data-tipo="pro">
+                    <i class="fa-solid fa-briefcase"></i> Formatação Pro
+                </button>
+                <button class="filter-tab" data-tipo="gamer">
+                    <i class="fa-solid fa-gamepad"></i> Formatação Gamer
+                </button>
+                <button class="filter-tab" data-tipo="premium">
+                    <i class="fa-solid fa-crown"></i> Formatação Premium
+                </button>
+                <button class="filter-tab" data-tipo="enterprise">
+                    <i class="fa-solid fa-building"></i> Formatação Enterprise
+                </button>
+            </div>
+
+            <div id="tipoFormatacaoDescricao" class="tipo-descricao"></div>
+            <div class="filter-tabs" id="soFilterTabs"></div>
+            <div class="recovery-cards" id="formatacaoCardsGrid"></div>
+
+            <!-- Botão Gerar Pacote -->
+            <div class="gerador-pacote-trigger" id="geradorPacoteTrigger">
+                <button id="abrirGeradorBtn" class="btn btn--primary btn--pacote-abrir">
+                    <i class="fa-solid fa-cubes"></i> Gerar Pacote
+                </button>
+            </div>
+
+            <!-- ============================================================
+            MODAL DO GERADOR DE PACOTE
+            ============================================================ -->
+            <div id="geradorModal" class="modal" style="display:none;">
+                <div class="modal-overlay" id="modalOverlay"></div>
+                <div class="modal-content modal-content--pacote">
+                    <button class="modal-close" id="modalClose">&times;</button>
+                    <div class="pacote-modal">
+                        <div class="pacote-modal__header">
+                            <div class="pacote-modal__icon-wrapper">
+                                <i class="fa-solid fa-cubes"></i>
+                            </div>
+                            <h2 class="pacote-modal__title">Gerador de Pacote</h2>
+                            <p class="pacote-modal__subtitle">Escolha o tipo, o sistema operacional e a quantidade de PCs</p>
+                        </div>
+                        <div class="pacote-modal__body">
+                            <!-- Campo Tipo -->
+                            <div class="pacote-modal__field">
+                                <label for="pacoteTipoModal"><i class="fa-solid fa-tag"></i> Tipo de formatação</label>
+                                <div class="pacote-modal__select-wrapper">
+                                    <i class="pacote-modal__select-icon fa-solid fa-desktop" id="tipoIcon"></i>
+                                    <select id="pacoteTipoModal" class="pacote-modal__select">
+                                        <option value="standard">Standard</option>
+                                        <option value="educacional">Educacional</option>
+                                        <option value="pro">Pro</option>
+                                        <option value="gamer">Gamer</option>
+                                        <option value="premium">Premium</option>
+                                        <option value="enterprise">Enterprise</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <!-- Campo Sistema Operacional -->
+                            <div class="pacote-modal__field">
+                                <label for="pacoteSOModal"><i class="fa-solid fa-desktop"></i> Sistema Operacional</label>
+                                <div class="pacote-modal__select-wrapper">
+                                    <i class="pacote-modal__select-icon fa-brands fa-windows" id="soIcon"></i>
+                                    <select id="pacoteSOModal" class="pacote-modal__select"></select>
+                                </div>
+                            </div>
+                            <!-- Campo Quantidade -->
+                            <div class="pacote-modal__field">
+                                <label for="pacoteQuantidadeModal"><i class="fa-solid fa-computer"></i> Quantidade de PCs</label>
+                                <div class="pacote-modal__input-wrapper">
+                                    <i class="pacote-modal__input-icon fa-solid fa-hashtag"></i>
+                                    <input type="number" id="pacoteQuantidadeModal" class="pacote-modal__input" value="1" min="1" max="150" step="1" />
+                                </div>
+                            </div>
+
+                            <!-- ============================================
+                            OPÇÕES DE PAGAMENTO (À Vista, Parcelado, Bitcoin - será adicionado pelo JS)
+                            ============================================ -->
+                            <div class="pacote-modal__payment" style="margin-top: 16px;">
+                                <div class="payment-toggle" id="paymentToggleContainer">
+                                    <!-- Os botões serão recriados pelo JavaScript -->
+                                </div>
+                                <div class="installment-options" id="pacoteInstallmentOptions" style="display: none;">
+                                    <label for="pacoteInstallmentCount">Número de Parcelas:</label>
+                                    <select id="pacoteInstallmentCount" class="installment-select">
+                                        <option value="2">2x</option>
+                                        <option value="3">3x</option>
+                                        <option value="4">4x</option>
+                                        <option value="5">5x</option>
+                                        <option value="6">6x</option>
+                                        <option value="7">7x</option>
+                                        <option value="8">8x</option>
+                                        <option value="9">9x</option>
+                                        <option value="10">10x</option>
+                                        <option value="11">11x</option>
+                                        <option value="12">12x</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Campos Limpeza, Antivírus, Office, Impressora serão injetados pelo JS -->
+                            <div class="pacote-modal__action">
+                                <button id="calcularPacoteBtn" class="btn btn--primary btn--pacote-calcular">
+                                    <i class="fa-solid fa-calculator"></i> Calcular
+                                </button>
+                            </div>
+                        </div>
+                        <div class="pacote-modal__base-info" id="baseInfoModal"></div>
+                        <div id="pacoteResultadoModal" class="pacote-modal__resultado" style="display:none;"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- ============================================================
+            FIM DO MODAL DO GERADOR DE PACOTE
+            ============================================================ -->
+
+            <!-- Mensagem corporativa -->
+            <div id="mensagemPlanosCorporativos" style="display: none; text-align: center; margin-top: 40px; padding: 24px; background: rgba(16, 185, 129, 0.05); border: 1px solid rgba(16, 185, 129, 0.15); border-radius: 12px;">
+                <p style="font-size: 1.1rem; color: var(--color-text-secondary);">
+                    <i class="fa-solid fa-building" style="color: var(--color-primary); margin-right: 8px;"></i>
+                    Precisa de planos corporativos ou pacotes <strong style="color: var(--color-primary-light);">"Enterprise"</strong> personalizados? 
+                    Entre em contato e descubra soluções sob medida para sua empresa.
+                </p>
+                <a href="https://wa.me/5548996446508?text=Olá!%20Gostaria%20de%20saber%20mais%20sobre%20planos%20corporativos%20de%20formatação." target="_blank" rel="noopener" class="btn btn--whatsapp" style="margin-top: 12px;">
+                    <i class="fa-brands fa-whatsapp"></i> Fale conosco
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+    SEÇÃO: RECUPERAÇÃO DE DADOS
+    ============================================================ -->
+    <section class="recovery" id="recuperacao">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-header__tag">Recuperação de Dados</span>
+                <h2 class="section-header__title">Seus arquivos estão seguros conosco</h2>
+                <p class="section-header__desc">Oferecemos planos flexíveis para recuperação dos seus dados perdidos</p>
+            </div>
+            <div class="recovery-cards" id="recoveryGrid"></div>
+            <div class="recovery-extra">
+                <div class="recovery-extra__card">
+                    <span class="recovery-extra__icon"><i class="fa-solid fa-comment-dots"></i></span>
+                    <h3>Precisa recuperar mais de <strong>80 GB</strong>?</h3>
+                    <p>Entre em contato diretamente pelo WhatsApp para um orçamento personalizado.</p>
+                    <a href="https://wa.me/5548996446508?text=Olá!%20Preciso%20recuperar%20mais%20de%2080GB%20de%20dados.%20Pode%20me%20fazer%20um%20orçamento%3F" target="_blank" rel="noopener" class="btn btn--whatsapp">
+                        <i class="fa-brands fa-whatsapp"></i> Orçamento via WhatsApp
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+    SEÇÃO: LIMPEZA E MANUTENÇÃO
+    ============================================================ -->
+    <section class="cleaning" id="limpeza">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-header__tag">Limpeza e Manutenção</span>
+                <h2 class="section-header__title">Cuide do seu equipamento</h2>
+                <p class="section-header__desc">Serviços profissionais de limpeza e manutenção preventiva para aumentar a vida útil do seu computador</p>
+            </div>
+            <div class="recovery-cards" id="cleaningGrid"></div>
+            <div class="recovery-extra">
+                <div class="recovery-extra__card">
+                    <span class="recovery-extra__icon"><i class="fa-solid fa-lightbulb"></i></span>
+                    <h3>Dica de ouro</h3>
+                    <p>Realizar limpeza interna a cada 6 meses aumenta a vida útil do seu computador em até <strong>50%</strong>.</p>
+                    <a href="https://wa.me/5548996446508?text=Olá!%20Gostaria%20de%20agendar%20uma%20limpeza%20preventiva." target="_blank" rel="noopener" class="btn btn--whatsapp">
+                        <i class="fa-brands fa-whatsapp"></i> Agendar limpeza
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+    SEÇÃO: CRIAÇÃO DE SITES
+    ============================================================ -->
+    <section class="criacao-site" id="criacao-site">
+        <div class="container">
+            <div class="criacao-site__grid">
+                <div class="criacao-site__content">
+                    <span class="criacao-site__tag"><i class="fa-solid fa-rocket"></i> Presença digital</span>
+                    <h2 class="criacao-site__title">
+                        Sua empresa ainda não tem um site?
+                        <span class="criacao-site__highlight">Leve seu negócio para a internet</span>
+                    </h2>
+                    <p class="criacao-site__desc">
+                        Desenvolvo sites personalizados para pequenas e médias empresas, ajudando sua marca a conquistar mais clientes e transmitir mais credibilidade.
+                    </p>
+
+                    <!-- Ideal para -->
+                    <div class="criacao-site__grupo">
+                        <h4 class="criacao-site__grupo-titulo"><i class="fa-solid fa-bullseye"></i> Ideal para:</h4>
+                        <ul class="criacao-site__beneficios criacao-site__beneficios--grid-3">
+                            <li><i class="fa-solid fa-store"></i> Lojas</li>
+                            <li><i class="fa-solid fa-bread-slice"></i> Padarias</li>
+                            <li><i class="fa-solid fa-cart-shopping"></i> Mercados</li>
+                            <li><i class="fa-solid fa-utensils"></i> Restaurantes</li>
+                            <li><i class="fa-solid fa-building"></i> Escritórios</li>
+                            <li><i class="fa-solid fa-handshake"></i> Prestadores de serviços</li>
+                            <li><i class="fa-solid fa-hospital"></i> Clínicas</li>
+                            <li><i class="fa-solid fa-scissors"></i> Salões de beleza</li>
+                            <li><i class="fa-solid fa-ellipsis"></i> E muito mais!</li>
+                        </ul>
+                    </div>
+
+                    <!-- O que seu site pode ter -->
+                    <div class="criacao-site__grupo">
+                        <h4 class="criacao-site__grupo-titulo"><i class="fa-solid fa-list-check"></i> O que seu site pode ter:</h4>
+                        <ul class="criacao-site__beneficios criacao-site__beneficios--grid-2">
+                            <li><i class="fa-solid fa-palette"></i> Design moderno e profissional</li>
+                            <li><i class="fa-solid fa-mobile-screen-button"></i> Compatível com celular, tablet e computador</li>
+                            <li><i class="fa-brands fa-whatsapp"></i> Botão de WhatsApp integrado</li>
+                            <li><i class="fa-solid fa-envelope"></i> Formulário de contato</li>
+                            <li><i class="fa-solid fa-list"></i> Catálogo de produtos e serviços</li>
+                            <li><i class="fa-solid fa-location-dot"></i> Mapa de localização</li>
+                            <li><i class="fa-solid fa-gauge-high"></i> Alta velocidade e segurança</li>
+                        </ul>
+                    </div>
+
+                    <p class="criacao-site__destaque">
+                        <i class="fa-solid fa-clock"></i> Tenha o site oficial da sua empresa e esteja disponível para seus clientes <strong>24 horas por dia!</strong>
+                    </p>
+
+                    <div class="criacao-site__actions">
+                        <a href="https://wa.me/5548996446508?text=Olá!%20Gostaria%20de%20um%20orçamento%20para%20criação%20de%20site." target="_blank" rel="noopener" class="btn btn--whatsapp btn--lg">
+                            <i class="fa-brands fa-whatsapp"></i> Solicitar orçamento
+                        </a>
+                        <a href="#servicos" class="btn btn--outline btn--lg">Ver outros serviços</a>
+                    </div>
+                </div>
+                <div class="criacao-site__image">
+                    <img src="img/Site Profissional.png" alt="Site Profissional" class="criacao-site__image-img" />
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+    SEÇÃO: CONTATO
+    ============================================================ -->
+    <section class="contact" id="contato">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-header__tag">Fale Conosco</span>
+                <h2 class="section-header__title">Entre em contato</h2>
+                <p class="section-header__desc">Estamos prontos para atender você</p>
+            </div>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <div class="contact-info__card">
+                        <div class="contact-info__icon"><i class="fa-brands fa-whatsapp"></i></div>
+                        <div>
+                            <h4>WhatsApp</h4>
+                            <a href="https://wa.me/5548996446508" target="_blank" rel="noopener">(48) 99644-6508</a>
+                        </div>
+                    </div>
+                    <div class="contact-info__card">
+                        <div class="contact-info__icon"><i class="fa-solid fa-location-dot"></i></div>
+                        <div>
+                            <h4>Endereço</h4>
+                            <p>Rua Francisco Ronchi, Nº 280<br />Caravaggio — Nova Veneza, SC</p>
+                        </div>
+                    </div>
+                    <div class="contact-info__card">
+                        <div class="contact-info__icon"><i class="fa-solid fa-map-location-dot"></i></div>
+                        <div>
+                            <h4>Localização</h4>
+                            <div class="map-container">
+                                <iframe
+                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14168.457088253043!2d-49.538416!3d-28.636416!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9520e0b2b8c7f2d%3A0x5c2b2a8e0f8b9c4d!2sRua%20Francisco%20Ronchi%2C%20280%20-%20Caravaggio%2C%20Nova%20Veneza%20-%20SC%2C%2088865-000!5e0!3m2!1spt-BR!2sbr!4v1712345678901"
+                                    width="100%"
+                                    height="200"
+                                    style="border:0; border-radius: 8px;"
+                                    allowfullscreen=""
+                                    loading="lazy"
+                                    referrerpolicy="no-referrer-when-downgrade">
+                                </iframe>
+                            </div>
+                            <p style="margin-top: 8px; font-size: 0.9rem;">
+                                <a href="https://maps.app.goo.gl/xfaS8hTQDkiDRdii7" target="_blank" rel="noopener">
+                                    <i class="fa-solid fa-arrow-up-right-from-square"></i> Abrir no Google Maps
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="contact-info__card">
+                        <div class="contact-info__icon"><i class="fa-solid fa-briefcase"></i></div>
+                        <div>
+                            <h4>Atendimento</h4>
+                            <p>Atendimento local em Nova Veneza e região. Traga seu equipamento ou agende uma visita.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ================================================ -->
+                <!-- FORMULÁRIO INTEGRADO COM FORMSPREE              -->
+                <!-- ================================================ -->
+                <div class="contact-form-wrapper">
+                    <form 
+                        class="contact-form" 
+                        id="contactForm"
+                        action="https://formspree.io/f/mgogrkvv"
+                        method="POST"
+                    >
+                        <h3>Envie uma mensagem</h3>
+                        <input type="hidden" name="_subject" value="Novo contato pelo site - Leandro Stanger" />
+                        <div class="form-group">
+                            <label for="nome">Nome</label>
+                            <input type="text" id="nome" name="nome" placeholder="Seu nome completo" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="whatsapp">WhatsApp</label>
+                            <input type="tel" id="whatsapp" name="whatsapp" placeholder="(48) 99999-9999" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="mensagem">Mensagem</label>
+                            <textarea id="mensagem" name="mensagem" rows="4" placeholder="Descreva como podemos ajudar..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn--primary btn--full">Enviar Mensagem</button>
+                        <div id="formResponse"></div>
+                    </form>
+                </div>
+                <!-- ================================================ -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+    FOOTER
+    ============================================================ -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__grid">
+                <div class="footer__brand">
+                    <img src="img/Logo.png" alt="Leandro Stanger Soluções em Informática" class="footer__logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+                    <span class="footer__logo-fallback" style="display:none;">
+                        <svg width="32" height="32" viewBox="0 0 36 36" fill="none">
+                            <rect width="36" height="36" rx="8" fill="#10b981" />
+                            <text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" fill="#0d1117" font-weight="800" font-size="16" font-family="Inter,sans-serif">LS</text>
+                        </svg>
+                    </span>
+                    <p><strong>Leandro Stanger</strong><br />Soluções em Informática</p>
+                </div>
+                <div class="footer__links">
+                    <h4>Links Rápidos</h4>
+                    <ul>
+                        <li><a href="#servicos">Serviços</a></li>
+                        <li><a href="#formatacao">Formatação</a></li>
+                        <li><a href="#recuperacao">Recuperação</a></li>
+                        <li><a href="#limpeza">Limpeza</a></li>
+                        <li><a href="#criacao-site">Criação de Sites</a></li>
+                        <li><a href="#contato">Contato</a></li>
+                    </ul>
+                </div>
+                <div class="footer__contact">
+                    <h4>Contato</h4>
+                    <ul>
+                        <li><a href="https://wa.me/5548996446508" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> (48) 99644-6508</a></li>
+                        <li>Rua Francisco Ronchi, Nº 280</li>
+                        <li>Caravaggio, Nova Veneza - SC</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer__bottom">
+                <p>&copy; 2026 Leandro Stanger Soluções em Informática. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ============================================================
+    WHATSAPP FLOATING BUTTON
+    ============================================================ -->
+    <a href="https://wa.me/5548996446508" target="_blank" rel="noopener" class="whatsapp-float" aria-label="Fale conosco pelo WhatsApp">
+        <i class="fa-brands fa-whatsapp"></i>
+        <span class="whatsapp-float__pulse"></span>
+    </a>
+
+    <!-- ============================================================
+    SCRIPTS
+    ============================================================ -->
+    <!-- Inicialização do particles.js -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof particlesJS !== 'undefined') {
+                particlesJS('particles-js', {
+                    "particles": {
+                        "number": {
+                            "value": 60,
+                            "density": {
+                                "enable": true,
+                                "value_area": 800
+                            }
+                        },
+                        "color": {
+                            "value": ["#10b981", "#34d399", "#059669", "#ffffff"]
+                        },
+                        "shape": {
+                            "type": "circle",
+                            "stroke": {
+                                "width": 0,
+                                "color": "#000000"
+                            },
+                            "polygon": {
+                                "nb_sides": 5
+                            }
+                        },
+                        "opacity": {
+                            "value": 0.5,
+                            "random": true,
+                            "anim": {
+                                "enable": true,
+                                "speed": 0.8,
+                                "opacity_min": 0.1,
+                                "sync": false
+                            }
+                        },
+                        "size": {
+                            "value": 4,
+                            "random": true,
+                            "anim": {
+                                "enable": true,
+                                "speed": 1.5,
+                                "size_min": 0.5,
+                                "sync": false
+                            }
+                        },
+                        "line_linked": {
+                            "enable": true,
+                            "distance": 150,
+                            "color": "#10b981",
+                            "opacity": 0.3,
+                            "width": 1
+                        },
+                        "move": {
+                            "enable": true,
+                            "speed": 1.2,
+                            "direction": "none",
+                            "random": false,
+                            "straight": false,
+                            "out_mode": "out",
+                            "bounce": false,
+                            "attract": {
+                                "enable": false,
+                                "rotateX": 600,
+                                "rotateY": 1200
+                            }
+                        }
+                    },
+                    "interactivity": {
+                        "detect_on": "canvas",
+                        "events": {
+                            "onhover": {
+                                "enable": true,
+                                "mode": "grab"
+                            },
+                            "onclick": {
+                                "enable": true,
+                                "mode": "push"
+                            },
+                            "resize": true
+                        },
+                        "modes": {
+                            "grab": {
+                                "distance": 180,
+                                "line_linked": {
+                                    "opacity": 0.5
+                                }
+                            },
+                            "push": {
+                                "particles_nb": 4
+                            }
+                        }
+                    },
+                    "retina_detect": true
+                });
+            } else {
+                console.warn('particles.js não carregado.');
+            }
+        });
+    </script>
+
+    <!-- JavaScript principal -->
+    <script src="script.js"></script>
+
+</body>
+</html>
