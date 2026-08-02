@@ -1,6 +1,6 @@
 # Leandro Stanger Soluções em Informática
 
-[![GitHub Pages](https://img.shields.io/badge/Site_Online-Acessar-blue?style=for-the-badge&logo=githubpages)](https://leandrostanger.github.io/LeandroStanger-Solucoes-em-Informatica/)
+[![GitHub Pages](https://img.shields.io/badge/Site_Online-Acessar-blue?style=for-the-badge&logo=opsgenie)](https://leandrostanger.github.io/LeandroStanger-Solucoes-em-Informatica/)
 [![GitHub](https://img.shields.io/badge/Reposit%C3%B3rio-GitHub-black?style=for-the-badge&logo=github)](https://github.com/LeandroStanger/LeandroStanger-Solucoes-em-Informatica)
 
 ## Descrição
