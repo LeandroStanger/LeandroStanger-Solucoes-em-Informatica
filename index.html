@@ -20,6 +20,9 @@
     <!-- particles.js -->
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 
+    <!-- HTMX (Hypermedia-Driven Applications) -->
+    <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.10/dist/htmx.js" integrity="sha384-Q+Dky3iHVJOr6wUjQ4ulh6uQ76an/t+ak1+PjMVaxRjbZamFLAG+u9InkfjbsEQf" crossorigin="anonymous"></script>
+
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="img/Logo.png" />
 
@@ -132,6 +135,48 @@
         .hero .hero__content {
             position: relative;
             z-index: 1;
+        }
+
+        /* ============================================================
+           DICAS - ESTILO PARA O CONTEÚDO CARREGADO VIA HTMX
+           ============================================================ */
+        .dicas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 24px;
+        }
+
+        .dica-card {
+            background: var(--color-bg-card);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            transition: all var(--transition);
+        }
+
+        .dica-card:hover {
+            border-color: var(--color-primary);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .dica-card__icon {
+            font-size: 2rem;
+            color: var(--color-primary);
+            margin-bottom: 10px;
+        }
+
+        .dica-card h4 {
+            color: var(--color-white);
+            font-size: 1.1rem;
+            margin-bottom: 6px;
+        }
+
+        .dica-card p {
+            color: var(--color-text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.6;
         }
     </style>
 </head>
@@ -425,7 +470,7 @@
     </section>
 
     <!-- ============================================================
-    SEÇÃO: LIMPEZA E MANUTENÇÃO
+    SEÇÃO: LIMPEZA E MANUTENÇÃO (COM HTMX PARA DICAS)
     ============================================================ -->
     <section class="cleaning" id="limpeza">
         <div class="container">
@@ -444,6 +489,21 @@
                         <i class="fa-brands fa-whatsapp"></i> Agendar limpeza
                     </a>
                 </div>
+            </div>
+
+            <!-- ============================================================
+            SEÇÃO DE DICAS CARREGADA VIA HTMX
+            ============================================================ -->
+            <div style="margin-top: 40px; text-align: center;">
+                <button class="btn btn--outline" 
+                        hx-get="dicas.html" 
+                        hx-target="#dicasContainer" 
+                        hx-swap="innerHTML"
+                        hx-trigger="click"
+                        style="margin-bottom: 16px;">
+                    <i class="fa-solid fa-lightbulb"></i> Ver dicas de manutenção
+                </button>
+                <div id="dicasContainer"></div>
             </div>
         </div>
     </section>
@@ -513,7 +573,7 @@
     </section>
 
     <!-- ============================================================
-    SEÇÃO: CONTATO
+    SEÇÃO: CONTATO (COM HTMX PARA ENVIO DO FORMULÁRIO)
     ============================================================ -->
     <section class="contact" id="contato">
         <div class="container">
@@ -570,14 +630,16 @@
                 </div>
 
                 <!-- ================================================ -->
-                <!-- FORMULÁRIO INTEGRADO COM FORMSPREE              -->
+                <!-- FORMULÁRIO INTEGRADO COM FORMSPREE VIA HTMX     -->
                 <!-- ================================================ -->
                 <div class="contact-form-wrapper">
                     <form 
                         class="contact-form" 
                         id="contactForm"
-                        action="https://formspree.io/f/mgogrkvv"
-                        method="POST"
+                        hx-post="https://formspree.io/f/mgogrkvv"
+                        hx-target="#formResponse"
+                        hx-swap="innerHTML"
+                        hx-on::after-request="this.reset()"
                     >
                         <h3>Envie uma mensagem</h3>
                         <input type="hidden" name="_subject" value="Novo contato pelo site - Leandro Stanger" />
@@ -752,6 +814,57 @@
                 });
             } else {
                 console.warn('particles.js não carregado.');
+            }
+        });
+
+        // ============================================================
+        // TRATAMENTO DA RESPOSTA DO FORMSPREE VIA HTMX
+        // O Formspree retorna JSON, então convertemos para HTML
+        // ============================================================
+        document.addEventListener('htmx:afterRequest', function(evt) {
+            if (evt.detail.target && evt.detail.target.id === 'formResponse') {
+                const response = evt.detail.xhr;
+                let html = '';
+                if (response.status === 200) {
+                    try {
+                        const data = JSON.parse(response.responseText);
+                        if (data.ok) {
+                            html = `
+                                <div class="form-success">
+                                    <i class="fa-solid fa-circle-check"></i>
+                                    <h3>Mensagem enviada!</h3>
+                                    <p>Obrigado! Sua mensagem foi enviada com sucesso. Em breve entraremos em contato.</p>
+                                </div>
+                            `;
+                            // Resetar o formulário
+                            const form = document.getElementById('contactForm');
+                            if (form) form.reset();
+                        } else {
+                            html = `
+                                <div class="form-error" style="color: #f87171; text-align: center; padding: 16px; background: rgba(248, 113, 113, 0.1); border-radius: 8px; border: 1px solid rgba(248, 113, 113, 0.2);">
+                                    <i class="fa-solid fa-circle-exclamation" style="font-size: 1.5rem; display: block; margin-bottom: 8px;"></i>
+                                    <strong>Ops!</strong> Erro ao enviar mensagem. Tente novamente.
+                                </div>
+                            `;
+                        }
+                    } catch (e) {
+                        html = `
+                            <div class="form-success">
+                                <i class="fa-solid fa-circle-check"></i>
+                                <h3>Mensagem enviada!</h3>
+                                <p>Obrigado! Sua mensagem foi enviada com sucesso. Em breve entraremos em contato.</p>
+                            </div>
+                        `;
+                    }
+                } else {
+                    html = `
+                        <div class="form-error" style="color: #f87171; text-align: center; padding: 16px; background: rgba(248, 113, 113, 0.1); border-radius: 8px; border: 1px solid rgba(248, 113, 113, 0.2);">
+                            <i class="fa-solid fa-circle-exclamation" style="font-size: 1.5rem; display: block; margin-bottom: 8px;"></i>
+                            <strong>Ops!</strong> Erro ao enviar mensagem. Tente novamente ou entre em contato diretamente pelo WhatsApp.
+                        </div>
+                    `;
+                }
+                evt.detail.target.innerHTML = html;
             }
         });
     </script>

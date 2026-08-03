@@ -1,6 +1,6 @@
 /**
  * Leandro Stanger — Soluções em Informática
- * script.js — Versão 36.55 (correção da formatação BTC/ETH no PDF)
+ * script.js — Versão 36.56 (PDF com formatação aprimorada para criptomoedas)
  */
 document.addEventListener('DOMContentLoaded', function() {
 
@@ -1022,7 +1022,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ============================================================
-    // 17. GERADOR DE PACOTE (VERSÃO 36.55 - PDF CORRIGIDO)
+    // 17. GERADOR DE PACOTE (VERSÃO 36.56 - PDF CORRIGIDO)
     // ============================================================
     function configurarGeradorPacote() {
         if (geradorConfigurado) return;
@@ -3223,7 +3223,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
         // ============================================================
-        // FUNÇÃO PARA GERAR PDF (COM BTC E ETH CORRIGIDOS)
+        // FUNÇÃO PARA GERAR PDF (COM FORMATAÇÃO APRIMORADA PARA CRIPTO)
         // ============================================================
         function gerarPDF(dados) {
             try {
@@ -3380,22 +3380,22 @@ document.addEventListener('DOMContentLoaded', function() {
                     tableData.push(['', '', 'Total', 'R$ ' + subtotal.toFixed(2).replace('.', ',')]);
                 }
 
+                // Formatação aprimorada para criptomoedas
                 let formaPagamento = 'À Vista';
                 let detalheFinal = '';
                 if (dados.isInstallment) {
                     formaPagamento = 'Parcelado em ' + dados.numParcelas + 'x';
                     detalheFinal = 'Valor Final: R$ ' + dados.valorFinal.toFixed(2).replace('.', ',') + ' (com juros)';
                 } else if (dados.isBitcoin) {
-                    formaPagamento = 'Bitcoin';
-                    // Usa o valor numérico e formata com BTC
-                    const valorBTC = typeof dados.valorBTC === 'number' ? dados.valorBTC.toFixed(8) : '0.00000000';
+                    formaPagamento = 'Bitcoin (BTC)';
+                    const valorBTC = typeof dados.valorBTC === 'number' ? dados.valorBTC.toFixed(8) : '0,00000000';
                     const cotacao = typeof dados.cotacaoBTC === 'number' ? 'R$ ' + dados.cotacaoBTC.toFixed(2).replace('.', ',') : '--';
-                    detalheFinal = 'Valor em BTC: ' + valorBTC + ' (cotação: ' + cotacao + '/BTC)';
+                    detalheFinal = 'Valor em BTC: ' + valorBTC.replace('.', ',') + '  |  Cotação: ' + cotacao + '/BTC';
                 } else if (dados.isEthereum) {
-                    formaPagamento = 'Ethereum';
-                    const valorETH = typeof dados.valorETH === 'number' ? dados.valorETH.toFixed(6) : '0.000000';
+                    formaPagamento = 'Ethereum (ETH)';
+                    const valorETH = typeof dados.valorETH === 'number' ? dados.valorETH.toFixed(6) : '0,000000';
                     const cotacao = typeof dados.cotacaoETH === 'number' ? 'R$ ' + dados.cotacaoETH.toFixed(2).replace('.', ',') : '--';
-                    detalheFinal = 'Valor em ETH: ' + valorETH + ' (cotação: ' + cotacao + '/ETH)';
+                    detalheFinal = 'Valor em ETH: ' + valorETH.replace('.', ',') + '  |  Cotação: ' + cotacao + '/ETH';
                 } else {
                     formaPagamento = 'À Vista';
                     detalheFinal = 'Valor Final: R$ ' + dados.valorFinal.toFixed(2).replace('.', ',');
@@ -3403,6 +3403,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 tableData.push(['', '', 'Forma de Pagamento', formaPagamento]);
                 if (detalheFinal) {
+                    // Centralizar o detalhe na coluna 3 (índice 3) com quebra de linha se necessário
                     tableData.push(['', '', '', detalheFinal]);
                 }
 
@@ -3444,8 +3445,9 @@ document.addEventListener('DOMContentLoaded', function() {
                                     data.cell.styles.fontStyle = 'bold';
                                     data.cell.styles.textColor = [corPrimaria[0], corPrimaria[1], corPrimaria[2]];
                                 }
-                                if (cellText.includes('Valor Final') || cellText.includes('Total') || cellText.includes('Bitcoin') || cellText.includes('Ethereum')) {
+                                if (cellText.includes('Valor Final') || cellText.includes('Total') || cellText.includes('BTC') || cellText.includes('ETH')) {
                                     data.cell.styles.fontSize = 10;
+                                    data.cell.styles.fontStyle = 'bold';
                                 }
                             }
                         }
@@ -3958,9 +3960,9 @@ document.addEventListener('DOMContentLoaded', function() {
                         numParcelas: isInstallment ? numParcelas : null,
                         valorParcela: isInstallment ? resultadoParcelamento.valorParcela : null,
                         jurosTotal: isInstallment ? resultadoParcelamento.jurosTotal : null,
-                        valorBTC: isBitcoin ? valorBTC : null, // agora é número
+                        valorBTC: isBitcoin ? valorBTC : null,
                         cotacaoBTC: isBitcoin ? cotacaoBTCUsada : null,
-                        valorETH: isEthereum ? valorETH : null, // número
+                        valorETH: isEthereum ? valorETH : null,
                         cotacaoETH: isEthereum ? cotacaoETHUsada : null,
                         brindes: brindesGerador,
                         limpezaQtd: qtdLimpeza,
@@ -3983,7 +3985,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
 
-        console.log('✅ Gerador de pacote configurado com sucesso! (versão 36.55)');
+        console.log('✅ Gerador de pacote configurado com sucesso! (versão 36.56)');
     }
 
     // ============================================================
