@@ -178,6 +178,58 @@
             font-size: 0.9rem;
             line-height: 1.6;
         }
+
+        /* ============================================================
+           HERO - LISTA DE SERVIÇOS COM ÍCONES
+           ============================================================ */
+        .hero__services-list {
+            list-style: none;
+            padding: 0;
+            margin: 16px 0 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px 24px;
+        }
+
+        .hero__services-list li {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--color-text-secondary);
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .hero__services-list li i {
+            color: var(--color-primary-light);
+            font-size: 1.1rem;
+            width: 20px;
+            text-align: center;
+        }
+
+        .hero__experience {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+            color: var(--color-bg);
+            font-weight: 700;
+            padding: 4px 18px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            box-shadow: 0 2px 12px rgba(16, 185, 129, 0.25);
+        }
+
+        @media (max-width: 520px) {
+            .hero__services-list {
+                flex-direction: column;
+                align-items: center;
+                gap: 4px;
+            }
+            .hero__services-list li {
+                font-size: 0.85rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -221,7 +273,7 @@
     </header>
 
     <!-- ============================================================
-    HERO (com particles.js)
+    HERO (com particles.js e conteúdo expandido)
     ============================================================ -->
     <section class="hero" id="inicio">
         <!-- Container para partículas -->
@@ -231,10 +283,30 @@
         <div class="hero__content">
             <span class="hero__badge"><i class="fa-solid fa-laptop"></i> Assistência Técnica Profissional</span>
             <h1 class="hero__title">Leandro Stanger <br /><span class="hero__highlight">Soluções em Informática</span></h1>
-            <p class="hero__subtitle">
-                Formatação, reparos, recuperação de dados e muito mais. <br />
+
+            <!-- Destaque de experiência -->
+            <div class="hero__experience">
+                <i class="fa-solid fa-award"></i> Mais de 12 anos de experiência
+            </div>
+
+            <p class="hero__subtitle" style="margin-bottom: 8px;">
+                Ofereço serviços completos para manter seu computador sempre funcionando com segurança e desempenho.
+            </p>
+
+            <!-- Lista de serviços com ícones (6 linhas) -->
+            <ul class="hero__services-list">
+                <li><i class="fa-solid fa-desktop"></i> Formatação de sistemas (Windows, Linux, Mac)</li>
+                <li><i class="fa-solid fa-database"></i> Backup e recuperação de dados</li>
+                <li><i class="fa-solid fa-broom"></i> Limpeza e manutenção preventiva</li>
+                <li><i class="fa-solid fa-download"></i> Instalação de softwares e antivírus</li>
+                <li><i class="fa-solid fa-microchip"></i> Diagnóstico e reparo de hardware</li>
+                <li><i class="fa-solid fa-headset"></i> Suporte técnico remoto e presencial</li>
+            </ul>
+
+            <p class="hero__subtitle" style="font-size: 1rem;">
                 Atendimento ágil, confiável e com preço justo em <strong>Nova Veneza - SC</strong>.
             </p>
+
             <div class="hero__actions">
                 <a href="#servicos" class="btn btn--primary">Ver Serviços</a>
                 <a href="https://wa.me/5548996446508" target="_blank" rel="noopener" class="btn btn--outline">
@@ -819,7 +891,6 @@
 
         // ============================================================
         // TRATAMENTO DA RESPOSTA DO FORMSPREE VIA HTMX
-        // O Formspree retorna JSON, então convertemos para HTML
         // ============================================================
         document.addEventListener('htmx:afterRequest', function(evt) {
             if (evt.detail.target && evt.detail.target.id === 'formResponse') {
@@ -836,7 +907,6 @@
                                     <p>Obrigado! Sua mensagem foi enviada com sucesso. Em breve entraremos em contato.</p>
                                 </div>
                             `;
-                            // Resetar o formulário
                             const form = document.getElementById('contactForm');
                             if (form) form.reset();
                         } else {
