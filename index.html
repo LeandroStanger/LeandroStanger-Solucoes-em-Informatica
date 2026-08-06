@@ -29,7 +29,7 @@
     <!-- CSS principal -->
     <link rel="stylesheet" href="style.css" />
 
-    <!-- Estilos extras para a seção de Criação de Sites -->
+    <!-- Estilos extras -->
     <style>
         /* ============================================================
            CRIAÇÃO DE SITES - NOVOS ESTILOS PARA TEXTOS AMPLIADOS
@@ -180,54 +180,25 @@
         }
 
         /* ============================================================
-           HERO - LISTA DE SERVIÇOS COM ÍCONES
+           HERO SUBTITLE - MAIOR ESPAÇAMENTO PARA O NOVO TEXTO
            ============================================================ */
-        .hero__services-list {
-            list-style: none;
-            padding: 0;
-            margin: 16px 0 20px;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 8px 24px;
+        .hero__subtitle {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            max-width: 750px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        .hero__services-list li {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: var(--color-text-secondary);
-            font-size: 0.95rem;
-            font-weight: 500;
-        }
-
-        .hero__services-list li i {
+        .hero__subtitle strong {
             color: var(--color-primary-light);
-            font-size: 1.1rem;
-            width: 20px;
-            text-align: center;
         }
 
-        .hero__experience {
-            display: inline-block;
-            background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
-            color: var(--color-bg);
-            font-weight: 700;
-            padding: 4px 18px;
-            border-radius: 50px;
-            font-size: 0.9rem;
-            margin-bottom: 8px;
-            box-shadow: 0 2px 12px rgba(16, 185, 129, 0.25);
-        }
-
-        @media (max-width: 520px) {
-            .hero__services-list {
-                flex-direction: column;
-                align-items: center;
-                gap: 4px;
-            }
-            .hero__services-list li {
-                font-size: 0.85rem;
+        @media (max-width: 768px) {
+            .hero__subtitle {
+                font-size: 0.95rem;
+                line-height: 1.7;
+                padding: 0 12px;
             }
         }
     </style>
@@ -273,7 +244,7 @@
     </header>
 
     <!-- ============================================================
-    HERO (com particles.js e conteúdo expandido)
+    HERO (com particles.js) - TEXTO ATUALIZADO
     ============================================================ -->
     <section class="hero" id="inicio">
         <!-- Container para partículas -->
@@ -284,28 +255,31 @@
             <span class="hero__badge"><i class="fa-solid fa-laptop"></i> Assistência Técnica Profissional</span>
             <h1 class="hero__title">Leandro Stanger <br /><span class="hero__highlight">Soluções em Informática</span></h1>
 
-            <!-- Destaque de experiência -->
-            <div class="hero__experience">
-                <i class="fa-solid fa-award"></i> Mais de 12 anos de experiência
+            <!-- ============================================= -->
+            <!-- NOVO TEXTO COMPLETO NA HERO                   -->
+            <!-- ============================================= -->
+            <div class="hero__subtitle">
+                <p style="margin-bottom: 12px;">
+                    <strong>Formatação, reparos, recuperação de dados e muito mais.</strong><br />
+                    Atendimento ágil, confiável e com preço justo em <strong>Nova Veneza - SC</strong>.
+                </p>
+                <p style="margin-bottom: 12px;">
+                    Há <strong>mais de 12 anos</strong> oferecendo serviços de informática com qualidade, compromisso e dedicação.
+                </p>
+                <p style="margin-bottom: 12px;">
+                    Especializado em manutenção de computadores, notebooks e soluções para residências e empresas.
+                </p>
+                <p style="margin-bottom: 12px;">
+                    Realizo formatação, remoção de vírus, otimização de desempenho, instalação de SSD, upgrades de hardware, recuperação de dados e suporte técnico.
+                </p>
+                <p style="margin-bottom: 12px;">
+                    Cada serviço é executado com atenção aos detalhes, buscando a melhor solução para aumentar o desempenho e a vida útil do seu equipamento.
+                </p>
+                <p style="margin-bottom: 0;">
+                    Entre em contato e solicite um orçamento sem compromisso. Seu computador em boas mãos, com experiência e atendimento de confiança.
+                </p>
             </div>
-
-            <p class="hero__subtitle" style="margin-bottom: 8px;">
-                Ofereço serviços completos para manter seu computador sempre funcionando com segurança e desempenho.
-            </p>
-
-            <!-- Lista de serviços com ícones (6 linhas) -->
-            <ul class="hero__services-list">
-                <li><i class="fa-solid fa-desktop"></i> Formatação de sistemas (Windows, Linux, Mac)</li>
-                <li><i class="fa-solid fa-database"></i> Backup e recuperação de dados</li>
-                <li><i class="fa-solid fa-broom"></i> Limpeza e manutenção preventiva</li>
-                <li><i class="fa-solid fa-download"></i> Instalação de softwares e antivírus</li>
-                <li><i class="fa-solid fa-microchip"></i> Diagnóstico e reparo de hardware</li>
-                <li><i class="fa-solid fa-headset"></i> Suporte técnico remoto e presencial</li>
-            </ul>
-
-            <p class="hero__subtitle" style="font-size: 1rem;">
-                Atendimento ágil, confiável e com preço justo em <strong>Nova Veneza - SC</strong>.
-            </p>
+            <!-- ============================================= -->
 
             <div class="hero__actions">
                 <a href="#servicos" class="btn btn--primary">Ver Serviços</a>
@@ -891,6 +865,7 @@
 
         // ============================================================
         // TRATAMENTO DA RESPOSTA DO FORMSPREE VIA HTMX
+        // O Formspree retorna JSON, então convertemos para HTML
         // ============================================================
         document.addEventListener('htmx:afterRequest', function(evt) {
             if (evt.detail.target && evt.detail.target.id === 'formResponse') {
@@ -907,6 +882,7 @@
                                     <p>Obrigado! Sua mensagem foi enviada com sucesso. Em breve entraremos em contato.</p>
                                 </div>
                             `;
+                            // Resetar o formulário
                             const form = document.getElementById('contactForm');
                             if (form) form.reset();
                         } else {
