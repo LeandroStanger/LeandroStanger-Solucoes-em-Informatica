@@ -996,6 +996,16 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+    function selecionarAbaFormatacaoPeloHash() {
+        const target = document.getElementById(window.location.hash.slice(1));
+        if (target && target.matches('#tipoFormatacaoTabs .filter-tab')) {
+            target.click();
+        }
+    }
+
+    window.addEventListener('hashchange', selecionarAbaFormatacaoPeloHash);
+    selecionarAbaFormatacaoPeloHash();
+
     // ============================================================
     // 16. FUNÇÃO DE DESCONTO ESCALONADO
     // ============================================================
