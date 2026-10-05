@@ -1164,6 +1164,62 @@ document.addEventListener('DOMContentLoaded', function() {
         let numParcelasSelecionadas = 2;
         let cotacaoBTC = null;
         let cotacaoETH = null;
+        const wizardPanels = Array.from(modal.querySelectorAll('[data-wizard-panel]'));
+        const wizardIndicators = Array.from(modal.querySelectorAll('[data-wizard-indicator]'));
+        const wizardBack = document.getElementById('pacoteWizardBack');
+        const wizardNext = document.getElementById('pacoteWizardNext');
+        const wizardStatus = document.getElementById('pacoteWizardStatus');
+        let etapaWizardAtual = 0;
+
+        function mostrarEtapaWizard(indice, moverFoco) {
+            etapaWizardAtual = Math.max(0, Math.min(indice, wizardPanels.length - 1));
+            wizardPanels.forEach(function(painel, index) {
+                painel.hidden = index !== etapaWizardAtual;
+            });
+            wizardIndicators.forEach(function(indicador, index) {
+                indicador.classList.toggle('is-active', index === etapaWizardAtual);
+                indicador.classList.toggle('is-complete', index < etapaWizardAtual);
+                if (index === etapaWizardAtual) {
+                    indicador.setAttribute('aria-current', 'step');
+                } else {
+                    indicador.removeAttribute('aria-current');
+                }
+            });
+            if (wizardBack) wizardBack.disabled = etapaWizardAtual === 0;
+            if (wizardNext) wizardNext.hidden = etapaWizardAtual === wizardPanels.length - 1;
+            if (wizardStatus) wizardStatus.textContent = 'Etapa ' + (etapaWizardAtual + 1) + ' de ' + wizardPanels.length;
+            if (modalContent) modalContent.scrollTop = 0;
+
+            if (moverFoco) {
+                const titulo = wizardPanels[etapaWizardAtual].querySelector('.pacote-wizard__panel-title');
+                if (titulo) titulo.focus({ preventScroll: true });
+            }
+        }
+
+        function organizarCamposWizard() {
+            const campos = [
+                [limpezaContainer, 'wizardLimpezaSlot'],
+                [jogosContainer, 'wizardJogosSlot'],
+                [antivirusContainer, 'wizardAntivirusSlot'],
+                [officeContainer, 'wizardOfficeSlot'],
+                [impressoraContainer, 'wizardImpressoraSlot']
+            ];
+            campos.forEach(function(item) {
+                const destino = document.getElementById(item[1]);
+                if (item[0] && destino) destino.appendChild(item[0]);
+            });
+        }
+
+        if (wizardBack) {
+            wizardBack.addEventListener('click', function() {
+                mostrarEtapaWizard(etapaWizardAtual - 1, true);
+            });
+        }
+        if (wizardNext) {
+            wizardNext.addEventListener('click', function() {
+                mostrarEtapaWizard(etapaWizardAtual + 1, true);
+            });
+        }
 
         // ============================================================
         // FUNÇÃO AUXILIAR PARA CRIAR INPUT COM BOTÕES + E -
@@ -3022,6 +3078,8 @@ document.addEventListener('DOMContentLoaded', function() {
             criarCampoAntivirus();
             criarCampoOffice();
             criarCampoImpressora();
+            organizarCamposWizard();
+            mostrarEtapaWizard(0, false);
 
             const tipo = pacoteTipoModal.value;
             const so = pacoteSOModal.value;
@@ -3051,7 +3109,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
         abrirGeradorBtn.addEventListener('click', abrirModal);
         modalClose.addEventListener('click', fecharModal);
-        modalOverlay.addEventListener('click', fecharModal);
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape' && modal && modal.style.display === 'flex') {
                 fecharModal();
@@ -3244,87 +3301,52 @@ document.addEventListener('DOMContentLoaded', function() {
                 const jsPDFLib = window.jspdf || jspdf;
                 const doc = new jsPDFLib.jsPDF('p', 'mm', 'a4');
                 const pageWidth = 210;
+                const pageHeight = doc.internal.pageSize.getHeight();
                 const margin = 18;
-                let currentY = 20;
+                let currentY = 48;
 
                 const corPrimaria = [16, 185, 129];
+                const corMarca = [18, 54, 48];
                 const corTexto = [30, 30, 30];
                 const corTextoClaro = [100, 100, 100];
                 const corLinhaAlternada = [250, 250, 250];
-                const corFundoCard = [245, 245, 245];
+                const corFundoCard = [242, 249, 246];
 
-                doc.setFontSize(24);
-                doc.setTextColor(corPrimaria[0], corPrimaria[1], corPrimaria[2]);
+                doc.setFillColor(corMarca[0], corMarca[1], corMarca[2]);
+                doc.rect(0, 0, pageWidth, 34, 'F');
+                doc.setFontSize(19);
+                doc.setTextColor(255, 255, 255);
                 doc.setFont('helvetica', 'bold');
-                doc.text('Leandro Stanger', pageWidth / 2, currentY, { align: 'center' });
-                currentY += 8;
+                doc.text('Leandro Stanger', margin, 15);
 
-                doc.setFontSize(13);
-                doc.setTextColor(corTextoClaro[0], corTextoClaro[1], corTextoClaro[2]);
+                doc.setFontSize(9);
                 doc.setFont('helvetica', 'normal');
-                doc.text('Soluções em Informática', pageWidth / 2, currentY, { align: 'center' });
-                currentY += 10;
+                doc.text('SOLUÇÕES EM INFORMÁTICA', margin, 22);
+                doc.setFontSize(8);
+                doc.text('Nova Veneza - SC  |  WhatsApp (48) 99644-6508', pageWidth - margin, 20, { align: 'right' });
 
-                doc.setDrawColor(corPrimaria[0], corPrimaria[1], corPrimaria[2]);
-                doc.setLineWidth(0.5);
-                doc.line(margin + 20, currentY, pageWidth - margin - 20, currentY);
-                currentY += 2;
-                doc.line(margin + 10, currentY, pageWidth - margin - 10, currentY);
-                currentY += 14;
-
-                doc.setFontSize(20);
+                doc.setFontSize(18);
                 doc.setTextColor(corTexto[0], corTexto[1], corTexto[2]);
                 doc.setFont('helvetica', 'bold');
-                doc.text('ORÇAMENTO DE FORMAÇÃO', pageWidth / 2, currentY, { align: 'center' });
-                currentY += 8;
+                doc.text('ORÇAMENTO', margin, currentY);
 
                 const numOrcamento = 'ORC-' + new Date().getFullYear() + '-' + String(Math.floor(Math.random() * 9999) + 1000).padStart(4, '0');
-                doc.setFontSize(9);
+                doc.setFontSize(8.5);
                 doc.setTextColor(corTextoClaro[0], corTextoClaro[1], corTextoClaro[2]);
                 doc.setFont('helvetica', 'normal');
-                doc.text('Nº ' + numOrcamento, pageWidth / 2, currentY, { align: 'center' });
-                currentY += 5;
+                doc.text('Nº ' + numOrcamento, pageWidth - margin, currentY - 2, { align: 'right' });
 
                 const dataAtual = new Date().toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' });
                 const dataValidade = new Date();
                 dataValidade.setDate(dataValidade.getDate() + 7);
                 const dataValidadeStr = dataValidade.toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' });
 
-                doc.setFontSize(9);
-                doc.setTextColor(corTextoClaro[0], corTextoClaro[1], corTextoClaro[2]);
-                doc.text('Emissão: ' + dataAtual, pageWidth - margin, currentY, { align: 'right' });
-                doc.text('Validade: ' + dataValidadeStr, pageWidth - margin, currentY + 5, { align: 'right' });
-                currentY += 14;
+                doc.setFontSize(8);
+                doc.text('Emissão: ' + dataAtual, pageWidth - margin, currentY + 4, { align: 'right' });
+                doc.text('Válido até: ' + dataValidadeStr, pageWidth - margin, currentY + 8, { align: 'right' });
+                currentY += 12;
 
-                const cardHeight = 32;
-                doc.setFillColor(corFundoCard[0], corFundoCard[1], corFundoCard[2]);
-                doc.roundedRect(margin, currentY, pageWidth - (margin * 2), cardHeight, 4, 4, 'F');
-                doc.setDrawColor(corPrimaria[0], corPrimaria[1], corPrimaria[2]);
-                doc.setLineWidth(0.5);
-                doc.roundedRect(margin, currentY, pageWidth - (margin * 2), cardHeight, 4, 4, 'D');
-
-                doc.setFontSize(12);
-                doc.setTextColor(corTexto[0], corTexto[1], corTexto[2]);
-                doc.setFont('helvetica', 'bold');
-                const linha1 = dados.tipo + ' • ' + dados.so;
-                doc.text(linha1, pageWidth / 2, currentY + 9, { align: 'center' });
-
-                doc.setFontSize(10);
-                doc.setFont('helvetica', 'normal');
-                let linha2 = dados.qtd + ' PC' + (dados.qtd > 1 ? 's' : '');
-                if (dados.valorUnitario) {
-                    linha2 += ' • R$ ' + dados.valorUnitario.toFixed(2).replace('.', ',') + ' cada';
-                }
-                doc.text(linha2, pageWidth / 2, currentY + 19, { align: 'center' });
-
-                if (dados.desconto) {
-                    doc.setFontSize(11);
-                    doc.setFont('helvetica', 'bold');
-                    doc.setTextColor(corPrimaria[0], corPrimaria[1], corPrimaria[2]);
-                    doc.text('DESCONTO APLICADO: ' + dados.desconto, pageWidth / 2, currentY + 29, { align: 'center' });
-                }
-
-                currentY += cardHeight + 8;
+                currentY += 8;
 
                 const tableData = [
                     ['Item', 'Quantidade', 'Valor Unitário', 'Total']
@@ -3344,7 +3366,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const descontoAplicado = dados.desconto ? parseFloat(dados.desconto) / 100 : 0;
                 const totalOriginal = dados.totalOriginal || totalFormatacao;
 
-                addRow('Formatação (' + dados.tipo + ')', dados.qtd + ' PC' + (dados.qtd > 1 ? 's' : ''), precoBase, totalFormatacao);
+                addRow('Formatação ' + dados.tipo + ' - ' + dados.so, dados.qtd + ' PC' + (dados.qtd > 1 ? 's' : ''), precoBase, totalFormatacao);
 
                 if (dados.limpezaQtd > 0) {
                     const totalLimpeza = dados.limpezaTotal || 0;
@@ -3504,6 +3526,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 let obs = 'Este orçamento é válido por 7 dias a partir da data de emissão.';
                 obs += ' Os preços e condições podem ser alterados sem aviso prévio.';
                 obs += ' Para contratação, entre em contato pelo WhatsApp (48) 99644-6508.';
+                if (finalY > pageHeight - 34) {
+                    doc.addPage();
+                    finalY = 20;
+                }
                 const obsLines = doc.splitTextToSize(obs, pageWidth - (margin * 2));
                 doc.text(obsLines, margin, finalY);
                 finalY += (obsLines.length * 5) + 6;
@@ -3514,28 +3540,36 @@ document.addEventListener('DOMContentLoaded', function() {
                 doc.text('Agradecemos pela preferência!', pageWidth / 2, finalY, { align: 'center' });
                 finalY += 8;
 
-                let footerY = Math.max(finalY + 10, 270);
-                if (footerY > 285) {
-                    doc.addPage();
-                    footerY = 20;
-                }
-                doc.setDrawColor(200, 200, 200);
-                doc.setLineWidth(0.3);
-                doc.line(margin, footerY, pageWidth - margin, footerY);
+                const totalPaginas = doc.internal.getNumberOfPages();
+                for (let pagina = 1; pagina <= totalPaginas; pagina++) {
+                    doc.setPage(pagina);
+                    doc.setDrawColor(220, 228, 224);
+                    doc.setLineWidth(0.3);
+                    doc.line(margin, pageHeight - 17, pageWidth - margin, pageHeight - 17);
 
-                doc.setFontSize(7.5);
-                doc.setTextColor(corTextoClaro[0], corTextoClaro[1], corTextoClaro[2]);
-                doc.setFont('helvetica', 'normal');
-                doc.text('Leandro Stanger Soluções em Informática', pageWidth / 2, footerY + 5, { align: 'center' });
-                doc.text('Rua Francisco Ronchi, Nº 280 - Caravaggio, Nova Veneza - SC', pageWidth / 2, footerY + 9, { align: 'center' });
-                doc.text('WhatsApp: (48) 99644-6508  •  E-mail: contato@leandrostanger.com.br', pageWidth / 2, footerY + 13, { align: 'center' });
+                    doc.setFontSize(7.5);
+                    doc.setTextColor(corTextoClaro[0], corTextoClaro[1], corTextoClaro[2]);
+                    doc.setFont('helvetica', 'normal');
+                    doc.text('Leandro Stanger  |  WhatsApp (48) 99644-6508', margin, pageHeight - 11);
+                    doc.text('Página ' + pagina + ' de ' + totalPaginas, pageWidth - margin, pageHeight - 11, { align: 'right' });
+                }
 
                 const dataArquivo = new Date();
                 const dia = String(dataArquivo.getDate()).padStart(2, '0');
                 const mes = String(dataArquivo.getMonth() + 1).padStart(2, '0');
                 const ano = dataArquivo.getFullYear();
-                const nomeArquivo = 'Orcamento_de_formatacao_' + dia + '_' + mes + '_' + ano + '.pdf';
-                doc.save(nomeArquivo);
+                const nomeArquivo = 'Orcamento_de_formatacao_' + numOrcamento + '_' + dia + '_' + mes + '_' + ano + '.pdf';
+                const pdfBlob = doc.output('blob');
+                const pdfUrl = URL.createObjectURL(pdfBlob);
+                const downloadLink = document.createElement('a');
+                downloadLink.href = pdfUrl;
+                downloadLink.download = nomeArquivo;
+                document.body.appendChild(downloadLink);
+                downloadLink.click();
+                downloadLink.remove();
+                window.setTimeout(function() {
+                    URL.revokeObjectURL(pdfUrl);
+                }, 1000);
 
             } catch (error) {
                 console.error('Erro ao gerar PDF:', error);
@@ -3944,7 +3978,7 @@ document.addEventListener('DOMContentLoaded', function() {
             resultadoHtml += '</div>';
 
             resultadoHtml += '<div style="margin-top: 12px; text-align: center;">';
-            resultadoHtml += '<button id="gerarPDFBtn" class="btn btn--pdf" style="width: 100%;">';
+            resultadoHtml += '<button type="button" id="gerarPDFBtn" class="btn btn--pdf" style="width: 100%;">';
             resultadoHtml += '<i class="fa-solid fa-file-pdf"></i> Baixar orçamento em PDF';
             resultadoHtml += '</button>';
             resultadoHtml += '</div>';
@@ -3954,7 +3988,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
             const pdfBtn = document.getElementById('gerarPDFBtn');
             if (pdfBtn) {
-                pdfBtn.addEventListener('click', function() {
+                pdfBtn.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    event.stopPropagation();
                     const dadosPDF = {
                         tipo: nomeTipoExibicao[tipo] || tipo,
                         so: nomeSO[so] || so,

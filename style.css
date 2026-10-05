@@ -1504,7 +1504,7 @@ strong {
    MODAL DO GERADOR DE PACOTE - VISUAL PROFISSIONAL
    ============================================================ */
 .modal-content--pacote {
-    max-width: 720px;
+    max-width: 900px;
     max-height: 92vh;
     overflow-y: auto;
     overflow-x: hidden !important;
@@ -1550,7 +1550,7 @@ strong {
     padding: 44px 40px 48px;
     background: linear-gradient(180deg, rgba(16, 185, 129, 0.06) 0%, transparent 100%);
     position: relative;
-    overflow-x: hidden;
+    overflow-x: clip;
 }
 
 .pacote-modal::before {
@@ -1627,7 +1627,99 @@ strong {
     margin-bottom: 26px;
     position: relative;
     z-index: 1;
-    overflow-x: hidden;
+    overflow-x: clip;
+}
+
+.pacote-wizard__steps {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: 8px;
+    margin: 0 0 4px;
+    padding: 0;
+    list-style: none;
+}
+
+.pacote-wizard__step {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    min-width: 0;
+    color: var(--color-text-muted);
+    font-size: 0.72rem;
+}
+
+.pacote-wizard__step > span:first-child {
+    display: grid;
+    place-items: center;
+    flex: 0 0 24px;
+    width: 24px;
+    height: 24px;
+    border: 1px solid var(--color-border);
+    border-radius: 50%;
+    font-size: 0.7rem;
+    font-weight: 700;
+}
+
+.pacote-wizard__step > span:last-child {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.pacote-wizard__step.is-active {
+    color: var(--color-primary-light);
+    font-weight: 700;
+}
+
+.pacote-wizard__step.is-active > span:first-child,
+.pacote-wizard__step.is-complete > span:first-child {
+    color: var(--color-bg);
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+}
+
+.pacote-wizard__panel[hidden],
+.pacote-wizard__navigation button[hidden] {
+    display: none;
+}
+
+.pacote-wizard__panel-title {
+    margin: 0 0 20px;
+    color: var(--color-white);
+    font-size: 1.1rem;
+}
+
+.pacote-wizard__navigation {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding-top: 16px;
+    border-top: 1px solid var(--color-border);
+}
+
+.pacote-wizard__navigation button:disabled {
+    cursor: not-allowed;
+    opacity: 0.45;
+}
+
+.pacote-wizard__status {
+    color: var(--color-text-muted);
+    font-size: 0.8rem;
+    text-align: center;
+}
+
+@media (max-width: 600px) {
+    .pacote-wizard__steps {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        row-gap: 12px;
+    }
+}
+
+@media (max-width: 380px) {
+    .pacote-wizard__steps {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
 }
 
 .pacote-modal__field {

@@ -404,72 +404,113 @@
                             <p class="pacote-modal__subtitle">Escolha o tipo, o sistema operacional e a quantidade de PCs</p>
                         </div>
                         <div class="pacote-modal__body">
-                            <!-- Campo Tipo -->
-                            <div class="pacote-modal__field">
-                                <label for="pacoteTipoModal"><i class="fa-solid fa-tag"></i> Tipo de formatação</label>
-                                <div class="pacote-modal__select-wrapper">
-                                    <i class="pacote-modal__select-icon fa-solid fa-desktop" id="tipoIcon"></i>
-                                    <select id="pacoteTipoModal" class="pacote-modal__select">
-                                        <option value="standard">Standard</option>
-                                        <option value="educacional">Educacional</option>
-                                        <option value="pro">Pro</option>
-                                        <option value="gamer">Gamer</option>
-                                        <option value="premium">Premium</option>
-                                        <option value="enterprise">Enterprise</option>
-                                    </select>
+                            <ol class="pacote-wizard__steps" aria-label="Etapas do orçamento">
+                                <li class="pacote-wizard__step is-active" data-wizard-indicator="0" aria-current="step"><span>1</span><span>Configuração</span></li>
+                                <li class="pacote-wizard__step" data-wizard-indicator="1"><span>2</span><span>Limpeza</span></li>
+                                <li class="pacote-wizard__step" data-wizard-indicator="2"><span>3</span><span>Jogos</span></li>
+                                <li class="pacote-wizard__step" data-wizard-indicator="3"><span>4</span><span>Proteção</span></li>
+                                <li class="pacote-wizard__step" data-wizard-indicator="4"><span>5</span><span>Office</span></li>
+                                <li class="pacote-wizard__step" data-wizard-indicator="5"><span>6</span><span>Impressora</span></li>
+                                <li class="pacote-wizard__step" data-wizard-indicator="6"><span>7</span><span>Pagamento</span></li>
+                            </ol>
+
+                            <div class="pacote-wizard__panel" data-wizard-panel="0" aria-labelledby="wizardPanelTitle0">
+                                <h3 class="pacote-wizard__panel-title" id="wizardPanelTitle0" tabindex="-1">Configuração do pacote</h3>
+                                <div class="pacote-modal__field">
+                                    <label for="pacoteTipoModal"><i class="fa-solid fa-tag"></i> Tipo de formatação</label>
+                                    <div class="pacote-modal__select-wrapper">
+                                        <i class="pacote-modal__select-icon fa-solid fa-desktop" id="tipoIcon"></i>
+                                        <select id="pacoteTipoModal" class="pacote-modal__select">
+                                            <option value="standard">Standard</option>
+                                            <option value="educacional">Educacional</option>
+                                            <option value="pro">Pro</option>
+                                            <option value="gamer">Gamer</option>
+                                            <option value="premium">Premium</option>
+                                            <option value="enterprise">Enterprise</option>
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
-                            <!-- Campo Sistema Operacional -->
-                            <div class="pacote-modal__field">
-                                <label for="pacoteSOModal"><i class="fa-solid fa-desktop"></i> Sistema Operacional</label>
-                                <div class="pacote-modal__select-wrapper">
-                                    <i class="pacote-modal__select-icon fa-brands fa-windows" id="soIcon"></i>
-                                    <select id="pacoteSOModal" class="pacote-modal__select"></select>
+                                <div class="pacote-modal__field">
+                                    <label for="pacoteSOModal"><i class="fa-solid fa-desktop"></i> Sistema Operacional</label>
+                                    <div class="pacote-modal__select-wrapper">
+                                        <i class="pacote-modal__select-icon fa-brands fa-windows" id="soIcon"></i>
+                                        <select id="pacoteSOModal" class="pacote-modal__select"></select>
+                                    </div>
                                 </div>
-                            </div>
-                            <!-- Campo Quantidade -->
-                            <div class="pacote-modal__field">
-                                <label for="pacoteQuantidadeModal"><i class="fa-solid fa-computer"></i> Quantidade de PCs</label>
-                                <div class="pacote-modal__input-wrapper">
-                                    <i class="pacote-modal__input-icon fa-solid fa-hashtag"></i>
-                                    <input type="number" id="pacoteQuantidadeModal" class="pacote-modal__input" value="1" min="1" max="150" step="1" />
+                                <div class="pacote-modal__field">
+                                    <label for="pacoteQuantidadeModal"><i class="fa-solid fa-computer"></i> Quantidade de PCs</label>
+                                    <div class="pacote-modal__input-wrapper">
+                                        <i class="pacote-modal__input-icon fa-solid fa-hashtag"></i>
+                                        <input type="number" id="pacoteQuantidadeModal" class="pacote-modal__input" value="1" min="1" max="150" step="1" />
+                                    </div>
                                 </div>
                             </div>
 
-                            <!-- ============================================
-                            OPÇÕES DE PAGAMENTO (À Vista, Parcelado, Bitcoin - será adicionado pelo JS)
-                            ============================================ -->
-                            <div class="pacote-modal__payment" style="margin-top: 16px;">
-                                <div class="payment-toggle" id="paymentToggleContainer">
-                                    <!-- Os botões serão recriados pelo JavaScript -->
-                                </div>
-                                <div class="installment-options" id="pacoteInstallmentOptions" style="display: none;">
-                                    <label for="pacoteInstallmentCount">Número de Parcelas:</label>
-                                    <select id="pacoteInstallmentCount" class="installment-select">
-                                        <option value="2">2x</option>
-                                        <option value="3">3x</option>
-                                        <option value="4">4x</option>
-                                        <option value="5">5x</option>
-                                        <option value="6">6x</option>
-                                        <option value="7">7x</option>
-                                        <option value="8">8x</option>
-                                        <option value="9">9x</option>
-                                        <option value="10">10x</option>
-                                        <option value="11">11x</option>
-                                        <option value="12">12x</option>
-                                    </select>
-                                </div>
+                            <div class="pacote-wizard__panel" data-wizard-panel="1" aria-labelledby="wizardPanelTitle1" hidden>
+                                <h3 class="pacote-wizard__panel-title" id="wizardPanelTitle1" tabindex="-1">Limpeza interna</h3>
+                                <div id="wizardLimpezaSlot"></div>
                             </div>
 
-                            <!-- Campos Limpeza, Antivírus, Office, Impressora serão injetados pelo JS -->
-                            <div class="pacote-modal__action">
-                                <button id="calcularPacoteBtn" class="btn btn--primary btn--pacote-calcular">
-                                    <i class="fa-solid fa-calculator"></i> Calcular
+                            <div class="pacote-wizard__panel" data-wizard-panel="2" aria-labelledby="wizardPanelTitle2" hidden>
+                                <h3 class="pacote-wizard__panel-title" id="wizardPanelTitle2" tabindex="-1">Pacote de jogos</h3>
+                                <div id="wizardJogosSlot"></div>
+                            </div>
+
+                            <div class="pacote-wizard__panel" data-wizard-panel="3" aria-labelledby="wizardPanelTitle3" hidden>
+                                <h3 class="pacote-wizard__panel-title" id="wizardPanelTitle3" tabindex="-1">Antivírus</h3>
+                                <div id="wizardAntivirusSlot"></div>
+                            </div>
+
+                            <div class="pacote-wizard__panel" data-wizard-panel="4" aria-labelledby="wizardPanelTitle4" hidden>
+                                <h3 class="pacote-wizard__panel-title" id="wizardPanelTitle4" tabindex="-1">Pacote Office</h3>
+                                <div id="wizardOfficeSlot"></div>
+                            </div>
+
+                            <div class="pacote-wizard__panel" data-wizard-panel="5" aria-labelledby="wizardPanelTitle5" hidden>
+                                <h3 class="pacote-wizard__panel-title" id="wizardPanelTitle5" tabindex="-1">Instalação de impressora</h3>
+                                <div id="wizardImpressoraSlot"></div>
+                            </div>
+
+                            <div class="pacote-wizard__panel" data-wizard-panel="6" aria-labelledby="wizardPanelTitle6" hidden>
+                                <h3 class="pacote-wizard__panel-title" id="wizardPanelTitle6" tabindex="-1">Forma de pagamento</h3>
+                                <div class="pacote-modal__payment">
+                                    <div class="payment-toggle" id="paymentToggleContainer"></div>
+                                    <div class="installment-options" id="pacoteInstallmentOptions" style="display: none;">
+                                        <label for="pacoteInstallmentCount">Número de Parcelas:</label>
+                                        <select id="pacoteInstallmentCount" class="installment-select">
+                                            <option value="2">2x</option>
+                                            <option value="3">3x</option>
+                                            <option value="4">4x</option>
+                                            <option value="5">5x</option>
+                                            <option value="6">6x</option>
+                                            <option value="7">7x</option>
+                                            <option value="8">8x</option>
+                                            <option value="9">9x</option>
+                                            <option value="10">10x</option>
+                                            <option value="11">11x</option>
+                                            <option value="12">12x</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="pacote-modal__action">
+                                    <button type="button" id="calcularPacoteBtn" class="btn btn--primary btn--pacote-calcular">
+                                        <i class="fa-solid fa-calculator"></i> Calcular orçamento
+                                    </button>
+                                </div>
+                                <div class="pacote-modal__base-info" id="baseInfoModal"></div>
+                                <div id="pacoteResultadoModal" class="pacote-modal__resultado" style="display:none;"></div>
+                            </div>
+
+                            <div class="pacote-wizard__navigation">
+                                <button type="button" id="pacoteWizardBack" class="btn btn--outline" disabled>
+                                    <i class="fa-solid fa-arrow-left"></i> Voltar
+                                </button>
+                                <span id="pacoteWizardStatus" class="pacote-wizard__status" aria-live="polite">Etapa 1 de 7</span>
+                                <button type="button" id="pacoteWizardNext" class="btn btn--primary">
+                                    Avançar <i class="fa-solid fa-arrow-right"></i>
                                 </button>
                             </div>
                         </div>
-                        <div class="pacote-modal__base-info" id="baseInfoModal"></div>
-                        <div id="pacoteResultadoModal" class="pacote-modal__resultado" style="display:none;"></div>
                     </div>
                 </div>
             </div>
@@ -541,11 +582,12 @@
             SEÇÃO DE DICAS CARREGADA VIA HTMX
             ============================================================ -->
             <div style="margin-top: 40px; text-align: center;">
-                <button class="btn btn--outline" 
+                <button id="carregarDicasBtn" class="btn btn--outline" 
                         hx-get="dicas.html" 
                         hx-target="#dicasContainer" 
                         hx-swap="innerHTML"
                         hx-trigger="click"
+                        onclick="if (location.protocol === 'file:') carregarDicasFallback();"
                         style="margin-bottom: 16px;">
                     <i class="fa-solid fa-lightbulb"></i> Ver dicas de manutenção
                 </button>
@@ -634,7 +676,7 @@
                         <div class="contact-info__icon"><i class="fa-brands fa-whatsapp"></i></div>
                         <div>
                             <h4>WhatsApp</h4>
-                            <a href="https://wa.me/5548996446508" target="_blank" rel="noopener">(48) 99644-6508</a>
+                            <a href="https://wa.me/5548996446508" target="_blank" rel="noopener">+55 (48) 99644-6508</a>
                         </div>
                     </div>
                     <div class="contact-info__card">
@@ -740,7 +782,7 @@
                 <div class="footer__contact">
                     <h4>Contato</h4>
                     <ul>
-                        <li><a href="https://wa.me/5548996446508" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> (48) 99644-6508</a></li>
+                        <li><a href="https://wa.me/5548996446508" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> +55 (48) 99644-6508</a></li>
                         <li>Rua Francisco Ronchi, Nº 280</li>
                         <li>Caravaggio, Nova Veneza - SC</li>
                     </ul>
@@ -867,6 +909,36 @@
         // TRATAMENTO DA RESPOSTA DO FORMSPREE VIA HTMX
         // O Formspree retorna JSON, então convertemos para HTML
         // ============================================================
+        window.carregarDicasFallback = async function () {
+            const container = document.getElementById('dicasContainer');
+            const button = document.getElementById('carregarDicasBtn');
+
+            if (!container) return;
+
+            try {
+                const response = await fetch('dicas.html', { cache: 'no-store' });
+                if (!response.ok) throw new Error('Falha ao carregar dicas');
+
+                const html = await response.text();
+                container.innerHTML = html;
+
+                if (button) {
+                    button.innerHTML = '<i class="fa-solid fa-check"></i> Dicas carregadas';
+                    button.disabled = true;
+                }
+            } catch (error) {
+                container.innerHTML = `
+                    <div class="dicas-grid">
+                        <div class="dica-card">
+                            <div class="dica-card__icon"><i class="fa-solid fa-circle-exclamation"></i></div>
+                            <h4>Não foi possível carregar as dicas</h4>
+                            <p>Verifique se o arquivo dicas.html está presente na pasta do site e tente novamente.</p>
+                        </div>
+                    </div>
+                `;
+            }
+        };
+
         document.addEventListener('htmx:afterRequest', function(evt) {
             if (evt.detail.target && evt.detail.target.id === 'formResponse') {
                 const response = evt.detail.xhr;
