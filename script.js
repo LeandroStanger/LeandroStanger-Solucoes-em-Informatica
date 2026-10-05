@@ -1155,8 +1155,6 @@ document.addEventListener('DOMContentLoaded', function() {
         modal.style.justifyContent = 'center';
         const modalContent = document.querySelector('.modal-content--pacote');
         if (modalContent) {
-            modalContent.style.maxHeight = '90vh';
-            modalContent.style.overflowY = 'auto';
             modalContent.style.padding = '0';
         }
 
@@ -3310,7 +3308,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 const corTexto = [30, 30, 30];
                 const corTextoClaro = [100, 100, 100];
                 const corLinhaAlternada = [250, 250, 250];
-                const corFundoCard = [242, 249, 246];
 
                 doc.setFillColor(corMarca[0], corMarca[1], corMarca[2]);
                 doc.rect(0, 0, pageWidth, 34, 'F');
@@ -3400,24 +3397,14 @@ document.addEventListener('DOMContentLoaded', function() {
                     addRow(labelJogos, dados.jogosQtd + ' PC' + (dados.jogosQtd > 1 ? 's' : ''), precoJogos, totalJogos);
                 }
 
-                let subtotal = totalOriginal;
-                tableData.push(['', '', 'Subtotal', 'R$ ' + subtotal.toFixed(2).replace('.', ',')]);
+                const subtotal = totalOriginal;
 
-                if (descontoAplicado > 0) {
-                    const valorDesconto = subtotal * descontoAplicado;
-                    const subtotalComDesconto = subtotal - valorDesconto;
-                    tableData.push(['', '', 'Desconto (' + (descontoAplicado * 100).toFixed(0) + '%)', '- R$ ' + valorDesconto.toFixed(2).replace('.', ',')]);
-                    tableData.push(['', '', 'Total com Desconto', 'R$ ' + subtotalComDesconto.toFixed(2).replace('.', ',')]);
-                } else {
-                    tableData.push(['', '', 'Total', 'R$ ' + subtotal.toFixed(2).replace('.', ',')]);
-                }
-
-                // Formatação aprimorada para criptomoedas
                 let formaPagamento = 'À Vista';
                 let detalheFinal = '';
                 if (dados.isInstallment) {
                     formaPagamento = 'Parcelado em ' + dados.numParcelas + 'x';
-                    detalheFinal = 'Valor Final: R$ ' + dados.valorFinal.toFixed(2).replace('.', ',') + ' (com juros)';
+                    detalheFinal = 'Parcela: R$ ' + dados.valorParcela.toFixed(2).replace('.', ',') +
+                        ' | Juros: R$ ' + dados.jurosTotal.toFixed(2).replace('.', ',');
                 } else if (dados.isBitcoin) {
                     formaPagamento = 'Bitcoin (BTC)';
                     const valorBTC = typeof dados.valorBTC === 'number' ? dados.valorBTC.toFixed(8) : '0,00000000';
@@ -3428,15 +3415,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     const valorETH = typeof dados.valorETH === 'number' ? dados.valorETH.toFixed(6) : '0,000000';
                     const cotacao = typeof dados.cotacaoETH === 'number' ? 'R$ ' + dados.cotacaoETH.toFixed(2).replace('.', ',') : '--';
                     detalheFinal = 'Valor em ETH: ' + valorETH.replace('.', ',') + '  |  Cotação: ' + cotacao + '/ETH';
-                } else {
-                    formaPagamento = 'À Vista';
-                    detalheFinal = 'Valor Final: R$ ' + dados.valorFinal.toFixed(2).replace('.', ',');
-                }
-
-                tableData.push(['', '', 'Forma de Pagamento', formaPagamento]);
-                if (detalheFinal) {
-                    // Centralizar o detalhe na coluna 3 (índice 3) com quebra de linha se necessário
-                    tableData.push(['', '', '', detalheFinal]);
                 }
 
                 doc.autoTable({
@@ -3469,20 +3447,64 @@ document.addEventListener('DOMContentLoaded', function() {
                     alternateRowStyles: {
                         fillColor: [corLinhaAlternada[0], corLinhaAlternada[1], corLinhaAlternada[2]],
                     },
-                    didParseCell: function(data) {
-                        if (data.section === 'body') {
-                            const cellText = data.cell.raw;
-                            if (typeof cellText === 'string') {
-                                if (cellText.includes('Total') || cellText.includes('Valor Final') || cellText.includes('Subtotal')) {
-                                    data.cell.styles.fontStyle = 'bold';
-                                    data.cell.styles.textColor = [corPrimaria[0], corPrimaria[1], corPrimaria[2]];
-                                }
-                                if (cellText.includes('Valor Final') || cellText.includes('Total') || cellText.includes('BTC') || cellText.includes('ETH')) {
-                                    data.cell.styles.fontSize = 10;
-                                    data.cell.styles.fontStyle = 'bold';
-                                }
-                            }
-                        }
+                    margin: { left: margin, right: margin },
+                    pageBreak: 'auto',
+                });
+
+                const formatarValorPDF = function(valor) {
+                    return 'R$ ' + valor.toFixed(2).replace('.', ',');
+                };
+                const resumoFinanceiro = [];
+                if (descontoAplicado > 0) {
+                    const valorDesconto = subtotal * descontoAplicado;
+                    const totalComDesconto = subtotal - valorDesconto;
+                    resumoFinanceiro.push([
+                        { content: 'Subtotal', styles: { fontStyle: 'bold', fillColor: [245, 248, 246] } },
+                        formatarValorPDF(subtotal),
+                        { content: 'Desc. ' + (descontoAplicado * 100).toFixed(0) + '%', styles: { fontStyle: 'bold', fillColor: [245, 248, 246] } },
+                        '- ' + formatarValorPDF(valorDesconto),
+                        { content: 'Total', styles: { fontStyle: 'bold', fillColor: [245, 248, 246], textColor: corPrimaria } },
+                        { content: formatarValorPDF(totalComDesconto), styles: { fontStyle: 'bold', textColor: corPrimaria } },
+                    ]);
+                } else {
+                    resumoFinanceiro.push([
+                        { content: 'Subtotal', styles: { fontStyle: 'bold', fillColor: [245, 248, 246] } },
+                        formatarValorPDF(subtotal),
+                        { content: 'Total', colSpan: 2, styles: { fontStyle: 'bold', fillColor: [245, 248, 246], textColor: corPrimaria } },
+                        { content: formatarValorPDF(subtotal), colSpan: 2, styles: { fontStyle: 'bold', textColor: corPrimaria } },
+                    ]);
+                }
+                resumoFinanceiro.push([
+                    { content: 'Pagamento', styles: { fontStyle: 'bold', fillColor: [245, 248, 246] } },
+                    {
+                        content: formaPagamento + (detalheFinal ? '\n' + detalheFinal : ''),
+                        colSpan: 3,
+                        styles: { fontSize: 7.5 },
+                    },
+                    { content: 'Valor final', styles: { fontStyle: 'bold', fillColor: [245, 248, 246], textColor: corPrimaria } },
+                    { content: formatarValorPDF(dados.valorFinal), styles: { fontStyle: 'bold', textColor: corPrimaria } },
+                ]);
+
+                doc.autoTable({
+                    startY: doc.lastAutoTable.finalY + 2,
+                    body: resumoFinanceiro,
+                    theme: 'grid',
+                    styles: {
+                        font: 'helvetica',
+                        fontSize: 8,
+                        textColor: [corTexto[0], corTexto[1], corTexto[2]],
+                        cellPadding: { top: 3, bottom: 3, left: 3, right: 3 },
+                        lineColor: [220, 228, 224],
+                        lineWidth: 0.2,
+                        valign: 'middle',
+                    },
+                    columnStyles: {
+                        0: { cellWidth: 24 },
+                        1: { cellWidth: 28, halign: 'right' },
+                        2: { cellWidth: 26 },
+                        3: { cellWidth: 29, halign: 'right' },
+                        4: { cellWidth: 30 },
+                        5: { cellWidth: 37, halign: 'right' },
                     },
                     margin: { left: margin, right: margin },
                     pageBreak: 'auto',
@@ -3491,31 +3513,43 @@ document.addEventListener('DOMContentLoaded', function() {
                 let finalY = doc.lastAutoTable.finalY + 6;
 
                 if (dados.brindes && dados.brindes.length > 0) {
-                    const boxY = finalY;
-                    const boxHeight = 12 + (dados.brindes.length * 7);
-                    doc.setFillColor(corFundoCard[0], corFundoCard[1], corFundoCard[2]);
-                    doc.roundedRect(margin, boxY, pageWidth - (margin * 2), boxHeight, 4, 4, 'F');
-                    doc.setDrawColor(corPrimaria[0], corPrimaria[1], corPrimaria[2]);
-                    doc.setLineWidth(0.3);
-                    doc.roundedRect(margin, boxY, pageWidth - (margin * 2), boxHeight, 4, 4, 'D');
-
-                    doc.setFontSize(10);
-                    doc.setFont('helvetica', 'bold');
-                    doc.setTextColor(corPrimaria[0], corPrimaria[1], corPrimaria[2]);
-                    doc.text('BRINDES INCLUSOS', margin + 10, boxY + 7);
-
-                    let brindeY = boxY + 13;
-                    doc.setFont('helvetica', 'normal');
-                    doc.setFontSize(8.5);
-                    doc.setTextColor(corTexto[0], corTexto[1], corTexto[2]);
-                    dados.brindes.forEach(function(brinde) {
-                        const texto = '• ' + brinde;
-                        const maxWidth = pageWidth - (margin * 2) - 20;
-                        const lines = doc.splitTextToSize(texto, maxWidth);
-                        doc.text(lines, margin + 14, brindeY);
-                        brindeY += (lines.length * 5) + 2;
+                    doc.autoTable({
+                        startY: finalY,
+                        head: [['BENEFÍCIO INCLUSO', 'SITUAÇÃO']],
+                        body: dados.brindes.map(function(brinde) {
+                            return [brinde, 'Incluso no pacote'];
+                        }),
+                        theme: 'grid',
+                        styles: {
+                            font: 'helvetica',
+                            fontSize: 8.5,
+                            textColor: [corTexto[0], corTexto[1], corTexto[2]],
+                            cellPadding: { top: 3.5, bottom: 3.5, left: 5, right: 5 },
+                            lineColor: [220, 228, 224],
+                            lineWidth: 0.15,
+                        },
+                        headStyles: {
+                            fillColor: [corMarca[0], corMarca[1], corMarca[2]],
+                            textColor: [255, 255, 255],
+                            fontSize: 8,
+                            fontStyle: 'bold',
+                        },
+                        columnStyles: {
+                            0: { cellWidth: 130 },
+                            1: {
+                                cellWidth: 44,
+                                halign: 'center',
+                                fontStyle: 'bold',
+                                textColor: [corPrimaria[0], corPrimaria[1], corPrimaria[2]],
+                            },
+                        },
+                        alternateRowStyles: {
+                            fillColor: [corLinhaAlternada[0], corLinhaAlternada[1], corLinhaAlternada[2]],
+                        },
+                        margin: { left: margin, right: margin },
+                        pageBreak: 'auto',
                     });
-                    finalY = boxY + boxHeight + 8;
+                    finalY = doc.lastAutoTable.finalY + 8;
                 } else {
                     finalY = finalY + 4;
                 }
