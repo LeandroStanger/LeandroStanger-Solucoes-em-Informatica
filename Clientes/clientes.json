@@ -1,0 +1,31 @@
+{
+  "clientes": [
+    {
+      "nome": "Fundimodel Fundição em Alumínio",
+      "logo": "img/clientes/fundimodel.png",
+      "descricao": "Especializada em fundição de peças em alumínio.",
+      "iconeDescricao": "fa-solid fa-industry",
+      "url": "https://www.instagram.com/fundimodel/",
+      "textoLink": "Visitar perfil",
+      "descricaoLink": "Conheça a Fundimodel no Instagram"
+    },
+    {
+      "nome": "Gamil Móveis",
+      "logo": "img/clientes/gamilmoveis.png",
+      "descricao": "Acompanhe a Gamil Móveis pelo Instagram.",
+      "iconeDescricao": "fa-solid fa-couch",
+      "url": "https://www.instagram.com/gamilmoveis/",
+      "textoLink": "Visitar perfil",
+      "descricaoLink": "Conheça a Gamil Móveis no Instagram"
+    },
+    {
+      "nome": "Cursos de Codar",
+      "logo": "img/clientes/cursos-de-codar.png",
+      "descricao": "Cursos e conteúdos para quem quer aprender a programar.",
+      "iconeDescricao": "fa-solid fa-code",
+      "url": "https://cursosdecodar.com.br",
+      "textoLink": "Visitar site",
+      "descricaoLink": "Acesse o site Cursos de Codar"
+    }
+  ]
+}

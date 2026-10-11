@@ -227,6 +227,7 @@
                 <li><a href="#recuperacao" class="nav__link">Recuperação</a></li>
                 <li><a href="#limpeza" class="nav__link">Limpeza</a></li>
                 <li><a href="#criacao-site" class="nav__link">Criação de Sites</a></li>
+                <li><a href="#clientes" class="nav__link">Clientes</a></li>
                 <li><a href="#contato" class="nav__link">Contato</a></li>
                 <li>
                     <a href="https://wa.me/5548996446508" target="_blank" rel="noopener" class="nav__cta-btn">
@@ -661,6 +662,33 @@
     </section>
 
     <!-- ============================================================
+    SEÇÃO: CLIENTES
+    ============================================================ -->
+    <section class="clients" id="clientes" aria-labelledby="clientsTitle">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-header__tag">Clientes</span>
+                <h2 class="section-header__title" id="clientsTitle">Empresas que confiam no nosso trabalho</h2>
+                <p class="section-header__desc">Conheça alguns dos nossos primeiros clientes</p>
+            </div>
+
+            <div class="clients__carousel" id="clientsCarousel" aria-roledescription="carrossel" aria-label="Clientes">
+                <button class="clients__arrow" type="button" data-client-previous aria-label="Cliente anterior">
+                    <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
+                </button>
+
+                <div class="clients__slides" aria-live="polite"></div>
+
+                <button class="clients__arrow" type="button" data-client-next aria-label="Próximo cliente">
+                    <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+                </button>
+            </div>
+
+            <div class="clients__pagination" role="group" aria-label="Escolher cliente"></div>
+        </div>
+    </section>
+
+    <!-- ============================================================
     SEÇÃO: CONTATO (COM HTMX PARA ENVIO DO FORMULÁRIO)
     ============================================================ -->
     <section class="contact" id="contato">
@@ -776,6 +804,7 @@
                         <li><a href="#recuperacao">Recuperação</a></li>
                         <li><a href="#limpeza">Limpeza</a></li>
                         <li><a href="#criacao-site">Criação de Sites</a></li>
+                        <li><a href="#clientes">Clientes</a></li>
                         <li><a href="#contato">Contato</a></li>
                     </ul>
                 </div>

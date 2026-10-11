@@ -170,6 +170,148 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ============================================================
+    // 3.1. CARROSSEL DE CLIENTES
+    // ============================================================
+    const clientsCarousel = document.getElementById('clientsCarousel');
+    if (clientsCarousel) {
+        const clientsRegion = clientsCarousel.closest('.clients');
+        const clientSlidesContainer = clientsCarousel.querySelector('.clients__slides');
+        const clientPagination = clientsRegion.querySelector('.clients__pagination');
+        const clientPreviousButton = clientsCarousel.querySelector('[data-client-previous]');
+        const clientNextButton = clientsCarousel.querySelector('[data-client-next]');
+
+        fetch('Clientes/clientes.json')
+            .then(function(response) {
+                if (!response.ok) throw new Error('Erro ao carregar Clientes/clientes.json');
+                return response.json();
+            })
+            .then(function(data) {
+                if (!data || !Array.isArray(data.clientes) || data.clientes.length === 0) {
+                    throw new Error('O arquivo de clientes não contém uma lista válida.');
+                }
+
+                const clientSlides = [];
+                const clientDots = [];
+                let activeClientIndex = 0;
+
+                data.clientes.forEach(function(cliente, index) {
+                    const slide = document.createElement('article');
+                    slide.className = 'clients__slide' + (index === 0 ? ' is-active' : '');
+                    slide.setAttribute('data-client-slide', '');
+                    slide.setAttribute('aria-roledescription', 'slide');
+                    slide.setAttribute('aria-label', (index + 1) + ' de ' + data.clientes.length);
+                    slide.hidden = index !== 0;
+
+                    const link = document.createElement('a');
+                    link.className = 'clients__link';
+                    link.href = cliente.url;
+                    link.target = '_blank';
+                    link.rel = 'noopener noreferrer';
+                    link.setAttribute('aria-label', cliente.descricaoLink);
+
+                    const logoWrap = document.createElement('span');
+                    logoWrap.className = 'clients__logo-wrap';
+                    const logo = document.createElement('img');
+                    logo.src = cliente.logo;
+                    logo.alt = cliente.nome;
+                    logo.className = 'clients__logo';
+                    logoWrap.appendChild(logo);
+
+                    const name = document.createElement('span');
+                    name.className = 'clients__name';
+                    name.textContent = cliente.nome;
+
+                    const description = document.createElement('span');
+                    description.className = 'clients__description';
+                    const descriptionIcon = document.createElement('i');
+                    descriptionIcon.className = cliente.iconeDescricao;
+                    descriptionIcon.setAttribute('aria-hidden', 'true');
+                    const descriptionText = document.createElement('span');
+                    descriptionText.textContent = cliente.descricao;
+                    description.append(descriptionIcon, descriptionText);
+
+                    const visit = document.createElement('span');
+                    visit.className = 'clients__visit';
+                    visit.append(document.createTextNode(cliente.textoLink + ' '));
+                    const visitIcon = document.createElement('i');
+                    visitIcon.className = 'fa-solid fa-arrow-up-right-from-square';
+                    visitIcon.setAttribute('aria-hidden', 'true');
+                    visit.appendChild(visitIcon);
+
+                    link.append(logoWrap, name, description, visit);
+                    slide.appendChild(link);
+                    clientSlidesContainer.appendChild(slide);
+                    clientSlides.push(slide);
+
+                    const dot = document.createElement('button');
+                    dot.className = 'clients__dot' + (index === 0 ? ' is-active' : '');
+                    dot.type = 'button';
+                    dot.setAttribute('data-client-dot', String(index));
+                    dot.setAttribute('aria-label', 'Mostrar ' + cliente.nome);
+                    dot.setAttribute('aria-current', index === 0 ? 'true' : 'false');
+                    clientPagination.appendChild(dot);
+                    clientDots.push(dot);
+                });
+
+                function mostrarCliente(index) {
+                    activeClientIndex = (index + clientSlides.length) % clientSlides.length;
+                    clientSlides.forEach(function(slide, slideIndex) {
+                        const isActive = slideIndex === activeClientIndex;
+                        slide.hidden = !isActive;
+                        slide.classList.toggle('is-active', isActive);
+                    });
+                    clientDots.forEach(function(dot, dotIndex) {
+                        const isActive = dotIndex === activeClientIndex;
+                        dot.classList.toggle('is-active', isActive);
+                        dot.setAttribute('aria-current', isActive ? 'true' : 'false');
+                    });
+                }
+
+                clientPreviousButton.addEventListener('click', function() {
+                    mostrarCliente(activeClientIndex - 1);
+                });
+                clientNextButton.addEventListener('click', function() {
+                    mostrarCliente(activeClientIndex + 1);
+                });
+                clientDots.forEach(function(dot) {
+                    dot.addEventListener('click', function() {
+                        mostrarCliente(Number(dot.getAttribute('data-client-dot')));
+                    });
+                });
+
+                if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches && clientSlides.length > 1) {
+                    let autoplayTimer = window.setInterval(function() {
+                        mostrarCliente(activeClientIndex + 1);
+                    }, 5000);
+
+                    function pausarAutoplay() {
+                        window.clearInterval(autoplayTimer);
+                    }
+
+                    function retomarAutoplay() {
+                        window.clearInterval(autoplayTimer);
+                        autoplayTimer = window.setInterval(function() {
+                            mostrarCliente(activeClientIndex + 1);
+                        }, 5000);
+                    }
+
+                    clientsRegion.addEventListener('mouseenter', pausarAutoplay);
+                    clientsRegion.addEventListener('mouseleave', retomarAutoplay);
+                    clientsRegion.addEventListener('focusin', pausarAutoplay);
+                    clientsRegion.addEventListener('focusout', function(event) {
+                        if (!clientsRegion.contains(event.relatedTarget)) retomarAutoplay();
+                    });
+                }
+            })
+            .catch(function(error) {
+                console.error('Erro ao carregar os clientes:', error);
+                clientSlidesContainer.textContent = 'Não foi possível carregar os clientes.';
+                clientPreviousButton.disabled = true;
+                clientNextButton.disabled = true;
+            });
+    }
+
+    // ============================================================
     // 4. CARREGAR SERVIÇOS DO JSON
     // ============================================================
     function carregarServicos() {

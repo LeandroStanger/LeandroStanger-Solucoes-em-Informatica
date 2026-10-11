@@ -2400,6 +2400,211 @@ strong {
     pointer-events: none;
 }
 
+/* ============================================================
+   CLIENTES - CARROSSEL
+   ============================================================ */
+.clients {
+    padding: 80px 0;
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+    background:
+        radial-gradient(ellipse at 18% 80%, rgba(56, 189, 248, 0.08), transparent 42%),
+        radial-gradient(ellipse at 82% 18%, rgba(16, 185, 129, 0.10), transparent 46%),
+        #0d1117;
+}
+
+.clients__carousel {
+    display: grid;
+    grid-template-columns: 48px minmax(0, 1fr) 48px;
+    align-items: center;
+    gap: 20px;
+    max-width: 760px;
+    margin: 0 auto;
+}
+
+.clients__slides {
+    min-width: 0;
+}
+
+.clients__slide {
+    animation: clientsSlideIn 0.35s ease both;
+}
+
+.clients__link {
+    min-height: 340px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 32px;
+    text-align: center;
+    background: rgba(22, 27, 34, 0.82);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    transition: border-color var(--transition), background-color var(--transition), transform var(--transition);
+}
+
+.clients__link:hover,
+.clients__link:focus-visible {
+    border-color: var(--color-primary);
+    background-color: var(--color-bg-card-hover);
+    transform: translateY(-3px);
+}
+
+.clients__link:focus-visible,
+.clients__arrow:focus-visible,
+.clients__dot:focus-visible {
+    outline: 2px solid var(--color-primary-light);
+    outline-offset: 4px;
+}
+
+.clients__logo-wrap {
+    width: min(100%, 420px);
+    height: 190px;
+    flex: 0 0 190px;
+    display: grid;
+    place-items: center;
+    position: relative;
+    overflow: hidden;
+    background: transparent;
+    border-radius: var(--radius-sm);
+}
+
+.clients__logo {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.clients__name {
+    order: 1;
+    color: var(--color-white);
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+.clients__logo-wrap {
+    order: 0;
+}
+
+.clients__description {
+    order: 2;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 8px;
+    max-width: 420px;
+    color: var(--color-text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.clients__description i {
+    flex: 0 0 auto;
+    margin-top: 3px;
+    color: var(--color-primary-light);
+}
+
+.clients__visit {
+    order: 3;
+    color: var(--color-primary-light);
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.clients__visit i {
+    margin-left: 5px;
+}
+
+.clients__arrow {
+    width: 48px;
+    height: 48px;
+    display: grid;
+    place-items: center;
+    color: var(--color-text);
+    background: var(--color-bg-elevated);
+    border: 1px solid var(--color-border);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: color var(--transition), border-color var(--transition), background-color var(--transition);
+}
+
+.clients__arrow:hover {
+    color: var(--color-bg);
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+}
+
+.clients__pagination {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 22px;
+}
+
+.clients__dot {
+    width: 10px;
+    height: 10px;
+    padding: 0;
+    background: var(--color-text-muted);
+    border: 0;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color var(--transition), transform var(--transition);
+}
+
+.clients__dot.is-active {
+    background: var(--color-primary-light);
+    transform: scale(1.25);
+}
+
+@keyframes clientsSlideIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 520px) {
+    .clients {
+        padding: 64px 0;
+    }
+
+    .clients__carousel {
+        grid-template-columns: 36px minmax(0, 1fr) 36px;
+        gap: 8px;
+    }
+
+    .clients__arrow {
+        width: 36px;
+        height: 36px;
+    }
+
+    .clients__link {
+        min-height: 280px;
+        gap: 12px;
+        padding: 20px 12px;
+    }
+
+    .clients__logo-wrap {
+        height: 150px;
+        flex-basis: 150px;
+    }
+
+    .clients__name {
+        font-size: 1rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .clients__slide {
+        animation: none;
+    }
+}
+
 @keyframes pulseRing {
     0% { transform: scale(1); opacity: 0.6; }
     70% { transform: scale(1.5); opacity: 0; }
