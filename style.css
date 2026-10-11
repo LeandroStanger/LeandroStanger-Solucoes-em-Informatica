@@ -1201,6 +1201,22 @@ strong {
     margin-bottom: 40px;
 }
 
+#tipoFormatacaoTabs {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100vw;
+    max-width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: 0;
+    padding-inline: 8px;
+}
+
+#tipoFormatacaoTabs .filter-tab {
+    flex: 0 1 auto;
+    white-space: nowrap;
+}
+
 .filter-tab {
     background-color: var(--color-bg-card);
     color: var(--color-text-secondary);
