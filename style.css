@@ -516,10 +516,14 @@ strong {
     border-bottom: 1px solid var(--color-border);
 }
 
+.services .container {
+    max-width: 1800px;
+}
+
 .services-grid {
     display: grid;
-    grid-template-columns: repeat(4, minmax(var(--card-min-width), var(--card-max-width)));
-    gap: 24px;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--card-min-width)), 1fr));
+    gap: 12px;
     justify-content: center;
     align-items: stretch;
 }
@@ -2390,11 +2394,6 @@ strong {
    RESPONSIVIDADE
    ============================================================ */
 @media (max-width: 1024px) {
-    .services-grid {
-        grid-template-columns: repeat(3, minmax(var(--card-min-width), var(--card-max-width)));
-        justify-content: center;
-    }
-
     .contact-grid {
         grid-template-columns: 1fr;
         gap: 32px;
@@ -2489,12 +2488,6 @@ strong {
 
     .btn {
         width: 100%;
-    }
-
-    .services-grid {
-        grid-template-columns: repeat(2, minmax(var(--card-min-width), var(--card-max-width)));
-        justify-content: center;
-        gap: 16px;
     }
 
     .recovery-cards {
@@ -2616,7 +2609,6 @@ strong {
 
 @media (max-width: 520px) {
     .services-grid {
-        grid-template-columns: 1fr;
         max-width: 400px;
         margin: 0 auto;
     }

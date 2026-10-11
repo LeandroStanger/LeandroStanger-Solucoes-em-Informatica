@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let tipoSelecionado = 'standard';
     let soSelecionado = 'windows';
     let geradorConfigurado = false;
+    let servicosExpandidos = false;
 
     // IDs dos pacotes de jogos que NUNCA devem aparecer na seção de formatação
     const IDS_PACOTES_JOGOS = [72, 73, 74];
@@ -689,30 +690,44 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ============================================================
-    // 11. PAGINAÇÃO (restaurada - 12 cards por vez)
+    // 11. PAGINAÇÃO (duas linhas, limitada a 14 cards)
     // ============================================================
+    function calcularCardsPorLinha(grid) {
+        const estilo = window.getComputedStyle(grid);
+        const larguraMinima = parseFloat(
+            window.getComputedStyle(document.documentElement).getPropertyValue('--card-min-width')
+        ) || 240;
+        const espacamento = parseFloat(estilo.columnGap) || 0;
+        return Math.max(1, Math.floor((grid.clientWidth + espacamento) / (larguraMinima + espacamento)));
+    }
+
     function aplicarPaginacao() {
         const grid = document.getElementById('servicesGrid');
         if (!grid) return;
 
         const cards = grid.querySelectorAll('.service-card');
-        const cardsVisiveis = [];
-        cards.forEach(function(card) {
-            if (card.style.display !== 'none') {
-                cardsVisiveis.push(card);
-            }
+        const cardsVisiveis = Array.from(cards).filter(function(card) {
+            return card.dataset.filteredVisible !== 'false';
         });
+        const limiteAtual = servicosExpandidos
+            ? cardsVisiveis.length
+            : Math.min(14, calcularCardsPorLinha(grid) * 2);
 
         const btnContainer = document.getElementById('btnVerTodosContainer');
         if (btnContainer) {
             btnContainer.remove();
         }
 
-        if (cardsVisiveis.length > 12) {
-            for (let i = 12; i < cardsVisiveis.length; i++) {
-                cardsVisiveis[i].style.display = 'none';
+        cardsVisiveis.forEach(function(card, index) {
+            card.style.display = index < limiteAtual ? 'flex' : 'none';
+        });
+        cards.forEach(function(card) {
+            if (card.dataset.filteredVisible === 'false') {
+                card.style.display = 'none';
             }
+        });
 
+        if (cardsVisiveis.length > limiteAtual) {
             const container = document.createElement('div');
             container.id = 'btnVerTodosContainer';
             container.style.textAlign = 'center';
@@ -720,20 +735,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
             const btn = document.createElement('button');
             btn.className = 'btn btn--primary';
-            btn.textContent = 'Ver todos os ' + cardsVisiveis.length + ' serviços';
+            btn.textContent = 'Ver mais ' + (cardsVisiveis.length - limiteAtual) + ' serviços';
             btn.addEventListener('click', function() {
-                cardsVisiveis.forEach(function(card) {
-                    card.style.display = 'flex';
-                });
-                container.remove();
+                servicosExpandidos = true;
+                aplicarPaginacao();
             });
 
             container.appendChild(btn);
             grid.parentNode.insertBefore(container, grid.nextSibling);
-        } else {
-            cardsVisiveis.forEach(function(card) {
-                card.style.display = 'flex';
-            });
         }
     }
 
@@ -747,6 +756,12 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!servicesGrid) return;
 
         const categoriasFormatacao = ['formatacao', 'pro', 'educacional', 'enterprise', 'premium'];
+        let redimensionamentoPaginacao;
+
+        window.addEventListener('resize', function() {
+            window.clearTimeout(redimensionamentoPaginacao);
+            redimensionamentoPaginacao = window.setTimeout(aplicarPaginacao, 120);
+        });
 
         function filterServices(category) {
             const cards = servicesGrid.querySelectorAll('.service-card');
@@ -768,8 +783,10 @@ document.addEventListener('DOMContentLoaded', function() {
                         mostrar = true;
                     }
                 }
+                card.dataset.filteredVisible = mostrar ? 'true' : 'false';
                 card.style.display = mostrar ? 'flex' : 'none';
             });
+            servicosExpandidos = false;
             aplicarPaginacao();
         }
 
