@@ -1156,7 +1156,10 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     function selecionarAbaFormatacaoPeloHash() {
-        const target = document.getElementById(window.location.hash.slice(1));
+        const hash = window.location.hash.slice(1);
+        if (!hash) return;
+
+        const target = document.getElementById(hash);
         if (target && target.matches('#tipoFormatacaoTabs .filter-tab')) {
             target.click();
         }
