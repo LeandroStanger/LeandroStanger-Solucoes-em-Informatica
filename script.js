@@ -832,7 +832,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ============================================================
-    // 11. PAGINAÇÃO (duas linhas, limitada a 14 cards)
+    // 11. PAGINAÇÃO (duas linhas por largura disponível)
     // ============================================================
     function calcularCardsPorLinha(grid) {
         const estilo = window.getComputedStyle(grid);
@@ -853,7 +853,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         const limiteAtual = servicosExpandidos
             ? cardsVisiveis.length
-            : Math.min(14, calcularCardsPorLinha(grid) * 2);
+            : calcularCardsPorLinha(grid) * 2;
 
         const btnContainer = document.getElementById('btnVerTodosContainer');
         if (btnContainer) {
