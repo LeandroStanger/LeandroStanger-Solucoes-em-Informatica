@@ -215,6 +215,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     logo.src = cliente.logo;
                     logo.alt = cliente.nome;
                     logo.className = 'clients__logo';
+                    logo.loading = 'lazy';
+                    logo.decoding = 'async';
                     logoWrap.appendChild(logo);
 
                     const name = document.createElement('span');
@@ -315,7 +317,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // 4. CARREGAR SERVIÇOS DO JSON
     // ============================================================
     function carregarServicos() {
-        return fetch('servicos.json')
+        return fetch('servicos/servicos.json')
             .then(function(response) {
                 if (!response.ok) throw new Error('Erro ao carregar JSON (status ' + response.status + ')');
                 return response.json();
@@ -3452,6 +3454,34 @@ document.addEventListener('DOMContentLoaded', function() {
         // ============================================================
         // FUNÇÃO PARA GERAR PDF (COM FORMATAÇÃO APRIMORADA PARA CRIPTO)
         // ============================================================
+        let bibliotecasPdfPromise;
+
+        function carregarScript(src) {
+            return new Promise(function(resolve, reject) {
+                const script = document.createElement('script');
+                script.src = src;
+                script.onload = resolve;
+                script.onerror = function() {
+                    reject(new Error('Não foi possível carregar a biblioteca de PDF.'));
+                };
+                document.head.appendChild(script);
+            });
+        }
+
+        function carregarBibliotecasPdf() {
+            if (!bibliotecasPdfPromise) {
+                bibliotecasPdfPromise = carregarScript('https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js')
+                    .then(function() {
+                        return carregarScript('https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js');
+                    })
+                    .catch(function(error) {
+                        bibliotecasPdfPromise = null;
+                        throw error;
+                    });
+            }
+            return bibliotecasPdfPromise;
+        }
+
         function gerarPDF(dados) {
             try {
                 if (typeof window.jspdf === 'undefined' && typeof jspdf === 'undefined') {
@@ -4187,6 +4217,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 pdfBtn.addEventListener('click', function(event) {
                     event.preventDefault();
                     event.stopPropagation();
+                    const textoOriginal = pdfBtn.innerHTML;
+                    pdfBtn.disabled = true;
+                    pdfBtn.textContent = 'Carregando PDF...';
                     const dadosPDF = {
                         tipo: nomeTipoExibicao[tipo] || tipo,
                         so: nomeSO[so] || so,
@@ -4222,7 +4255,18 @@ document.addEventListener('DOMContentLoaded', function() {
                         jogosTotal: totalJogos,
                         jogosNivel: jogosNivel
                     };
-                    gerarPDF(dadosPDF);
+                    carregarBibliotecasPdf()
+                        .then(function() {
+                            gerarPDF(dadosPDF);
+                        })
+                        .catch(function(error) {
+                            console.error('Erro ao carregar as bibliotecas de PDF:', error);
+                            alert(error.message);
+                        })
+                        .finally(function() {
+                            pdfBtn.disabled = false;
+                            pdfBtn.innerHTML = textoOriginal;
+                        });
                 });
             }
         });
