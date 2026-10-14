@@ -1,0 +1,52 @@
+[
+  {
+    "icon": "fa-solid fa-fan",
+    "title": "Limpeza interna a cada 6 meses",
+    "description": "A poeira acumulada pode superaquecer seu computador. Faça uma limpeza interna com ar comprimido e revise o cooler periodicamente."
+  },
+  {
+    "icon": "fa-solid fa-battery-three-quarters",
+    "title": "Não deixe o notebook sempre na tomada",
+    "description": "Manter o notebook sempre plugado pode reduzir a vida útil da bateria. Desconecte quando estiver com carga total para preservar o ciclo de recarga."
+  },
+  {
+    "icon": "fa-solid fa-trash",
+    "title": "Limpe arquivos temporários",
+    "description": "Exclua arquivos temporários, cache e programas pouco usados para liberar espaço e melhorar o desempenho do sistema."
+  },
+  {
+    "icon": "fa-solid fa-shield-halved",
+    "title": "Mantenha o antivírus atualizado",
+    "description": "Um antivírus desatualizado não protege contra as ameaças mais recentes. Ative as atualizações automáticas e faça varreduras regulares."
+  },
+  {
+    "icon": "fa-solid fa-hard-drive",
+    "title": "Cuide do armazenamento",
+    "description": "Deixe pelo menos 15% a 20% do disco livre para manter a velocidade de leitura e escrita e evitar lentidão do sistema."
+  },
+  {
+    "icon": "fa-solid fa-download",
+    "title": "Atualize drivers e Windows",
+    "description": "Drivers desatualizados podem causar travamentos e falhas em dispositivos como placa de vídeo, rede e som. Mantenha tudo atualizado."
+  },
+  {
+    "icon": "fa-solid fa-cloud-arrow-up",
+    "title": "Faça backup com frequência",
+    "description": "O melhor momento para fazer backup é antes que aconteça uma falha. Armazene fotos, documentos e arquivos importantes em HD externo ou nuvem."
+  },
+  {
+    "icon": "fa-solid fa-bolt",
+    "title": "Proteja contra quedas de energia",
+    "description": "Use estabilizador ou nobreak para evitar danos em placas-mãe, SSD e processadores quando a energia da rede oscila."
+  },
+  {
+    "icon": "fa-solid fa-rocket",
+    "title": "Evite programas desnecessários",
+    "description": "Aplicativos que iniciam junto com o Windows podem consumir memória e deixar o computador pesado. Revise o auto-início periodicamente."
+  },
+  {
+    "icon": "fa-solid fa-compact-disc",
+    "title": "Desfragmente somente HDs mecânicos",
+    "description": "Se o seu equipamento usa HDD, a desfragmentação ajuda na organização dos arquivos. Para SSD, a desfragmentação não é recomendada."
+  }
+]

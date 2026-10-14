@@ -579,12 +579,8 @@
             SEÇÃO DE DICAS CARREGADA VIA HTMX
             ============================================================ -->
             <div style="margin-top: 40px; text-align: center;">
-                <button id="carregarDicasBtn" class="btn btn--outline" 
-                        hx-get="servicos/dicas.html"
-                        hx-target="#dicasContainer" 
-                        hx-swap="innerHTML"
-                        hx-trigger="click"
-                        onclick="if (location.protocol === 'file:') carregarDicasFallback();"
+                <button id="carregarDicasBtn" class="btn btn--outline" type="button"
+                        onclick="carregarDicas()"
                         style="margin-bottom: 16px;">
                     <i class="fa-solid fa-lightbulb"></i> Ver dicas de manutenção
                 </button>
@@ -931,21 +927,36 @@
         });
 
         // ============================================================
-        // TRATAMENTO DA RESPOSTA DO FORMSPREE VIA HTMX
-        // O Formspree retorna JSON, então convertemos para HTML
+        // CARREGAMENTO DAS DICAS EM FORMATO JSON
         // ============================================================
-        window.carregarDicasFallback = async function () {
+        window.carregarDicas = async function () {
             const container = document.getElementById('dicasContainer');
             const button = document.getElementById('carregarDicasBtn');
 
             if (!container) return;
 
             try {
-                const response = await fetch('servicos/dicas.html', { cache: 'no-store' });
+                const response = await fetch('servicos/dicas.json', { cache: 'no-store' });
                 if (!response.ok) throw new Error('Falha ao carregar dicas');
 
-                const html = await response.text();
-                container.innerHTML = html;
+                const dicas = await response.json();
+                const cards = Array.isArray(dicas) ? dicas : [];
+
+                if (!cards.length) {
+                    throw new Error('Nenhuma dica encontrada');
+                }
+
+                container.innerHTML = `
+                    <div class="dicas-grid">
+                        ${cards.map(dica => `
+                            <div class="dica-card">
+                                <div class="dica-card__icon"><i class="${dica.icon}"></i></div>
+                                <h4>${dica.title}</h4>
+                                <p>${dica.description}</p>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
 
                 if (button) {
                     button.innerHTML = '<i class="fa-solid fa-check"></i> Dicas carregadas';
@@ -957,7 +968,7 @@
                         <div class="dica-card">
                             <div class="dica-card__icon"><i class="fa-solid fa-circle-exclamation"></i></div>
                             <h4>Não foi possível carregar as dicas</h4>
-                            <p>Verifique se o arquivo servicos/dicas.html está presente na pasta do site e tente novamente.</p>
+                            <p>Verifique se o arquivo servicos/dicas.json está presente na pasta do site e tente novamente.</p>
                         </div>
                     </div>
                 `;
