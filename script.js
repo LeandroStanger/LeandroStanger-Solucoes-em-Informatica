@@ -837,25 +837,32 @@ document.addEventListener('DOMContentLoaded', function() {
     // 11. PAGINAÇÃO (duas linhas por largura disponível)
     // ============================================================
     function calcularCardsPorLinha(grid) {
+        const cards = grid.querySelectorAll('.service-card');
+        if (!cards.length) return 1;
+
         const estilo = window.getComputedStyle(grid);
-        const larguraMinima = parseFloat(
+        const gap = parseFloat(estilo.columnGap || estilo.gap || 0) || 0;
+        const cardWidth = cards[0].getBoundingClientRect().width || parseFloat(
             window.getComputedStyle(document.documentElement).getPropertyValue('--card-min-width')
         ) || 240;
-        const espacamento = parseFloat(estilo.columnGap) || 0;
-        return Math.max(1, Math.floor((grid.clientWidth + espacamento) / (larguraMinima + espacamento)));
+
+        const cardsPorLinha = Math.max(1, Math.floor((grid.clientWidth + gap) / (cardWidth + gap)));
+        grid.style.gridTemplateColumns = 'repeat(' + cardsPorLinha + ', minmax(0, 1fr))';
+        return cardsPorLinha;
     }
 
     function aplicarPaginacao() {
         const grid = document.getElementById('servicesGrid');
         if (!grid) return;
 
+        const cardsPorLinha = calcularCardsPorLinha(grid);
         const cards = grid.querySelectorAll('.service-card');
         const cardsVisiveis = Array.from(cards).filter(function(card) {
             return card.dataset.filteredVisible !== 'false';
         });
         const limiteAtual = servicosExpandidos
             ? cardsVisiveis.length
-            : calcularCardsPorLinha(grid) * 2;
+            : cardsPorLinha * 2;
 
         const btnContainer = document.getElementById('btnVerTodosContainer');
         if (btnContainer) {

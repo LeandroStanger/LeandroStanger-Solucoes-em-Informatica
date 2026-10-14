@@ -37,7 +37,7 @@
     --transition-slow: 0.45s cubic-bezier(0.22, 1, 0.36, 1);
     --max-width: 1200px;
     --header-height: 72px;
-    --card-min-width: 320px;
+    --card-min-width: 220px;
 }
 
 html {
@@ -520,16 +520,17 @@ strong {
 }
 
 .services-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(var(--card-min-width), 1fr));
+    gap: 20px;
     justify-content: center;
     align-items: stretch;
     width: 100%;
 }
 
 .services-grid .service-card {
-    flex: 0 1 var(--card-min-width);
+    width: 100%;
+    height: 100%;
 }
 
 .service-card {
@@ -625,13 +626,14 @@ strong {
     color: var(--color-text-secondary);
     flex-grow: 1;
     line-height: 1.6;
+    margin-bottom: 4px;
 }
 
 .service-card__price {
     font-size: 1.6rem;
     font-weight: 800;
     color: var(--color-primary-light);
-    margin-top: 4px;
+    margin-top: auto;
     letter-spacing: -0.02em;
 }
 
@@ -1128,6 +1130,13 @@ strong {
     border: 1px solid var(--color-border);
     border-radius: var(--radius-xl);
     padding: 36px 32px;
+    height: 100%;
+}
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 .contact-form h3 {
@@ -1171,7 +1180,11 @@ strong {
 
 .form-group textarea {
     resize: vertical;
-    min-height: 100px;
+    min-height: 266px;
+}
+
+.contact-form .btn--full {
+    margin-top: auto;
 }
 
 .form-success {
@@ -1264,6 +1277,7 @@ strong {
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 24px;
     margin-bottom: 32px;
+    align-items: stretch;
 }
 
 .cleaning .container {
@@ -1271,14 +1285,17 @@ strong {
 }
 
 .cleaning .recovery-cards {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+    align-items: stretch;
     justify-content: center;
 }
 
 .cleaning .recovery-card {
-    flex: 1 1 375px;
-    max-width: 500px;
+    width: 100%;
+    max-width: 100%;
+    min-height: 420px;
 }
 
 .recovery-card {
@@ -1292,6 +1309,8 @@ strong {
     flex-direction: column;
     gap: 20px;
     position: relative;
+    height: 100%;
+    min-height: 420px;
 }
 
 .recovery-card:hover {
