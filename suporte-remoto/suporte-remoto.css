@@ -245,6 +245,10 @@
     white-space: nowrap;
 }
 
+.remote-downloads__table tr > :nth-child(n + 2) {
+    text-align: center;
+}
+
 .remote-downloads__table thead th {
     color: var(--color-white);
     background: rgba(16, 185, 129, 0.08);
