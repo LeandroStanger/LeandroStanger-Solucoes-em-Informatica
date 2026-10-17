@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Suporte técnico remoto para computadores: ajuda com configurações, instalação de programas e problemas do dia a dia, sem sair de casa." />
+    <meta name="theme-color" content="#0a0e14" />
+    <title>Suporte Remoto — Leandro Stanger Soluções em Informática</title>
+
+    <link rel="icon" type="image/webp" href="../img/Logo.webp" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.0/css/all.css" />
+    <link rel="stylesheet" href="../style.css" />
+    <link rel="stylesheet" href="suporte-remoto.css" />
+</head>
+<body>
+    <header class="header" id="topo">
+        <nav class="nav" aria-label="Navegação principal">
+            <a href="../index.html#inicio" class="nav__logo" id="logoLink">
+                <img src="../img/Logo.webp" alt="Leandro Stanger Soluções em Informática" class="nav__logo-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+                <span class="nav__logo-fallback" style="display:none;">
+                    <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+                        <rect width="36" height="36" rx="8" fill="#10b981" />
+                        <text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" fill="#0d1117" font-weight="800" font-size="18" font-family="Inter,sans-serif">LS</text>
+                    </svg>
+                    <span class="nav__brand-text">Leandro Stanger</span>
+                </span>
+            </a>
+            <ul class="nav__links" id="navLinks">
+                <li><a href="../index.html#servicos" class="nav__link">Serviços</a></li>
+                <li><a href="../index.html#formatacao" class="nav__link">Formatação</a></li>
+                <li><a href="../index.html#recuperacao" class="nav__link">Recuperação</a></li>
+                <li><a href="../index.html#limpeza" class="nav__link">Limpeza</a></li>
+                <li><a href="../index.html#criacao-site" class="nav__link">Criação de Sites</a></li>
+                <li><a href="../index.html#clientes" class="nav__link">Clientes</a></li>
+                <li><a href="suporte-remoto.html" class="nav__link active-link" aria-current="page">Acesso remoto</a></li>
+                <li><a href="../index.html#contato" class="nav__link">Contato</a></li>
+                <li>
+                    <a href="https://wa.me/5548996446508?text=Ol%C3%A1!%20Gostaria%20de%20mais%20informa%C3%A7%C3%B5es%20sobre%20o%20servi%C3%A7o%20de%20Acesso%20Remoto." target="_blank" rel="noopener noreferrer" class="nav__cta-btn">
+                        <i class="fa-brands fa-whatsapp" aria-hidden="true"></i> WhatsApp
+                    </a>
+                </li>
+            </ul>
+            <button class="nav__mobile-toggle" id="mobileToggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="navLinks">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+
+    <main class="remote-page">
+        <div class="container">
+            <section class="remote-hero" aria-labelledby="remoteTitle">
+                <div class="remote-hero__content">
+                    <span class="remote-hero__tag"><i class="fa-solid fa-headset" aria-hidden="true"></i> Atendimento de onde você estiver</span>
+                    <h1 id="remoteTitle">Suporte técnico <span>remoto</span></h1>
+                    <p class="remote-hero__intro">
+                        Precisa de ajuda com o computador? Receba assistência à distância para resolver problemas,
+                        instalar programas e configurar o sistema, sem precisar sair de casa.
+                    </p>
+                    <div class="remote-hero__actions">
+                        <a href="https://wa.me/5548996446508?text=Ol%C3%A1!%20Gostaria%20de%20mais%20informa%C3%A7%C3%B5es%20sobre%20o%20servi%C3%A7o%20de%20Acesso%20Remoto." target="_blank" rel="noopener noreferrer" class="btn btn--whatsapp">
+                            <i class="fa-brands fa-whatsapp" aria-hidden="true"></i> Solicitar atendimento
+                        </a>
+                        <a href="../index.html#servicos" class="btn btn--outline">Ver todos os serviços</a>
+                    </div>
+                    <span class="remote-hero__price">Valor do serviço: <strong>R$ 25,00 por hora</strong></span>
+                </div>
+                <div class="remote-hero__image-wrap">
+                    <img src="../img/Suporte Remoto.webp" alt="Atendimento de suporte técnico remoto em um computador" class="remote-hero__image" fetchpriority="high" />
+                </div>
+            </section>
+
+            <section class="remote-details" aria-labelledby="remoteDetailsTitle">
+                <h2 id="remoteDetailsTitle">Como posso ajudar?</h2>
+                <p class="remote-details__intro">O suporte remoto é uma forma prática de receber assistência técnica para diversas necessidades do dia a dia.</p>
+                <div class="remote-details__grid">
+                    <article class="remote-detail">
+                        <i class="remote-detail__icon fa-solid fa-screwdriver-wrench" aria-hidden="true"></i>
+                        <h3>Resolução de problemas</h3>
+                        <p>Ajuda para identificar e resolver erros, dificuldades de uso e problemas comuns no computador.</p>
+                    </article>
+                    <article class="remote-detail">
+                        <i class="remote-detail__icon fa-solid fa-download" aria-hidden="true"></i>
+                        <h3>Instalação de programas</h3>
+                        <p>Instalação e configuração de softwares para deixar seu computador pronto para uso.</p>
+                    </article>
+                    <article class="remote-detail">
+                        <i class="remote-detail__icon fa-solid fa-sliders" aria-hidden="true"></i>
+                        <h3>Configurações do sistema</h3>
+                        <p>Orientação e ajustes em configurações para ajudar o computador a funcionar como você precisa.</p>
+                    </article>
+                </div>
+                <p class="remote-notice"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i> O acesso ao computador é feito somente com sua autorização durante o atendimento. É necessário ter conexão com a internet. Consulte a disponibilidade e confirme se o problema pode ser resolvido remotamente pelo WhatsApp.</p>
+            </section>
+
+            <section class="remote-software" aria-labelledby="remoteSoftwareTitle">
+                <div class="remote-software__intro">
+                    <span class="remote-hero__tag"><i class="fa-solid fa-laptop-code" aria-hidden="true"></i> Software de acesso remoto</span>
+                    <h2 id="remoteSoftwareTitle">Vamos usar o RustDesk</h2>
+                    <p>O RustDesk é o aplicativo usado para conectar seu dispositivo ao atendimento técnico com sua autorização. Ele possui versões para diferentes sistemas operacionais e arquiteturas.</p>
+                    <a class="remote-docs-link" href="https://rustdesk.com/docs/" target="_blank" rel="noopener noreferrer">
+                        <i class="fa-solid fa-book-open" aria-hidden="true"></i> Consultar a wiki e a documentação oficial do RustDesk
+                        <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+                    </a>
+                </div>
+
+                <div class="remote-install">
+                    <h3>Como iniciar o atendimento</h3>
+                    <ol>
+                        <li>Converse pelo WhatsApp para confirmar o atendimento.</li>
+                        <li>Baixe e abra a versão do RustDesk compatível com seu dispositivo.</li>
+                        <li>Informe ao técnico o ID exibido no aplicativo e autorize a conexão quando solicitado.</li>
+                        <li>Ao terminar, encerre a sessão no RustDesk. Não compartilhe seu ID ou senha com pessoas desconhecidas.</li>
+                    </ol>
+                    <p class="remote-install__note"><i class="fa-solid fa-lock" aria-hidden="true"></i> A conexão só deve ser autorizada durante o atendimento combinado. Não é necessário configurar acesso permanente.</p>
+                </div>
+
+                <div class="remote-downloads">
+                    <h3>Downloads do RustDesk 1.5.0</h3>
+                    <p class="remote-downloads__intro">Escolha o arquivo correspondente ao sistema e à arquitetura do seu dispositivo. Se tiver dúvida, peça ajuda antes de instalar.</p>
+                    <div class="remote-downloads__scroll" role="region" aria-label="Downloads do RustDesk por sistema operacional e arquitetura" tabindex="0">
+                        <table class="remote-downloads__table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Arquitetura</th>
+                                    <th scope="col">Windows</th>
+                                    <th scope="col">Ubuntu</th>
+                                    <th scope="col">Mac</th>
+                                    <th scope="col">Android</th>
+                                    <th scope="col">Flatpak</th>
+                                    <th scope="col">iOS</th>
+                                    <th scope="col">Web</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">x86-64 (64-bit)</th>
+                                    <td><a href="https://github.com/rustdesk/rustdesk/releases/download/1.5.0/rustdesk-1.5.0-x86_64.exe">EXE</a><a href="https://github.com/rustdesk/rustdesk/releases/download/1.5.0/rustdesk-1.5.0-x86_64.msi">MSI</a></td>
+                                    <td><a href="https://github.com/rustdesk/rustdesk/releases/download/1.5.0/rustdesk-1.5.0-x86_64.deb">Download</a></td>
+                                    <td><a href="https://github.com/rustdesk/rustdesk/releases/download/1.5.0/rustdesk-1.5.0-x86_64.dmg">Download</a></td>
+                                    <td><a href="https://github.com/rustdesk/rustdesk/releases/download/1.5.0/rustdesk-1.5.0-universal-signed.apk">Universal</a></td>
+                                    <td><a href="https://github.com/rustdesk/rustdesk/releases/download/1.5.0/rustdesk-1.5.0-x86_64.flatpak">Download</a></td>
+                                    <td><span aria-label="Não disponível">—</span></td>
+                                    <td><a href="https://rustdesk.com/web" target="_blank" rel="noopener noreferrer">Acessar</a></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">AArch64 (ARM64)</th>
+                                    <td><a href="https://github.com/rustdesk/rustdesk/releases/download/1.5.0/rustdesk-1.5.0-aarch64.exe">EXE</a><a href="https://github.com/rustdesk/rustdesk/releases/download/1.5.0/rustdesk-1.5.0-aarch64.msi">MSI</a></td>
+                                    <td><a href="https://github.com/rustdesk/rustdesk/releases/download/1.5.0/rustdesk-1.5.0-aarch64.deb">Download</a></td>
+                                    <td><a href="https://github.com/rustdesk/rustdesk/releases/download/1.5.0/rustdesk-1.5.0-aarch64.dmg">Download</a></td>
+                                    <td><a href="https://github.com/rustdesk/rustdesk/releases/download/1.5.0/rustdesk-1.5.0-aarch64-signed.apk">Download</a></td>
+                                    <td><a href="https://github.com/rustdesk/rustdesk/releases/download/1.5.0/rustdesk-1.5.0-aarch64.flatpak">Download</a></td>
+                                    <td><a href="https://apps.apple.com/us/app/rustdesk-remote-desktop/id1581225015" target="_blank" rel="noopener noreferrer">App Store</a></td>
+                                    <td><span aria-label="Não disponível">—</span></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">ARMv7 (32-bit)</th>
+                                    <td><span aria-label="Não disponível">—</span></td>
+                                    <td><a href="https://github.com/rustdesk/rustdesk/releases/download/1.5.0/rustdesk-1.5.0-armv7-sciter.deb">Download</a></td>
+                                    <td><span aria-label="Não disponível">—</span></td>
+                                    <td><a href="https://github.com/rustdesk/rustdesk/releases/download/1.5.0/rustdesk-1.5.0-armv7-signed.apk">Download</a></td>
+                                    <td><span aria-label="Não disponível">—</span></td>
+                                    <td><span aria-label="Não disponível">—</span></td>
+                                    <td><span aria-label="Não disponível">—</span></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">x86-32 (32-bit)</th>
+                                    <td><a href="https://github.com/rustdesk/rustdesk/releases/download/1.5.0/rustdesk-1.5.0-x86-sciter.exe">EXE (Legacy)</a></td>
+                                    <td><span aria-label="Não disponível">—</span></td>
+                                    <td><span aria-label="Não disponível">—</span></td>
+                                    <td><span aria-label="Não disponível">—</span></td>
+                                    <td><span aria-label="Não disponível">—</span></td>
+                                    <td><span aria-label="Não disponível">—</span></td>
+                                    <td><span aria-label="Não disponível">—</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="remote-linux-downloads">
+                        <h4>Outras distribuições Linux (x86-64)</h4>
+                        <ul>
+                            <li><a href="https://github.com/rustdesk/rustdesk/releases/download/1.5.0/rustdesk-1.5.0-0.x86_64.rpm">Fedora (RPM)</a></li>
+                            <li><a href="https://github.com/rustdesk/rustdesk/releases/download/1.5.0/rustdesk-1.5.0-0-x86_64.pkg.tar.zst">Arch Linux (PKG.TAR.ZST)</a></li>
+                            <li><a href="https://github.com/rustdesk/rustdesk/releases/download/1.5.0/rustdesk-1.5.0-0.x86_64-suse.rpm">SUSE (RPM)</a></li>
+                            <li><a href="https://github.com/rustdesk/rustdesk/releases/download/1.5.0/rustdesk-1.5.0-x86_64.AppImage">AppImage</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+    <script src="suporte-remoto.js"></script>
+</body>
+</html>

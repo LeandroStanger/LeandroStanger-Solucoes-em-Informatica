@@ -681,6 +681,8 @@ strong {
     margin-top: 12px;
     width: 100%;
     justify-content: center;
+    white-space: normal;
+    text-align: center;
     border: 2px solid var(--color-primary);
     color: var(--color-primary-light);
     background-color: transparent;
@@ -2702,11 +2704,7 @@ strong {
     }
 }
 
-@media (max-width: 768px) {
-    :root {
-        --header-height: 64px;
-    }
-
+@media (max-width: 1024px) {
     .nav__links {
         position: fixed;
         top: 0;
@@ -2731,6 +2729,12 @@ strong {
 
     .nav__mobile-toggle {
         display: flex;
+    }
+}
+
+@media (max-width: 768px) {
+    :root {
+        --header-height: 64px;
     }
 
     .hero {
