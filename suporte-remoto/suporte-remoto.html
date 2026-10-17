@@ -67,7 +67,35 @@
                         </a>
                         <a href="../index.html#servicos" class="btn btn--outline">Ver todos os serviços</a>
                     </div>
-                    <span class="remote-hero__price">Valor do serviço: <strong>R$ 25,00 por hora</strong></span>
+                    <div class="remote-payment" id="remotePayment" data-price="25">
+                        <div class="remote-payment__methods" role="group" aria-label="Forma de pagamento">
+                            <button class="remote-payment__method is-active" type="button" data-payment="cash" aria-pressed="true">À vista</button>
+                            <button class="remote-payment__method" type="button" data-payment="installment" aria-pressed="false">Parcelado</button>
+                            <button class="remote-payment__method" type="button" data-payment="bitcoin" aria-pressed="false"><i class="fa-brands fa-bitcoin" aria-hidden="true"></i> BTC</button>
+                            <button class="remote-payment__method" type="button" data-payment="ethereum" aria-pressed="false"><i class="fa-brands fa-ethereum" aria-hidden="true"></i> ETH</button>
+                        </div>
+                        <div class="remote-payment__installments" hidden>
+                            <label for="remoteInstallmentCount">Número de parcelas</label>
+                            <select id="remoteInstallmentCount" class="installment-select">
+                                <option value="2">2x</option>
+                                <option value="3">3x</option>
+                                <option value="4">4x</option>
+                                <option value="5">5x</option>
+                                <option value="6">6x</option>
+                                <option value="7">7x</option>
+                                <option value="8">8x</option>
+                                <option value="9">9x</option>
+                                <option value="10">10x</option>
+                                <option value="11">11x</option>
+                                <option value="12">12x</option>
+                            </select>
+                            <small class="remote-payment__rate-note">Simulação estimada: de 2,00% a 3,00% ao mês, conforme o prazo. Não representa a tarifa de uma operadora específica.</small>
+                        </div>
+                        <div class="remote-payment__display" aria-live="polite">
+                            <strong class="remote-payment__total">Valor do serviço: R$ 25,00</strong>
+                            <span class="remote-payment__detail">À vista por hora</span>
+                        </div>
+                    </div>
                 </div>
                 <div class="remote-hero__image-wrap">
                     <img src="../img/Suporte Remoto.webp" alt="Atendimento de suporte técnico remoto em um computador" class="remote-hero__image" fetchpriority="high" />
@@ -194,6 +222,47 @@
             </section>
         </div>
     </main>
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__grid">
+                <div class="footer__brand">
+                    <img src="../img/Logo.webp" alt="Leandro Stanger Soluções em Informática" class="footer__logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+                    <span class="footer__logo-fallback" style="display:none;">
+                        <svg width="32" height="32" viewBox="0 0 36 36" fill="none">
+                            <rect width="36" height="36" rx="8" fill="#10b981" />
+                            <text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" fill="#0d1117" font-weight="800" font-size="16" font-family="Inter,sans-serif">LS</text>
+                        </svg>
+                    </span>
+                    <p><strong>Leandro Stanger</strong><br />Soluções em Informática</p>
+                </div>
+                <div class="footer__links">
+                    <h4>Links Rápidos</h4>
+                    <ul>
+                        <li><a href="../index.html#servicos">Serviços</a></li>
+                        <li><a href="../index.html#formatacao">Formatação</a></li>
+                        <li><a href="../index.html#recuperacao">Recuperação</a></li>
+                        <li><a href="../index.html#limpeza">Limpeza</a></li>
+                        <li><a href="../index.html#criacao-site">Criação de Sites</a></li>
+                        <li><a href="../index.html#clientes">Clientes</a></li>
+                        <li><a href="suporte-remoto.html" aria-current="page">Acesso remoto</a></li>
+                        <li><a href="../index.html#contato">Contato</a></li>
+                    </ul>
+                </div>
+                <div class="footer__contact">
+                    <h4>Contato</h4>
+                    <ul>
+                        <li><a href="https://wa.me/5548996446508" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> +55 (48) 99644-6508</a></li>
+                        <li>Rua Francisco Ronchi, Nº 280</li>
+                        <li>Caravaggio, Nova Veneza - SC</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer__bottom">
+                <p>&copy; 2026 Leandro Stanger Soluções em Informática. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+    <script src="../servicos/parcelamento.js"></script>
     <script src="suporte-remoto.js"></script>
 </body>
 </html>

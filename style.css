@@ -1473,6 +1473,14 @@ strong {
     border-color: var(--color-primary);
 }
 
+.installment-rate-note {
+    flex-basis: 100%;
+    color: var(--color-text-muted);
+    font-size: 0.7rem;
+    line-height: 1.4;
+    text-align: center;
+}
+
 .payment-display {
     display: flex;
     flex-direction: column;

@@ -3,6 +3,7 @@
  * script.js — Versão 36.56 (PDF com formatação aprimorada para criptomoedas)
  */
 document.addEventListener('DOMContentLoaded', function() {
+    atualizarOpcoesParcelamento(document);
 
     // ============================================================
     // 1. VARIÁVEIS GLOBAIS
@@ -15,9 +16,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // IDs dos pacotes de jogos que NUNCA devem aparecer na seção de formatação
     const IDS_PACOTES_JOGOS = [72, 73, 74];
-
-    // Taxa de juros mensal para parcelamento (2.5% ao mês)
-    const TAXA_JUROS_MENSAL = 0.025;
 
     // Cache das cotações (BTC e ETH)
     let cotacaoBitcoinCache = null;
@@ -617,6 +615,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             <option value="11">11x</option>
                             <option value="12">12x</option>
                         </select>
+                        <small class="installment-rate-note">Simulação estimada: de 2,00% a 3,00% ao mês, conforme o prazo. Não representa a tarifa de uma operadora específica.</small>
                     </div>
                     <div class="payment-display">
                         <span class="payment-total">${formatarMoeda(precoBase)}</span>
@@ -645,6 +644,7 @@ document.addEventListener('DOMContentLoaded', function() {
             '</a>' +
             '</div>';
 
+        atualizarOpcoesParcelamento(card);
         configurarPagamentoCard(card, precoBase, titulo, servico);
         configurarBotaoContratar(card, titulo, servico);
 
@@ -654,30 +654,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // ============================================================
     // 10. FUNÇÕES DE PARCELAMENTO E PAGAMENTO (COM BTC E ETH NOS CARDS)
     // ============================================================
-    function calcularParcelamento(valorTotal, numParcelas, taxaJuros) {
-        if (numParcelas === 1) {
-            return {
-                valorParcela: valorTotal,
-                valorTotalParcelado: valorTotal,
-                jurosTotal: 0
-            };
-        }
-
-        const i = taxaJuros || TAXA_JUROS_MENSAL;
-        const n = numParcelas;
-        const fator = Math.pow(1 + i, n);
-        const valorParcela = valorTotal * (i * fator) / (fator - 1);
-        const valorParcelaArredondado = Math.round(valorParcela * 100) / 100;
-        const valorTotalParcelado = Math.round(valorParcelaArredondado * n * 100) / 100;
-        const jurosTotal = Math.round((valorTotalParcelado - valorTotal) * 100) / 100;
-
-        return {
-            valorParcela: valorParcelaArredondado,
-            valorTotalParcelado: valorTotalParcelado,
-            jurosTotal: jurosTotal
-        };
-    }
-
     function formatarMoeda(valor) {
         return 'R$ ' + valor.toFixed(2).replace('.', ',');
     }
@@ -709,7 +685,9 @@ document.addEventListener('DOMContentLoaded', function() {
             const numParcelas = parseInt(installmentSelect.value);
             const resultado = calcularParcelamento(precoBase, numParcelas);
             valorTotal = resultado.valorTotalParcelado;
-            detailText = numParcelas + 'x de ' + formatarMoeda(resultado.valorParcela) + ' (juros: ' + formatarMoeda(resultado.jurosTotal) + ')';
+            detailText = numParcelas + 'x de ' + formatarMoeda(resultado.valorParcela) +
+                ' (juros: ' + formatarMoeda(resultado.jurosTotal) + ' | taxa estimada: ' +
+                formatarTaxaJurosMensal(resultado.taxaJurosMensal) + ' ao mês)';
         } else if (isBitcoin) {
             const valorBTC = parseFloat(card.dataset.bitcoinValue) || 0;
             if (valorBTC > 0) {
@@ -3608,7 +3586,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (dados.isInstallment) {
                     formaPagamento = 'Parcelado em ' + dados.numParcelas + 'x';
                     detalheFinal = 'Parcela: R$ ' + dados.valorParcela.toFixed(2).replace('.', ',') +
-                        ' | Juros: R$ ' + dados.jurosTotal.toFixed(2).replace('.', ',');
+                        ' | Juros: R$ ' + dados.jurosTotal.toFixed(2).replace('.', ',') +
+                        ' | Taxa estimada: ' + formatarTaxaJurosMensal(dados.taxaJurosMensal) + ' ao mês';
                 } else if (dados.isBitcoin) {
                     formaPagamento = 'Bitcoin (BTC)';
                     const valorBTC = typeof dados.valorBTC === 'number' ? dados.valorBTC.toFixed(8) : '0,00000000';
@@ -3982,7 +3961,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 numParcelas = numParcelasSelecionadas || 2;
                 resultadoParcelamento = calcularParcelamento(totalComDesconto, numParcelas);
                 valorFinal = resultadoParcelamento.valorTotalParcelado;
-                detalhePagamento = numParcelas + 'x de ' + formatarMoeda(resultadoParcelamento.valorParcela) + ' (juros: ' + formatarMoeda(resultadoParcelamento.jurosTotal) + ')';
+                detalhePagamento = numParcelas + 'x de ' + formatarMoeda(resultadoParcelamento.valorParcela) +
+                    ' (juros: ' + formatarMoeda(resultadoParcelamento.jurosTotal) + ' | taxa estimada: ' +
+                    formatarTaxaJurosMensal(resultadoParcelamento.taxaJurosMensal) + ' ao mês)';
             } else if (isBitcoin) {
                 try {
                     cotacaoBTC = await obterCotacaoBitcoin();
@@ -4247,6 +4228,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         numParcelas: isInstallment ? numParcelas : null,
                         valorParcela: isInstallment ? resultadoParcelamento.valorParcela : null,
                         jurosTotal: isInstallment ? resultadoParcelamento.jurosTotal : null,
+                        taxaJurosMensal: isInstallment ? resultadoParcelamento.taxaJurosMensal : null,
                         valorBTC: isBitcoin ? valorBTC : null,
                         cotacaoBTC: isBitcoin ? cotacaoBTCUsada : null,
                         valorETH: isEthereum ? valorETH : null,
