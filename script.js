@@ -1281,7 +1281,8 @@ document.addEventListener('DOMContentLoaded', function() {
             'office': 139.90,
             'libreoffice': 0.00,
             'wps': 0.00,
-            'onlyoffice': 0.00
+            'onlyoffice': 0.00,
+            'craft-office': 0.00
         };
 
         const brindeJogosMap = {
@@ -2846,6 +2847,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 { value: 'libreoffice', label: 'LibreOffice (Gratuito)' },
                 { value: 'wps', label: 'WPS Office (Gratuito)' },
                 { value: 'onlyoffice', label: 'OnlyOffice (Gratuito)' },
+                { value: 'craft-office', label: 'WordCraft, GridCraft e DeckCraft (Gratuito)' },
                 { value: 'office', label: 'Pacote Office com Licença – R$ 139,90' }
             ];
 
@@ -3020,6 +3022,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 'libreoffice': 'LibreOffice (Gratuito)',
                 'wps': 'WPS Office (Gratuito)',
                 'onlyoffice': 'OnlyOffice (Gratuito)',
+                'craft-office': 'WordCraft, GridCraft e DeckCraft (Gratuito)',
                 'office': 'Pacote Office com Licença'
             };
 
@@ -3876,6 +3879,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     'libreoffice': 'LibreOffice (Gratuito)',
                     'wps': 'WPS Office (Gratuito)',
                     'onlyoffice': 'OnlyOffice (Gratuito)',
+                    'craft-office': 'WordCraft, GridCraft e DeckCraft (Gratuito)',
                     'office': 'Pacote Office com Licença'
                 };
                 officeNome = nomesOfficeMap[selectedOffice] || 'Pacote Office';
