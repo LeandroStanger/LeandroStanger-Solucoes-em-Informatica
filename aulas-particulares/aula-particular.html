@@ -105,65 +105,17 @@
             </section>
 
             <section class="lessons-topics" id="conteudo" aria-labelledby="topicsTitle">
-                <span class="lessons-tag"><i class="fa-solid fa-laptop" aria-hidden="true"></i> Instrução básica por hora</span>
-                <h2 id="topicsTitle">O que você vai aprender</h2>
-                <p class="lessons-topics__intro">Conteúdo prático para você ganhar confiança e autonomia no uso da tecnologia.</p>
-                <div class="lessons-topic-grid">
-                    <article class="lessons-topic">
-                        <i class="fa-brands fa-windows" aria-hidden="true"></i>
-                        <h3>Sistema operacional</h3>
-                        <p>Aprenda a usar o Windows ou Linux, organizar arquivos e ajustar as configurações do computador.</p>
-                    </article>
-                    <article class="lessons-topic">
-                        <i class="fa-solid fa-globe" aria-hidden="true"></i>
-                        <h3>Navegação na internet</h3>
-                        <p>Use o navegador, faça pesquisas, acesse sites e conheça cuidados importantes ao navegar.</p>
-                    </article>
-                    <article class="lessons-topic">
-                        <i class="fa-solid fa-envelope" aria-hidden="true"></i>
-                        <h3>E-mail</h3>
-                        <p>Aprenda a enviar e responder mensagens, organizar a caixa de entrada e compartilhar anexos.</p>
-                    </article>
-                    <article class="lessons-topic">
-                        <i class="fa-solid fa-box-open" aria-hidden="true"></i>
-                        <h3>Programas essenciais</h3>
-                        <p>Conheça programas úteis para as tarefas do dia a dia e aprenda noções de instalação e atualização.</p>
-                    </article>
-                    <article class="lessons-topic">
-                        <i class="fa-solid fa-shield-halved" aria-hidden="true"></i>
-                        <h3>Segurança digital</h3>
-                        <p>Veja como criar senhas mais seguras, identificar mensagens suspeitas e proteger suas informações.</p>
-                    </article>
-                </div>
+                <div class="lessons-topic-grid" data-lessons-topics></div>
             </section>
 
             <section class="lessons-gallery" aria-labelledby="galleryTitle">
-                <div class="lessons-gallery__heading">
-                    <span class="lessons-tag"><i class="fa-solid fa-book-open" aria-hidden="true"></i> Conhecimento para o dia a dia</span>
-                    <h2 id="galleryTitle">Tecnologia com mais confiança</h2>
-                    <p>Orientação individual para tornar o computador e a internet mais simples de usar.</p>
-                </div>
-                <div class="lessons-gallery__grid">
-                    <figure class="lessons-gallery__item">
-                        <img src="../img/aula-particular/aulas-windows-linux.webp" alt="Aulas particulares de Windows e Linux" loading="lazy" />
-                        <figcaption>
-                            <span>Windows e Linux</span>
-                            <a href="https://wa.me/5548996446508?text=Ol%C3%A1!%20Gostaria%20de%20mais%20informa%C3%A7%C3%B5es%20sobre%20as%20aulas%20de%20Windows%20e%20Linux." target="_blank" rel="noopener noreferrer" class="btn btn--whatsapp btn--sm">
-                                <i class="fa-brands fa-whatsapp" aria-hidden="true"></i> Falar pelo WhatsApp
-                            </a>
-                        </figcaption>
-                    </figure>
-                    <figure class="lessons-gallery__item">
-                        <img src="../img/aula-particular/aulas-navegacao-internet.webp" alt="Aulas de navegação na internet" loading="lazy" />
-                        <figcaption>
-                            <span>Internet e recursos digitais</span>
-                            <a href="https://wa.me/5548996446508?text=Ol%C3%A1!%20Gostaria%20de%20mais%20informa%C3%A7%C3%B5es%20sobre%20as%20aulas%20de%20internet%20e%20recursos%20digitais." target="_blank" rel="noopener noreferrer" class="btn btn--whatsapp btn--sm">
-                                <i class="fa-brands fa-whatsapp" aria-hidden="true"></i> Falar pelo WhatsApp
-                            </a>
-                        </figcaption>
-                    </figure>
-                </div>
+                <div class="lessons-gallery__heading" data-lessons-gallery-heading></div>
+                <div class="lessons-gallery__grid" data-lessons-gallery></div>
             </section>
+
+            <p class="lessons-content-error" data-lessons-content-error role="alert" hidden>
+                Não foi possível carregar o conteúdo das aulas. Tente atualizar a página.
+            </p>
 
             <section class="lessons-cta" aria-labelledby="lessonsCtaTitle">
                 <div>
@@ -221,5 +173,6 @@
 
     <script src="../servicos/parcelamento.js"></script>
     <script src="../suporte-remoto/suporte-remoto.js"></script>
+    <script src="aula-particular.js"></script>
 </body>
 </html>

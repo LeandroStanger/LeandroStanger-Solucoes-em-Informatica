@@ -1,0 +1,110 @@
+{
+  "introducao": {
+    "icone": "fa-solid fa-laptop",
+    "etiqueta": "Instrução básica por hora",
+    "titulo": "O que você vai aprender",
+    "descricao": "Conteúdo prático para você ganhar confiança e autonomia no uso da tecnologia.",
+    "cards": [
+      {
+        "icone": "fa-brands fa-windows",
+        "titulo": "Sistema operacional",
+        "descricao": "Aprenda a usar o Windows ou Linux, organizar arquivos e ajustar as configurações do computador."
+      },
+      {
+        "icone": "fa-solid fa-globe",
+        "titulo": "Navegação na internet",
+        "descricao": "Use o navegador, faça pesquisas, acesse sites e conheça cuidados importantes ao navegar."
+      },
+      {
+        "icone": "fa-solid fa-envelope",
+        "titulo": "E-mail",
+        "descricao": "Aprenda a enviar e responder mensagens, organizar a caixa de entrada e compartilhar anexos."
+      },
+      {
+        "icone": "fa-solid fa-box-open",
+        "titulo": "Programas essenciais",
+        "descricao": "Conheça programas úteis para as tarefas do dia a dia e aprenda noções de instalação e atualização."
+      },
+      {
+        "icone": "fa-solid fa-shield-halved",
+        "titulo": "Segurança digital",
+        "descricao": "Veja como criar senhas mais seguras, identificar mensagens suspeitas e proteger suas informações."
+      },
+      {
+        "icone": "fa-solid fa-calculator",
+        "titulo": "Matemática básica",
+        "descricao": "Revise operações básicas e aprenda a usar recursos digitais para resolver cálculos do dia a dia."
+      },
+      {
+        "icone": "fa-solid fa-keyboard",
+        "titulo": "Digitação",
+        "descricao": "Pratique a digitação para ganhar agilidade e precisão ao usar o computador."
+      },
+      {
+        "icone": "fa-solid fa-shield-halved",
+        "titulo": "Reconhecimento de golpes",
+        "descricao": "Aprenda a identificar mensagens, links e contatos suspeitos para se proteger de golpes digitais."
+      }
+    ]
+  },
+  "dia_a_dia": {
+    "icone": "fa-solid fa-book-open",
+    "etiqueta": "Conhecimento para o dia a dia",
+    "titulo": "Tecnologia com mais confiança",
+    "descricao": "Orientação individual para tornar o computador e a internet mais simples de usar.",
+    "cards": [
+      {
+        "imagem": "../img/aula-particular/aulas-windows-linux.webp",
+        "imagem_alt": "Aulas particulares de Windows e Linux",
+        "titulo": "Windows e Linux",
+        "mensagem_whatsapp": "Olá! Gostaria de mais informações sobre as aulas de Windows e Linux."
+      },
+      {
+        "imagem": "../img/aula-particular/aulas-navegacao-internet.webp",
+        "imagem_alt": "Aulas de navegação na internet",
+        "titulo": "Internet e recursos digitais",
+        "mensagem_whatsapp": "Olá! Gostaria de mais informações sobre as aulas de internet e recursos digitais."
+      },
+      {
+        "imagem": "../img/aula-particular/aulas-de-segurana-digital.webp",
+        "imagem_alt": "Aula de segurança digital",
+        "titulo": "Segurança digital",
+        "mensagem_whatsapp": "Olá! Gostaria de mais informações sobre as aulas de segurança digital."
+      },
+      {
+        "imagem": "../img/aula-particular/aulas-particulares-de-editores-de-documentos.webp",
+        "imagem_alt": "Aulas particulares de editores de documentos",
+        "titulo": "Editores de documentos",
+        "mensagem_whatsapp": "Olá! Gostaria de mais informações sobre as aulas de editores de documentos."
+      },
+      {
+        "imagem": "../img/aula-particular/aulas-de-matemtica-basica.webp",
+        "imagem_alt": "Aulas de matemática básica",
+        "titulo": "Matemática básica",
+        "mensagem_whatsapp": "Olá! Gostaria de mais informações sobre as aulas de matemática básica."
+      },
+      {
+        "imagem": "../img/aula-particular/aulas-de-digitao-com-alta-performance.webp",
+        "imagem_alt": "Aulas de digitação com alta performance",
+        "titulo": "Digitação com alta performance",
+        "mensagem_whatsapp": "Olá! Gostaria de mais informações sobre as aulas de digitação com alta performance."
+      },
+      {
+        "imagem": "../img/aula-particular/aulas-particulares-de-email.webp",
+        "imagem_alt": "Aulas particulares de e-mail",
+        "titulo": "E-mail",
+        "mensagem_whatsapp": "Olá! Gostaria de mais informações sobre as aulas de e-mail."
+      },
+      {
+        "imagem": "../img/aula-particular/aulas-de-reconhecimento-de-golpes.webp",
+        "imagem_alt": "Aulas de reconhecimento de golpes digitais",
+        "titulo": "Reconhecimento de golpes digitais",
+        "mensagem_whatsapp": "Olá! Gostaria de mais informações sobre as aulas de reconhecimento de golpes digitais."
+      }
+    ]
+  },
+  "whatsapp": {
+    "numero": "5548996446508",
+    "texto_botao": "Falar pelo WhatsApp"
+  }
+}

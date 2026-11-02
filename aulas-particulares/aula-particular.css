@@ -132,6 +132,12 @@
     line-height: 1.7;
 }
 
+.lessons-content-error {
+    margin-top: 24px;
+    color: #fca5a5;
+    text-align: center;
+}
+
 .lessons-gallery__heading {
     text-align: center;
 }
