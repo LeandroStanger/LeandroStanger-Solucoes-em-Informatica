@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Aulas particulares de informática com Leandro Stanger: aprenda a usar o computador, a internet, o e-mail e programas essenciais com segurança." />
+    <meta name="theme-color" content="#0a0e14" />
+    <title>Aula Particular — Leandro Stanger Soluções em Informática</title>
+
+    <link rel="icon" type="image/webp" href="../img/Logo.webp" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.0/css/all.css" />
+    <link rel="stylesheet" href="../style.css" />
+    <link rel="stylesheet" href="../suporte-remoto/suporte-remoto.css" />
+    <link rel="stylesheet" href="aula-particular.css" />
+</head>
+<body>
+    <header class="header" id="topo">
+        <nav class="nav" aria-label="Navegação principal">
+            <a href="../index.html#inicio" class="nav__logo" id="logoLink">
+                <img src="../img/Logo.webp" alt="Leandro Stanger Soluções em Informática" class="nav__logo-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+                <span class="nav__logo-fallback" style="display:none;">
+                    <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+                        <rect width="36" height="36" rx="8" fill="#10b981" />
+                        <text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" fill="#0d1117" font-weight="800" font-size="18" font-family="Inter,sans-serif">LS</text>
+                    </svg>
+                    <span class="nav__brand-text">Leandro Stanger</span>
+                </span>
+            </a>
+            <ul class="nav__links" id="navLinks">
+                <li><a href="../index.html#servicos" class="nav__link">Serviços</a></li>
+                <li><a href="../index.html#formatacao" class="nav__link">Formatação</a></li>
+                <li><a href="../index.html#recuperacao" class="nav__link">Recuperação</a></li>
+                <li><a href="../index.html#limpeza" class="nav__link">Limpeza</a></li>
+                <li><a href="../index.html#criacao-site" class="nav__link">Criação de Sites</a></li>
+                <li><a href="../index.html#clientes" class="nav__link">Clientes</a></li>
+                <li><a href="aula-particular.html" class="nav__link active-link" aria-current="page">Aulas particulares</a></li>
+                <li><a href="../suporte-remoto/suporte-remoto.html" class="nav__link">Acesso remoto</a></li>
+                <li><a href="../index.html#contato" class="nav__link">Contato</a></li>
+                <li>
+                    <a href="https://wa.me/5548996446508?text=Ol%C3%A1!%20Gostaria%20de%20saber%20mais%20sobre%20as%20aulas%20particulares." target="_blank" rel="noopener noreferrer" class="nav__cta-btn">
+                        <i class="fa-brands fa-whatsapp" aria-hidden="true"></i> WhatsApp
+                    </a>
+                </li>
+            </ul>
+            <button class="nav__mobile-toggle" id="mobileToggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="navLinks">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+
+    <main class="lessons-page">
+        <div class="container">
+            <section class="lessons-hero" aria-labelledby="lessonsTitle">
+                <div class="lessons-hero__content">
+                    <span class="lessons-tag"><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i> Aprenda no seu ritmo</span>
+                    <h1 id="lessonsTitle">Aula <span>Particular</span></h1>
+                    <p class="lessons-hero__intro">
+                        Aprenda a usar o computador e os recursos digitais do dia a dia com aulas individuais,
+                        explicações simples e acompanhamento de acordo com suas necessidades.
+                    </p>
+                    <div class="lessons-hero__actions">
+                        <a href="https://wa.me/5548996446508?text=Ol%C3%A1!%20Gostaria%20de%20saber%20mais%20sobre%20as%20aulas%20particulares." target="_blank" rel="noopener noreferrer" class="btn btn--whatsapp">
+                            <i class="fa-brands fa-whatsapp" aria-hidden="true"></i> Quero saber mais
+                        </a>
+                        <a href="#conteudo" class="btn btn--outline">Ver o que você pode aprender</a>
+                    </div>
+                    <div class="remote-payment" id="remotePayment" data-price="45">
+                        <div class="remote-payment__methods" role="group" aria-label="Forma de pagamento">
+                            <button class="remote-payment__method is-active" type="button" data-payment="cash" aria-pressed="true">À vista</button>
+                            <button class="remote-payment__method" type="button" data-payment="installment" aria-pressed="false">Parcelado</button>
+                            <button class="remote-payment__method" type="button" data-payment="bitcoin" aria-pressed="false"><i class="fa-brands fa-bitcoin" aria-hidden="true"></i> BTC</button>
+                            <button class="remote-payment__method" type="button" data-payment="ethereum" aria-pressed="false"><i class="fa-brands fa-ethereum" aria-hidden="true"></i> ETH</button>
+                        </div>
+                        <div class="remote-payment__installments" hidden>
+                            <label for="remoteInstallmentCount">Número de parcelas</label>
+                            <select id="remoteInstallmentCount" class="installment-select">
+                                <option value="2">2x</option>
+                                <option value="3">3x</option>
+                                <option value="4">4x</option>
+                                <option value="5">5x</option>
+                                <option value="6">6x</option>
+                                <option value="7">7x</option>
+                                <option value="8">8x</option>
+                                <option value="9">9x</option>
+                                <option value="10">10x</option>
+                                <option value="11">11x</option>
+                                <option value="12">12x</option>
+                            </select>
+                            <small class="remote-payment__rate-note">Simulação estimada: de 2,00% a 3,00% ao mês, conforme o prazo. Não representa a tarifa de uma operadora específica.</small>
+                        </div>
+                        <div class="remote-payment__display" aria-live="polite">
+                            <strong class="remote-payment__total">Valor do serviço: R$ 45,00</strong>
+                            <span class="remote-payment__detail">À vista por hora</span>
+                        </div>
+                    </div>
+                </div>
+                <figure class="lessons-hero__image-wrap">
+                    <img src="../img/aula-particular/aulas-particulares-leandro-stanger.webp" alt="Aulas particulares de informática com Leandro Stanger" class="lessons-hero__image" fetchpriority="high" />
+                </figure>
+            </section>
+
+            <section class="lessons-topics" id="conteudo" aria-labelledby="topicsTitle">
+                <span class="lessons-tag"><i class="fa-solid fa-laptop" aria-hidden="true"></i> Instrução básica por hora</span>
+                <h2 id="topicsTitle">O que você vai aprender</h2>
+                <p class="lessons-topics__intro">Conteúdo prático para você ganhar confiança e autonomia no uso da tecnologia.</p>
+                <div class="lessons-topic-grid">
+                    <article class="lessons-topic">
+                        <i class="fa-brands fa-windows" aria-hidden="true"></i>
+                        <h3>Sistema operacional</h3>
+                        <p>Aprenda a usar o Windows ou Linux, organizar arquivos e ajustar as configurações do computador.</p>
+                    </article>
+                    <article class="lessons-topic">
+                        <i class="fa-solid fa-globe" aria-hidden="true"></i>
+                        <h3>Navegação na internet</h3>
+                        <p>Use o navegador, faça pesquisas, acesse sites e conheça cuidados importantes ao navegar.</p>
+                    </article>
+                    <article class="lessons-topic">
+                        <i class="fa-solid fa-envelope" aria-hidden="true"></i>
+                        <h3>E-mail</h3>
+                        <p>Aprenda a enviar e responder mensagens, organizar a caixa de entrada e compartilhar anexos.</p>
+                    </article>
+                    <article class="lessons-topic">
+                        <i class="fa-solid fa-box-open" aria-hidden="true"></i>
+                        <h3>Programas essenciais</h3>
+                        <p>Conheça programas úteis para as tarefas do dia a dia e aprenda noções de instalação e atualização.</p>
+                    </article>
+                    <article class="lessons-topic">
+                        <i class="fa-solid fa-shield-halved" aria-hidden="true"></i>
+                        <h3>Segurança digital</h3>
+                        <p>Veja como criar senhas mais seguras, identificar mensagens suspeitas e proteger suas informações.</p>
+                    </article>
+                </div>
+            </section>
+
+            <section class="lessons-gallery" aria-labelledby="galleryTitle">
+                <div class="lessons-gallery__heading">
+                    <span class="lessons-tag"><i class="fa-solid fa-book-open" aria-hidden="true"></i> Conhecimento para o dia a dia</span>
+                    <h2 id="galleryTitle">Tecnologia com mais confiança</h2>
+                    <p>Orientação individual para tornar o computador e a internet mais simples de usar.</p>
+                </div>
+                <div class="lessons-gallery__grid">
+                    <figure class="lessons-gallery__item">
+                        <img src="../img/aula-particular/aulas-windows-linux.webp" alt="Aulas particulares de Windows e Linux" loading="lazy" />
+                        <figcaption>
+                            <span>Windows e Linux</span>
+                            <a href="https://wa.me/5548996446508?text=Ol%C3%A1!%20Gostaria%20de%20mais%20informa%C3%A7%C3%B5es%20sobre%20as%20aulas%20de%20Windows%20e%20Linux." target="_blank" rel="noopener noreferrer" class="btn btn--whatsapp btn--sm">
+                                <i class="fa-brands fa-whatsapp" aria-hidden="true"></i> Falar pelo WhatsApp
+                            </a>
+                        </figcaption>
+                    </figure>
+                    <figure class="lessons-gallery__item">
+                        <img src="../img/aula-particular/aulas-navegacao-internet.webp" alt="Aulas de navegação na internet" loading="lazy" />
+                        <figcaption>
+                            <span>Internet e recursos digitais</span>
+                            <a href="https://wa.me/5548996446508?text=Ol%C3%A1!%20Gostaria%20de%20mais%20informa%C3%A7%C3%B5es%20sobre%20as%20aulas%20de%20internet%20e%20recursos%20digitais." target="_blank" rel="noopener noreferrer" class="btn btn--whatsapp btn--sm">
+                                <i class="fa-brands fa-whatsapp" aria-hidden="true"></i> Falar pelo WhatsApp
+                            </a>
+                        </figcaption>
+                    </figure>
+                </div>
+            </section>
+
+            <section class="lessons-cta" aria-labelledby="lessonsCtaTitle">
+                <div>
+                    <h2 id="lessonsCtaTitle">Vamos aprender juntos?</h2>
+                    <p>Entre em contato para conversar sobre suas dúvidas e combinar sua aula particular.</p>
+                </div>
+                <a href="https://wa.me/5548996446508?text=Ol%C3%A1!%20Gostaria%20de%20agendar%20uma%20aula%20particular." target="_blank" rel="noopener noreferrer" class="btn btn--whatsapp">
+                    <i class="fa-brands fa-whatsapp" aria-hidden="true"></i> Fale comigo pelo WhatsApp
+                </a>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__grid">
+                <div class="footer__brand">
+                    <img src="../img/Logo.webp" alt="Leandro Stanger Soluções em Informática" class="footer__logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+                    <span class="footer__logo-fallback" style="display:none;">
+                        <svg width="32" height="32" viewBox="0 0 36 36" fill="none">
+                            <rect width="36" height="36" rx="8" fill="#10b981" />
+                            <text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" fill="#0d1117" font-weight="800" font-size="16" font-family="Inter,sans-serif">LS</text>
+                        </svg>
+                    </span>
+                    <p><strong>Leandro Stanger</strong><br />Soluções em Informática</p>
+                </div>
+                <div class="footer__links">
+                    <h4>Links Rápidos</h4>
+                    <ul>
+                        <li><a href="../index.html#servicos">Serviços</a></li>
+                        <li><a href="../index.html#formatacao">Formatação</a></li>
+                        <li><a href="../index.html#recuperacao">Recuperação</a></li>
+                        <li><a href="../index.html#limpeza">Limpeza</a></li>
+                        <li><a href="../index.html#criacao-site">Criação de Sites</a></li>
+                        <li><a href="../index.html#clientes">Clientes</a></li>
+                        <li><a href="aula-particular.html" aria-current="page">Aulas particulares</a></li>
+                        <li><a href="../suporte-remoto/suporte-remoto.html">Acesso remoto</a></li>
+                        <li><a href="../index.html#contato">Contato</a></li>
+                    </ul>
+                </div>
+                <div class="footer__contact">
+                    <h4>Contato</h4>
+                    <ul>
+                        <li><a href="https://wa.me/5548996446508" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> +55 (48) 99644-6508</a></li>
+                        <li>Rua Francisco Ronchi, Nº 280</li>
+                        <li>Caravaggio, Nova Veneza - SC</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer__bottom">
+                <p>&copy; 2026 Leandro Stanger Soluções em Informática. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../servicos/parcelamento.js"></script>
+    <script src="../suporte-remoto/suporte-remoto.js"></script>
+</body>
+</html>

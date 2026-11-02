@@ -462,6 +462,9 @@ document.addEventListener('DOMContentLoaded', function() {
         const suporteRemotoLink = servico.id === 53
             ? '<a href="suporte-remoto/suporte-remoto.html" class="service-card__btn btn btn--outline btn--sm">Conheça o suporte remoto</a>'
             : '';
+        const aulasParticularesLink = servico.id === 52
+            ? '<a href="aulas-particulares/aula-particular.html" class="service-card__btn btn btn--outline btn--sm">Conheça as aulas particulares</a>'
+            : '';
 
         card.innerHTML =
             '<div class="service-card__icon"><i class="' + servico.icone + '"></i></div>' +
@@ -472,6 +475,7 @@ document.addEventListener('DOMContentLoaded', function() {
             badgeHtml +
             brindesHtml +
             suporteRemotoLink +
+            aulasParticularesLink +
             '<a href="https://wa.me/5548996446508?text=' + encodeURIComponent(servico.whatsapp) + '" target="_blank" rel="noopener" class="service-card__btn btn btn--outline btn--sm">' +
             '<i class="fa-brands fa-whatsapp"></i> Falar no WhatsApp' +
             '</a>';

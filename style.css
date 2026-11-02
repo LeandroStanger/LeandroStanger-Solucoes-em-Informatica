@@ -221,6 +221,7 @@ strong {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    column-gap: 24px;
     max-width: var(--max-width);
     margin: 0 auto;
     padding: 0 24px;
@@ -264,7 +265,7 @@ strong {
 .nav__links {
     display: flex;
     align-items: center;
-    gap: 32px;
+    gap: 20px;
 }
 
 .nav__link {
@@ -275,6 +276,7 @@ strong {
     padding: 4px 0;
     transition: color var(--transition);
     cursor: pointer;
+    white-space: nowrap;
 }
 
 .nav__link::after {
@@ -2712,7 +2714,7 @@ strong {
     }
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1280px) {
     .nav__links {
         position: fixed;
         top: 0;
