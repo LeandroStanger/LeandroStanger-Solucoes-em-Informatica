@@ -2369,7 +2369,14 @@ strong {
     letter-spacing: 0.04em;
 }
 
-.footer__links ul,
+.footer__links ul {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: repeat(5, auto);
+    gap: 10px 24px;
+}
+
 .footer__contact ul {
     display: flex;
     flex-direction: column;
@@ -2380,6 +2387,7 @@ strong {
     color: var(--color-text-secondary);
     font-size: 0.95rem;
     transition: color var(--transition);
+    white-space: nowrap;
 }
 
 .footer__links a:hover {
