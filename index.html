@@ -8,6 +8,10 @@
     <!-- Font Awesome 7.3.0 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.0/css/all.css" />
 
+    <!-- Seletor e formatação de telefone internacional -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@29.5.10/dist/css/intlTelInput.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@29.5.10/dist/js/intlTelInput.min.js" defer></script>
+
     <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -16,8 +20,7 @@
     <!-- particles.js -->
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js" defer></script>
 
-    <!-- HTMX (Hypermedia-Driven Applications) -->
-    <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.11/dist/htmx.js" integrity="sha384-gmJEF2eAKY4e+FDN+qtKIivWyb6ANwDB7JUdUybKgQspPKyEX/pIRZG/0uaRoW2C" crossorigin="anonymous" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.11/dist/htmx.js" integrity="sha384-gmJEF2eAKY4e+FDN+qtKIivWyb6ANwDB7JUdUybKgQspPKyEX/pIRZG/0uaRoW2C" crossorigin="anonymous"></script>
 
     <!-- Favicon -->
     <link rel="icon" type="image/webp" href="img/Logo.webp" />
@@ -741,33 +744,35 @@
                 </div>
 
                 <!-- ================================================ -->
-                <!-- FORMULÁRIO INTEGRADO COM FORMSPREE VIA HTMX     -->
+                <!-- FORMULÁRIO DE CONTATO -->
                 <!-- ================================================ -->
                 <div class="contact-form-wrapper">
-                    <form 
-                        class="contact-form" 
+                    <form
+                        class="contact-form"
                         id="contactForm"
-                        hx-post="https://formspree.io/f/mgogrkvv"
+                        action="https://postbag.dev/s/fm_t4v2nfrpty2a"
+                        method="POST"
+                        hx-post="https://postbag.dev/s/fm_t4v2nfrpty2a"
                         hx-target="#formResponse"
-                        hx-swap="innerHTML"
-                        hx-on::after-request="this.reset()"
+                        hx-swap="none"
+                        hx-encoding="application/x-www-form-urlencoded"
+                        hx-sync="this:drop"
                     >
                         <h3>Envie uma mensagem</h3>
-                        <input type="hidden" name="_subject" value="Novo contato pelo site - Leandro Stanger" />
                         <div class="form-group">
-                            <label for="nome">Nome</label>
-                            <input type="text" id="nome" name="nome" placeholder="Seu nome completo" required />
+                            <label for="email">E-mail</label>
+                            <input type="email" id="email" name="email" placeholder="seuemail@exemplo.com" required />
                         </div>
                         <div class="form-group">
                             <label for="whatsapp">WhatsApp</label>
-                            <input type="tel" id="whatsapp" name="whatsapp" placeholder="+ 55 (48) 99999-9999" required />
+                            <input type="tel" id="whatsapp" name="whatsapp" autocomplete="tel-national" placeholder="(99) 99999-9999" required />
                         </div>
                         <div class="form-group">
                             <label for="mensagem">Mensagem</label>
-                            <textarea id="mensagem" name="mensagem" rows="4" placeholder="Descreva como podemos ajudar..." required></textarea>
+                            <textarea id="mensagem" name="message" rows="4" placeholder="Descreva como podemos ajudar..." required></textarea>
                         </div>
                         <button type="submit" class="btn btn--primary btn--full">Enviar Mensagem</button>
-                        <div id="formResponse"></div>
+                        <div id="formResponse" role="status" aria-live="polite"></div>
                     </form>
                 </div>
                 <!-- ================================================ -->
@@ -980,52 +985,6 @@
             }
         };
 
-        document.addEventListener('htmx:afterRequest', function(evt) {
-            if (evt.detail.target && evt.detail.target.id === 'formResponse') {
-                const response = evt.detail.xhr;
-                let html = '';
-                if (response.status === 200) {
-                    try {
-                        const data = JSON.parse(response.responseText);
-                        if (data.ok) {
-                            html = `
-                                <div class="form-success">
-                                    <i class="fa-solid fa-circle-check"></i>
-                                    <h3>Mensagem enviada!</h3>
-                                    <p>Obrigado! Sua mensagem foi enviada com sucesso. Em breve entraremos em contato.</p>
-                                </div>
-                            `;
-                            // Resetar o formulário
-                            const form = document.getElementById('contactForm');
-                            if (form) form.reset();
-                        } else {
-                            html = `
-                                <div class="form-error" style="color: #f87171; text-align: center; padding: 16px; background: rgba(248, 113, 113, 0.1); border-radius: 8px; border: 1px solid rgba(248, 113, 113, 0.2);">
-                                    <i class="fa-solid fa-circle-exclamation" style="font-size: 1.5rem; display: block; margin-bottom: 8px;"></i>
-                                    <strong>Ops!</strong> Erro ao enviar mensagem. Tente novamente.
-                                </div>
-                            `;
-                        }
-                    } catch (e) {
-                        html = `
-                            <div class="form-success">
-                                <i class="fa-solid fa-circle-check"></i>
-                                <h3>Mensagem enviada!</h3>
-                                <p>Obrigado! Sua mensagem foi enviada com sucesso. Em breve entraremos em contato.</p>
-                            </div>
-                        `;
-                    }
-                } else {
-                    html = `
-                        <div class="form-error" style="color: #f87171; text-align: center; padding: 16px; background: rgba(248, 113, 113, 0.1); border-radius: 8px; border: 1px solid rgba(248, 113, 113, 0.2);">
-                            <i class="fa-solid fa-circle-exclamation" style="font-size: 1.5rem; display: block; margin-bottom: 8px;"></i>
-                            <strong>Ops!</strong> Erro ao enviar mensagem. Tente novamente ou entre em contato diretamente pelo WhatsApp.
-                        </div>
-                    `;
-                }
-                evt.detail.target.innerHTML = html;
-            }
-        });
     </script>
 
     <!-- JavaScript principal -->

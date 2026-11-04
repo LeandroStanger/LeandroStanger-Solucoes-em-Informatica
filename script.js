@@ -5,6 +5,117 @@
 document.addEventListener('DOMContentLoaded', function() {
     atualizarOpcoesParcelamento(document);
 
+    const contactForm = document.getElementById('contactForm');
+    const formResponse = document.getElementById('formResponse');
+    const phoneInput = document.getElementById('whatsapp');
+    const contactSubmitButton = contactForm && contactForm.querySelector('button[type="submit"]');
+    let phoneIti = null;
+    const phoneSetupPromise = phoneInput && window.intlTelInput
+        ? Promise.all([
+            window.intlTelInput.attachUtils(() => import('https://cdn.jsdelivr.net/npm/intl-tel-input@29.5.10/dist/js/utils.js')) || Promise.resolve(),
+            import('https://cdn.jsdelivr.net/npm/intl-tel-input@29.5.10/dist/js/locale/pt.js')
+        ]).then(function(results) {
+            phoneIti = window.intlTelInput(phoneInput, {
+                initialCountry: 'br',
+                separateDialCode: true,
+                nationalMode: true,
+                formatAsYouType: true,
+                strictMode: true,
+                countryNameLocale: 'pt-BR',
+                uiTranslations: results[1].default
+            });
+        })
+        : phoneInput
+            ? Promise.reject(new Error('A biblioteca de telefone internacional não foi carregada.'))
+            : Promise.resolve();
+
+    if (contactSubmitButton && phoneInput) {
+        contactSubmitButton.disabled = true;
+        phoneSetupPromise.then(function() {
+            contactSubmitButton.disabled = false;
+        }).catch(function(error) {
+            console.error('Não foi possível configurar o campo de telefone:', error);
+            if (formResponse) {
+                formResponse.textContent = 'Não foi possível carregar a validação do telefone. Atualize a página e tente novamente.';
+                formResponse.className = 'form-error';
+            }
+        });
+    }
+
+    if (phoneInput) {
+        phoneInput.addEventListener('input', function() {
+            phoneInput.setCustomValidity('');
+        });
+        phoneInput.addEventListener('countrychange', function() {
+            phoneInput.setCustomValidity('');
+        });
+    }
+
+    if (contactForm && formResponse) {
+        document.body.addEventListener('htmx:configRequest', function(event) {
+            if (event.detail.elt !== contactForm) return;
+
+            // Avoid an unnecessary CORS preflight; Postbag only needs the form fields.
+            Object.keys(event.detail.headers).forEach(function(header) {
+                if (/^HX-/i.test(header)) {
+                    delete event.detail.headers[header];
+                }
+            });
+
+            if (phoneIti) {
+                event.detail.parameters.whatsapp = phoneIti.getNumber();
+            }
+        });
+
+        document.body.addEventListener('htmx:beforeRequest', function(event) {
+            if (event.detail.elt !== contactForm) return;
+
+            formResponse.textContent = '';
+            formResponse.className = '';
+            if (!phoneIti || !phoneIti.isValidNumber()) {
+                phoneInput.setCustomValidity('Digite um número de telefone válido para o país selecionado.');
+                phoneInput.reportValidity();
+                event.preventDefault();
+                return;
+            }
+
+            phoneInput.setCustomValidity('');
+            if (contactSubmitButton) {
+                contactSubmitButton.disabled = true;
+                contactSubmitButton.textContent = 'Enviando...';
+            }
+        });
+
+        document.body.addEventListener('htmx:afterRequest', function(event) {
+            if (event.detail.elt !== contactForm) return;
+
+            if (contactSubmitButton) {
+                contactSubmitButton.disabled = false;
+                contactSubmitButton.textContent = 'Enviar Mensagem';
+            }
+
+            let submissionAccepted = false;
+            if (event.detail.successful) {
+                try {
+                    submissionAccepted = JSON.parse(event.detail.xhr.responseText).ok === true;
+                } catch (error) {
+                    console.error('Resposta inválida do serviço de contato:', error);
+                }
+            }
+
+            if (submissionAccepted) {
+                formResponse.textContent = 'Mensagem enviada com sucesso!';
+                formResponse.className = 'form-success';
+                contactForm.reset();
+                phoneIti.setNumber('');
+                return;
+            }
+
+            formResponse.textContent = 'Não foi possível confirmar o envio. Verifique sua conexão e se a origem do site está autorizada no serviço de contato.';
+            formResponse.className = 'form-error';
+        });
+    }
+
     // ============================================================
     // 1. VARIÁVEIS GLOBAIS
     // ============================================================
@@ -381,7 +492,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 cleaningGrid.appendChild(card);
             });
         }
-        iniciarContato();
     }
 
     // ============================================================
@@ -4274,80 +4384,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
         console.log('✅ Gerador de pacote configurado com sucesso! (versão 36.56)');
-    }
-
-    // ============================================================
-    // 18. FORMULÁRIO DE CONTATO COM FORMSPREE (AJAX)
-    // ============================================================
-    function iniciarContato() {
-        const contactForm = document.getElementById('contactForm');
-        if (!contactForm) return;
-
-        if (contactForm._listener) return;
-        contactForm._listener = true;
-
-        contactForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            const form = this;
-            const submitBtn = form.querySelector('button[type="submit"]');
-            const responseDiv = document.getElementById('formResponse');
-
-            if (submitBtn) {
-                submitBtn.disabled = true;
-                submitBtn.textContent = 'Enviando...';
-            }
-
-            if (responseDiv) {
-                responseDiv.innerHTML = '';
-            }
-
-            const formData = new FormData(form);
-
-            fetch(form.action, {
-                method: form.method,
-                body: formData,
-                headers: {
-                    'Accept': 'application/json'
-                }
-            })
-            .then(function(response) {
-                if (response.ok) {
-                    return response.json();
-                } else {
-                    return response.json().then(function(data) {
-                        throw new Error(data.error || 'Erro ao enviar mensagem.');
-                    });
-                }
-            })
-            .then(function(data) {
-                if (responseDiv) {
-                    responseDiv.innerHTML =
-                        '<div class="form-success">' +
-                        '<i class="fa-solid fa-circle-check"></i>' +
-                        '<h3>Mensagem enviada!</h3>' +
-                        '<p>Obrigado! Sua mensagem foi enviada com sucesso. Em breve entraremos em contato.</p>' +
-                        '</div>';
-                }
-                form.reset();
-            })
-            .catch(function(error) {
-                if (responseDiv) {
-                    responseDiv.innerHTML =
-                        '<div class="form-error" style="color: #f87171; text-align: center; padding: 16px; background: rgba(248, 113, 113, 0.1); border-radius: 8px; border: 1px solid rgba(248, 113, 113, 0.2);">' +
-                        '<i class="fa-solid fa-circle-exclamation" style="font-size: 1.5rem; display: block; margin-bottom: 8px;"></i>' +
-                        '<strong>Ops!</strong> ' + error.message +
-                        '<p style="font-size: 0.9rem; margin-top: 8px; color: var(--color-text-muted);">Tente novamente ou entre em contato diretamente pelo WhatsApp.</p>' +
-                        '</div>';
-                }
-            })
-            .finally(function() {
-                if (submitBtn) {
-                    submitBtn.disabled = false;
-                    submitBtn.textContent = 'Enviar Mensagem';
-                }
-            });
-        });
     }
 
     // ============================================================
