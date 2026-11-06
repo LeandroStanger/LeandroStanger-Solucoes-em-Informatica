@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Conheça os serviços de limpeza e manutenção preventiva para computadores e notebooks." />
+    <title>Limpeza e Manutenção — Leandro Stanger</title>
+
+    <base href="../" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.0/css/all.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link rel="icon" type="image/webp" href="img/Logo.webp" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <header class="header" id="topo">
+        <nav class="nav">
+            <a href="index.html#inicio" class="nav__logo" id="logoLink">
+                <img src="img/Logo.webp" alt="Leandro Stanger Soluções em Informática" class="nav__logo-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+                <span class="nav__logo-fallback" style="display:none;">
+                    <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+                        <rect width="36" height="36" rx="8" fill="#10b981" />
+                        <text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" fill="#0d1117" font-weight="800" font-size="18" font-family="Inter,sans-serif">LS</text>
+                    </svg>
+                    <span class="nav__brand-text">Leandro Stanger</span>
+                </span>
+            </a>
+
+            <ul class="nav__links" id="navLinks">
+                <li><a href="servicos/servicos.html" class="nav__link">Serviços</a></li>
+                <li><a href="formatacao/formatacao.html" class="nav__link">Formatação</a></li>
+                <li><a href="recuperacao-de-dados/recuperacao-de-dados.html" class="nav__link">Recuperação</a></li>
+                <li><a href="limpeza/limpeza.html#limpeza" class="nav__link active-link" aria-current="page">Limpeza</a></li>
+                <li><a href="index.html#criacao-site" class="nav__link">Criação de Sites</a></li>
+                <li><a href="index.html#clientes" class="nav__link">Clientes</a></li>
+                <li><a href="aulas-particulares/aula-particular.html" class="nav__link">Aulas particulares</a></li>
+                <li><a href="suporte-remoto/suporte-remoto.html" class="nav__link">Acesso remoto</a></li>
+                <li><a href="index.html#contato" class="nav__link">Contato</a></li>
+                <li>
+                    <a href="https://wa.me/5548996446508" target="_blank" rel="noopener" class="nav__cta-btn">
+                        <i class="fa-brands fa-whatsapp"></i> WhatsApp
+                    </a>
+                </li>
+            </ul>
+
+            <button class="nav__mobile-toggle" id="mobileToggle" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+
+    <main>
+        <section class="limpeza-hero" aria-labelledby="limpezaTitle">
+            <div class="container limpeza-hero__content">
+                <img
+                    class="limpeza-hero__image"
+                    src="img/limpeza-de-computador/limpeza-de-computador.webp"
+                    alt="Limpeza e manutenção de computador"
+                    fetchpriority="high"
+                />
+                <div class="limpeza-hero__text">
+                    <span class="section-header__tag"><i class="fa-solid fa-broom"></i> Limpeza e manutenção</span>
+                    <h1 class="section-header__title" id="limpezaTitle">Cuide do seu equipamento e prolongue sua vida útil</h1>
+                    <p>A limpeza preventiva ajuda a reduzir o acúmulo de poeira e o superaquecimento, mantendo seu computador ou notebook funcionando melhor. Conheça os serviços e escolha o cuidado ideal para seu equipamento.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="cleaning" id="limpeza">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-header__tag">Limpeza e Manutenção</span>
+                    <h2 class="section-header__title">Serviços para manter seu equipamento em dia</h2>
+                    <p class="section-header__desc">Serviços profissionais de limpeza e manutenção preventiva para aumentar a vida útil do seu computador</p>
+                </div>
+                <div class="recovery-cards" id="cleaningGrid"></div>
+                <div class="recovery-extra">
+                    <div class="recovery-extra__card">
+                        <span class="recovery-extra__icon"><i class="fa-solid fa-lightbulb"></i></span>
+                        <h3>Dica de ouro</h3>
+                        <p>Realizar limpeza interna a cada 6 meses ajuda a conservar seu computador e evitar o acúmulo excessivo de poeira.</p>
+                        <a href="https://wa.me/5548996446508?text=Ol%C3%A1!%20Gostaria%20de%20agendar%20uma%20limpeza%20preventiva." target="_blank" rel="noopener" class="btn btn--whatsapp">
+                            <i class="fa-brands fa-whatsapp"></i> Agendar limpeza
+                        </a>
+                    </div>
+                </div>
+
+                <div class="cleaning-tips">
+                    <div class="cleaning-tips__card">
+                        <div class="cleaning-tips__header">
+                            <span class="recovery-extra__icon"><i class="fa-solid fa-lightbulb"></i></span>
+                            <h3>Dicas para cuidar do seu computador</h3>
+                            <p>Orientações simples para ajudar a manter seu equipamento limpo, seguro e funcionando bem.</p>
+                            <button id="carregarDicasBtn" class="btn btn--outline" type="button" onclick="carregarDicas()">
+                                <i class="fa-solid fa-lightbulb"></i> Ver dicas de manutenção
+                            </button>
+                        </div>
+                        <div id="dicasContainer" aria-live="polite"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__grid">
+                <div class="footer__brand">
+                    <img src="img/Logo.webp" alt="Leandro Stanger Soluções em Informática" class="footer__logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+                    <span class="footer__logo-fallback" style="display:none;">
+                        <svg width="32" height="32" viewBox="0 0 36 36" fill="none">
+                            <rect width="36" height="36" rx="8" fill="#10b981" />
+                            <text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" fill="#0d1117" font-weight="800" font-size="16" font-family="Inter,sans-serif">LS</text>
+                        </svg>
+                    </span>
+                    <p><strong>Leandro Stanger</strong><br />Soluções em Informática</p>
+                </div>
+                <div class="footer__links">
+                    <h4>Links Rápidos</h4>
+                    <ul>
+                        <li><a href="servicos/servicos.html">Serviços</a></li>
+                        <li><a href="formatacao/formatacao.html">Formatação</a></li>
+                        <li><a href="recuperacao-de-dados/recuperacao-de-dados.html">Recuperação</a></li>
+                        <li><a href="limpeza/limpeza.html#limpeza">Limpeza</a></li>
+                        <li><a href="index.html#criacao-site">Criação de Sites</a></li>
+                        <li><a href="index.html#clientes">Clientes</a></li>
+                        <li><a href="aulas-particulares/aula-particular.html">Aulas particulares</a></li>
+                        <li><a href="suporte-remoto/suporte-remoto.html">Acesso remoto</a></li>
+                        <li><a href="index.html#contato">Contato</a></li>
+                    </ul>
+                </div>
+                <div class="footer__contact">
+                    <h4>Contato</h4>
+                    <ul>
+                        <li><a href="https://wa.me/5548996446508" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> +55 (48) 99644-6508</a></li>
+                        <li>Rua Francisco Ronchi, Nº 280</li>
+                        <li>Caravaggio, Nova Veneza - SC</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer__bottom">
+                <p>&copy; 2026 Leandro Stanger Soluções em Informática. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/5548996446508" target="_blank" rel="noopener" class="whatsapp-float" aria-label="Fale conosco pelo WhatsApp">
+        <i class="fa-brands fa-whatsapp"></i>
+        <span class="whatsapp-float__pulse"></span>
+    </a>
+
+    <script src="servicos/parcelamento.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

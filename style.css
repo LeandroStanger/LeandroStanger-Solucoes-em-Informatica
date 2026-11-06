@@ -765,6 +765,151 @@ strong {
 /* ============================================================
    TIPOS DE FORMAÇÃO - FUNDOS DINÂMICOS
    ============================================================ */
+.formatacao-hero,
+.recuperacao-hero,
+.limpeza-hero {
+    padding: calc(var(--header-height) + 48px) 0 64px;
+    background:
+        radial-gradient(ellipse at 75% 35%, rgba(16, 185, 129, 0.12) 0%, transparent 58%),
+        #0a0e14;
+}
+
+.formatacao-hero__content,
+.recuperacao-hero__content,
+.limpeza-hero__content {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
+    align-items: center;
+    gap: clamp(24px, 5vw, 64px);
+}
+
+.formatacao-hero__image,
+.recuperacao-hero__image,
+.limpeza-hero__image {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+}
+
+.limpeza-hero__image {
+    aspect-ratio: auto;
+    height: auto;
+    object-fit: contain;
+}
+
+.formatacao-hero__text .section-header__tag,
+.recuperacao-hero__text .section-header__tag,
+.limpeza-hero__text .section-header__tag {
+    margin-bottom: 20px;
+}
+
+.formatacao-hero__text .section-header__title,
+.recuperacao-hero__text .section-header__title,
+.limpeza-hero__text .section-header__title {
+    margin-bottom: 16px;
+}
+
+.formatacao-hero__text p,
+.recuperacao-hero__text p,
+.limpeza-hero__text p {
+    max-width: 560px;
+    color: var(--color-text-secondary);
+    font-size: 1.05rem;
+    line-height: 1.8;
+}
+
+@media (max-width: 768px) {
+    .formatacao-hero,
+    .recuperacao-hero,
+    .limpeza-hero {
+        padding: calc(var(--header-height) + 32px) 0 48px;
+    }
+
+    .formatacao-hero__content,
+    .recuperacao-hero__content,
+    .limpeza-hero__content {
+        grid-template-columns: 1fr;
+        gap: 28px;
+    }
+}
+
+.cleaning-tips {
+    margin-top: 40px;
+}
+
+.cleaning-tips__card {
+    padding: clamp(24px, 4vw, 40px);
+    background: linear-gradient(145deg, var(--color-bg-card), var(--color-bg));
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-md);
+    text-align: center;
+}
+
+.cleaning-tips__header {
+    max-width: 680px;
+    margin: 0 auto;
+}
+
+.cleaning-tips__header .recovery-extra__icon {
+    color: var(--color-primary);
+}
+
+.cleaning-tips__header h3 {
+    margin-bottom: 8px;
+    color: var(--color-white);
+    font-size: clamp(1.25rem, 2.5vw, 1.6rem);
+}
+
+.cleaning-tips__header p {
+    margin-bottom: 20px;
+    color: var(--color-text-secondary);
+}
+
+.dicas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+    gap: 16px;
+    margin-top: 28px;
+    text-align: left;
+}
+
+.dica-card {
+    padding: 20px;
+    background: rgba(10, 14, 20, 0.55);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition);
+}
+
+.dica-card:hover {
+    border-color: var(--color-primary);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-glow);
+}
+
+.dica-card__icon {
+    margin-bottom: 10px;
+    color: var(--color-primary);
+    font-size: 1.7rem;
+}
+
+.dica-card h4 {
+    margin-bottom: 6px;
+    color: var(--color-white);
+    font-size: 1rem;
+}
+
+.dica-card p {
+    color: var(--color-text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
 .tipos-formatacao-section {
     padding: 80px 0;
     border-top: 1px solid var(--color-border);
@@ -906,6 +1051,12 @@ strong {
     align-items: center;
     position: relative;
     z-index: 1;
+}
+
+.criacao-site__grid--service {
+    margin-top: 72px;
+    padding-top: 72px;
+    border-top: 1px solid var(--color-border);
 }
 
 .criacao-site__content {
@@ -2752,6 +2903,11 @@ strong {
         text-align: center;
     }
 
+    .criacao-site__grid--service {
+        margin-top: 56px;
+        padding-top: 56px;
+    }
+
     .criacao-site__tag {
         margin: 0 auto;
     }
@@ -3173,6 +3329,7 @@ strong {
 .service-card:nth-child(47) { animation-delay: 2.35s; }
 .service-card:nth-child(48) { animation-delay: 2.4s; }
 .service-card:nth-child(49) { animation-delay: 2.45s; }
+
 .service-card:nth-child(50) { animation-delay: 2.5s; }
 .service-card:nth-child(51) { animation-delay: 2.55s; }
 .service-card:nth-child(52) { animation-delay: 2.6s; }

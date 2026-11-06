@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Conheça os planos de recuperação de dados e recupere seus arquivos com atendimento especializado." />
+    <title>Recuperação de Dados — Leandro Stanger</title>
+
+    <base href="../" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.0/css/all.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link rel="icon" type="image/webp" href="img/Logo.webp" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <header class="header" id="topo">
+        <nav class="nav">
+            <a href="index.html#inicio" class="nav__logo" id="logoLink">
+                <img src="img/Logo.webp" alt="Leandro Stanger Soluções em Informática" class="nav__logo-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+                <span class="nav__logo-fallback" style="display:none;">
+                    <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+                        <rect width="36" height="36" rx="8" fill="#10b981" />
+                        <text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" fill="#0d1117" font-weight="800" font-size="18" font-family="Inter,sans-serif">LS</text>
+                    </svg>
+                    <span class="nav__brand-text">Leandro Stanger</span>
+                </span>
+            </a>
+
+            <ul class="nav__links" id="navLinks">
+                <li><a href="servicos/servicos.html" class="nav__link">Serviços</a></li>
+                <li><a href="formatacao/formatacao.html" class="nav__link">Formatação</a></li>
+                <li><a href="recuperacao-de-dados/recuperacao-de-dados.html#recuperacao" class="nav__link active-link" aria-current="page">Recuperação</a></li>
+                <li><a href="limpeza/limpeza.html" class="nav__link">Limpeza</a></li>
+                <li><a href="index.html#criacao-site" class="nav__link">Criação de Sites</a></li>
+                <li><a href="index.html#clientes" class="nav__link">Clientes</a></li>
+                <li><a href="aulas-particulares/aula-particular.html" class="nav__link">Aulas particulares</a></li>
+                <li><a href="suporte-remoto/suporte-remoto.html" class="nav__link">Acesso remoto</a></li>
+                <li><a href="index.html#contato" class="nav__link">Contato</a></li>
+                <li>
+                    <a href="https://wa.me/5548996446508" target="_blank" rel="noopener" class="nav__cta-btn">
+                        <i class="fa-brands fa-whatsapp"></i> WhatsApp
+                    </a>
+                </li>
+            </ul>
+
+            <button class="nav__mobile-toggle" id="mobileToggle" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+
+    <main>
+        <section class="recuperacao-hero" aria-labelledby="recuperacaoTitle">
+            <div class="container recuperacao-hero__content">
+                <img
+                    class="recuperacao-hero__image"
+                    src="img/recuperao-de-dados/recuperao-de-dados.webp"
+                    alt="Recuperação de arquivos e dados digitais"
+                    fetchpriority="high"
+                />
+                <div class="recuperacao-hero__text">
+                    <span class="section-header__tag"><i class="fa-solid fa-database"></i> Recuperação de dados</span>
+                    <h1 class="section-header__title" id="recuperacaoTitle">Seus arquivos importantes merecem uma segunda chance</h1>
+                    <p>Exclusões acidentais e falhas podem colocar fotos, documentos e outros arquivos em risco. Conheça nossos planos de recuperação e escolha a capacidade ideal para seus dados.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="recovery" id="recuperacao">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-header__tag">Nossos planos</span>
+                    <h2 class="section-header__title">Escolha a capacidade para recuperar seus arquivos</h2>
+                    <p class="section-header__desc">Planos flexíveis para recuperar seus dados perdidos</p>
+                </div>
+                <div class="recovery-cards" id="recoveryGrid"></div>
+                <div class="recovery-extra">
+                    <div class="recovery-extra__card">
+                        <span class="recovery-extra__icon"><i class="fa-solid fa-comment-dots"></i></span>
+                        <h3>Precisa recuperar mais de <strong>80 GB</strong>?</h3>
+                        <p>Entre em contato diretamente pelo WhatsApp para um orçamento personalizado.</p>
+                        <a href="https://wa.me/5548996446508?text=Ol%C3%A1!%20Preciso%20recuperar%20mais%20de%2080GB%20de%20dados.%20Pode%20me%20fazer%20um%20or%C3%A7amento%3F" target="_blank" rel="noopener" class="btn btn--whatsapp">
+                            <i class="fa-brands fa-whatsapp"></i> Orçamento via WhatsApp
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__grid">
+                <div class="footer__brand">
+                    <img src="img/Logo.webp" alt="Leandro Stanger Soluções em Informática" class="footer__logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+                    <span class="footer__logo-fallback" style="display:none;">
+                        <svg width="32" height="32" viewBox="0 0 36 36" fill="none">
+                            <rect width="36" height="36" rx="8" fill="#10b981" />
+                            <text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" fill="#0d1117" font-weight="800" font-size="16" font-family="Inter,sans-serif">LS</text>
+                        </svg>
+                    </span>
+                    <p><strong>Leandro Stanger</strong><br />Soluções em Informática</p>
+                </div>
+                <div class="footer__links">
+                    <h4>Links Rápidos</h4>
+                    <ul>
+                        <li><a href="servicos/servicos.html">Serviços</a></li>
+                        <li><a href="formatacao/formatacao.html">Formatação</a></li>
+                        <li><a href="recuperacao-de-dados/recuperacao-de-dados.html#recuperacao">Recuperação</a></li>
+                        <li><a href="limpeza/limpeza.html">Limpeza</a></li>
+                        <li><a href="index.html#criacao-site">Criação de Sites</a></li>
+                        <li><a href="index.html#clientes">Clientes</a></li>
+                        <li><a href="aulas-particulares/aula-particular.html">Aulas particulares</a></li>
+                        <li><a href="suporte-remoto/suporte-remoto.html">Acesso remoto</a></li>
+                        <li><a href="index.html#contato">Contato</a></li>
+                    </ul>
+                </div>
+                <div class="footer__contact">
+                    <h4>Contato</h4>
+                    <ul>
+                        <li><a href="https://wa.me/5548996446508" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> +55 (48) 99644-6508</a></li>
+                        <li>Rua Francisco Ronchi, Nº 280</li>
+                        <li>Caravaggio, Nova Veneza - SC</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer__bottom">
+                <p>&copy; 2026 Leandro Stanger Soluções em Informática. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/5548996446508" target="_blank" rel="noopener" class="whatsapp-float" aria-label="Fale conosco pelo WhatsApp">
+        <i class="fa-brands fa-whatsapp"></i>
+        <span class="whatsapp-float__pulse"></span>
+    </a>
+
+    <script src="servicos/parcelamento.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -2,6 +2,50 @@
  * Leandro Stanger — Soluções em Informática
  * script.js — Versão 36.56 (PDF com formatação aprimorada para criptomoedas)
  */
+window.carregarDicas = async function() {
+    const container = document.getElementById('dicasContainer');
+    const button = document.getElementById('carregarDicasBtn');
+
+    if (!container) return;
+
+    try {
+        const response = await fetch('servicos/dicas.json', { cache: 'no-store' });
+        if (!response.ok) throw new Error('Falha ao carregar dicas (status ' + response.status + ')');
+
+        const dicas = await response.json();
+        const cards = Array.isArray(dicas) ? dicas : [];
+        if (!cards.length) throw new Error('Nenhuma dica encontrada');
+
+        container.innerHTML = `
+            <div class="dicas-grid">
+                ${cards.map(dica => `
+                    <div class="dica-card">
+                        <div class="dica-card__icon"><i class="${dica.icon}"></i></div>
+                        <h4>${dica.title}</h4>
+                        <p>${dica.description}</p>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+
+        if (button) {
+            button.innerHTML = '<i class="fa-solid fa-check"></i> Dicas carregadas';
+            button.disabled = true;
+        }
+    } catch (error) {
+        console.error('Erro ao carregar as dicas de manutenção:', error);
+        container.innerHTML = `
+            <div class="dicas-grid">
+                <div class="dica-card">
+                    <div class="dica-card__icon"><i class="fa-solid fa-circle-exclamation"></i></div>
+                    <h4>Não foi possível carregar as dicas</h4>
+                    <p>Verifique se o arquivo servicos/dicas.json está presente na pasta do site e tente novamente.</p>
+                </div>
+            </div>
+        `;
+    }
+};
+
 document.addEventListener('DOMContentLoaded', function() {
     atualizarOpcoesParcelamento(document);
 

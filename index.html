@@ -221,10 +221,10 @@
             </a>
 
             <ul class="nav__links" id="navLinks">
-                <li><a href="#servicos" class="nav__link active-link">Serviços</a></li>
-                <li><a href="#formatacao" class="nav__link">Formatação</a></li>
-                <li><a href="#recuperacao" class="nav__link">Recuperação</a></li>
-                <li><a href="#limpeza" class="nav__link">Limpeza</a></li>
+                <li><a href="servicos/servicos.html" class="nav__link">Serviços</a></li>
+                <li><a href="formatacao/formatacao.html" class="nav__link">Formatação</a></li>
+                <li><a href="recuperacao-de-dados/recuperacao-de-dados.html" class="nav__link">Recuperação</a></li>
+                <li><a href="limpeza/limpeza.html" class="nav__link">Limpeza</a></li>
                 <li><a href="#criacao-site" class="nav__link">Criação de Sites</a></li>
                 <li><a href="#clientes" class="nav__link">Clientes</a></li>
                 <li><a href="aulas-particulares/aula-particular.html" class="nav__link">Aulas particulares</a></li>
@@ -284,7 +284,7 @@
             <!-- ============================================= -->
 
             <div class="hero__actions">
-                <a href="#servicos" class="btn btn--primary">Ver Serviços</a>
+                <a href="servicos/servicos.html" class="btn btn--primary">Ver Serviços</a>
                 <a href="https://wa.me/5548996446508" target="_blank" rel="noopener" class="btn btn--outline">
                     <i class="fa-brands fa-whatsapp"></i> Falar no WhatsApp
                 </a>
@@ -296,301 +296,149 @@
         </div>
     </section>
 
-    <!-- ============================================================
-    SEÇÃO: SERVIÇOS
-    ============================================================ -->
-    <section class="services" id="servicos">
+    <section class="criacao-site" id="formatacao" aria-labelledby="homeFormatacaoTitle">
         <div class="container">
-            <div class="section-header">
-                <span class="section-header__tag">Nossos Serviços</span>
-                <h2 class="section-header__title">Soluções completas para o seu equipamento</h2>
-                <p class="section-header__desc">Clique nas categorias abaixo para filtrar os serviços</p>
-            </div>
-
-            <div class="filter-tabs" id="filterTabs">
-                <button class="filter-tab filter-tab--active" data-filter="all">
-                    <i class="fa-solid fa-layer-group"></i> Todos
-                </button>
-                <button class="filter-tab" data-filter="formatacao">
-                    <i class="fa-solid fa-desktop"></i> Formatação
-                </button>
-                <button class="filter-tab" data-filter="educacional">
-                    <i class="fa-solid fa-graduation-cap"></i> Educacional
-                </button>
-                <button class="filter-tab" data-filter="gamer">
-                    <i class="fa-solid fa-gamepad"></i> Gamer
-                </button>
-                <button class="filter-tab" data-filter="hardware">
-                    <i class="fa-solid fa-microchip"></i> Hardware
-                </button>
-                <button class="filter-tab" data-filter="limpeza">
-                    <i class="fa-solid fa-broom"></i> Limpeza
-                </button>
-                <button class="filter-tab" data-filter="software">
-                    <i class="fa-solid fa-shield-virus"></i> Software
-                </button>
-                <button class="filter-tab" data-filter="suporte">
-                    <i class="fa-solid fa-headset"></i> Suporte
-                </button>
-                <button class="filter-tab" data-filter="dados">
-                    <i class="fa-solid fa-database"></i> Recuperação
-                </button>
-                <button class="filter-tab" data-filter="criacao_site">
-                    <i class="fa-solid fa-globe"></i> Sites
-                </button>
-            </div>
-
-            <div class="services-grid" id="servicesGrid"></div>
-        </div>
-    </section>
-
-    <!-- ============================================================
-    SEÇÃO: TIPOS DE FORMAÇÃO
-    ============================================================ -->
-    <section class="tipos-formatacao-section" id="formatacao">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-header__tag"><i class="fa-solid fa-desktop"></i> Escolha o tipo de formatação</span>
-                <h2 class="section-header__title">Formatação para todas as necessidades</h2>
-                <p class="section-header__desc">Selecione o tipo de formatação desejado e depois o sistema operacional</p>
-            </div>
-
-            <div class="filter-tabs" id="tipoFormatacaoTabs">
-                <button class="filter-tab" id="formatacao-go" data-tipo="go">
-                    <i class="fa-solid fa-rocket"></i> Formatação Go
-                </button>
-                <button class="filter-tab filter-tab--active" id="formatacao-standard" data-tipo="standard">
-                    <i class="fa-solid fa-desktop"></i> Formatação Standard
-                </button>
-                <button class="filter-tab" id="formatacao-educacional" data-tipo="educacional">
-                    <i class="fa-solid fa-graduation-cap"></i> Formatação Educacional
-                </button>
-                <button class="filter-tab" id="formatacao-pro" data-tipo="pro">
-                    <i class="fa-solid fa-briefcase"></i> Formatação Pro
-                </button>
-                <button class="filter-tab" id="formatacao-gamer" data-tipo="gamer">
-                    <i class="fa-solid fa-gamepad"></i> Formatação Gamer
-                </button>
-                <button class="filter-tab" id="formatacao-premium" data-tipo="premium">
-                    <i class="fa-solid fa-crown"></i> Formatação Premium
-                </button>
-                <button class="filter-tab" id="formatacao-enterprise" data-tipo="enterprise">
-                    <i class="fa-solid fa-building"></i> Formatação Enterprise
-                </button>
-            </div>
-
-            <div id="tipoFormatacaoDescricao" class="tipo-descricao"></div>
-            <div class="filter-tabs" id="soFilterTabs"></div>
-            <div class="recovery-cards" id="formatacaoCardsGrid"></div>
-
-            <!-- Botão Gerar Pacote -->
-            <div class="gerador-pacote-trigger" id="geradorPacoteTrigger">
-                <button id="abrirGeradorBtn" class="btn btn--primary btn--pacote-abrir">
-                    <i class="fa-solid fa-cubes"></i> Gerar Pacote
-                </button>
-            </div>
-
-            <!-- ============================================================
-            MODAL DO GERADOR DE PACOTE
-            ============================================================ -->
-            <div id="geradorModal" class="modal" style="display:none;">
-                <div class="modal-overlay" id="modalOverlay"></div>
-                <div class="modal-content modal-content--pacote">
-                    <button class="modal-close" id="modalClose">&times;</button>
-                    <div class="pacote-modal">
-                        <div class="pacote-modal__header">
-                            <div class="pacote-modal__icon-wrapper">
-                                <i class="fa-solid fa-cubes"></i>
-                            </div>
-                            <h2 class="pacote-modal__title">Gerador de Pacote</h2>
-                            <p class="pacote-modal__subtitle">Escolha o tipo, o sistema operacional e a quantidade de PCs</p>
-                        </div>
-                        <div class="pacote-modal__body">
-                            <ol class="pacote-wizard__steps" aria-label="Etapas do orçamento">
-                                <li class="pacote-wizard__step is-active" data-wizard-indicator="0" aria-current="step"><span>1</span><span>Configuração</span></li>
-                                <li class="pacote-wizard__step" data-wizard-indicator="1"><span>2</span><span>Limpeza</span></li>
-                                <li class="pacote-wizard__step" data-wizard-indicator="2"><span>3</span><span>Jogos</span></li>
-                                <li class="pacote-wizard__step" data-wizard-indicator="3"><span>4</span><span>Proteção</span></li>
-                                <li class="pacote-wizard__step" data-wizard-indicator="4"><span>5</span><span>Office</span></li>
-                                <li class="pacote-wizard__step" data-wizard-indicator="5"><span>6</span><span>Impressora</span></li>
-                                <li class="pacote-wizard__step" data-wizard-indicator="6"><span>7</span><span>Pagamento</span></li>
-                            </ol>
-
-                            <div class="pacote-wizard__panel" data-wizard-panel="0" aria-labelledby="wizardPanelTitle0">
-                                <h3 class="pacote-wizard__panel-title" id="wizardPanelTitle0" tabindex="-1">Configuração do pacote</h3>
-                                <div class="pacote-modal__field">
-                                    <label for="pacoteTipoModal"><i class="fa-solid fa-tag"></i> Tipo de formatação</label>
-                                    <div class="pacote-modal__select-wrapper">
-                                        <i class="pacote-modal__select-icon fa-solid fa-desktop" id="tipoIcon"></i>
-                                        <select id="pacoteTipoModal" class="pacote-modal__select">
-                                            <option value="standard">Standard</option>
-                                            <option value="educacional">Educacional</option>
-                                            <option value="pro">Pro</option>
-                                            <option value="gamer">Gamer</option>
-                                            <option value="premium">Premium</option>
-                                            <option value="enterprise">Enterprise</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="pacote-modal__field">
-                                    <label for="pacoteSOModal"><i class="fa-solid fa-desktop"></i> Sistema Operacional</label>
-                                    <div class="pacote-modal__select-wrapper">
-                                        <i class="pacote-modal__select-icon fa-brands fa-windows" id="soIcon"></i>
-                                        <select id="pacoteSOModal" class="pacote-modal__select"></select>
-                                    </div>
-                                </div>
-                                <div class="pacote-modal__field">
-                                    <label for="pacoteQuantidadeModal"><i class="fa-solid fa-computer"></i> Quantidade de PCs</label>
-                                    <div class="pacote-modal__input-wrapper">
-                                        <i class="pacote-modal__input-icon fa-solid fa-hashtag"></i>
-                                        <input type="number" id="pacoteQuantidadeModal" class="pacote-modal__input" value="1" min="1" max="150" step="1" />
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="pacote-wizard__panel" data-wizard-panel="1" aria-labelledby="wizardPanelTitle1" hidden>
-                                <h3 class="pacote-wizard__panel-title" id="wizardPanelTitle1" tabindex="-1">Limpeza interna</h3>
-                                <div id="wizardLimpezaSlot"></div>
-                            </div>
-
-                            <div class="pacote-wizard__panel" data-wizard-panel="2" aria-labelledby="wizardPanelTitle2" hidden>
-                                <h3 class="pacote-wizard__panel-title" id="wizardPanelTitle2" tabindex="-1">Pacote de jogos</h3>
-                                <div id="wizardJogosSlot"></div>
-                            </div>
-
-                            <div class="pacote-wizard__panel" data-wizard-panel="3" aria-labelledby="wizardPanelTitle3" hidden>
-                                <h3 class="pacote-wizard__panel-title" id="wizardPanelTitle3" tabindex="-1">Antivírus</h3>
-                                <div id="wizardAntivirusSlot"></div>
-                            </div>
-
-                            <div class="pacote-wizard__panel" data-wizard-panel="4" aria-labelledby="wizardPanelTitle4" hidden>
-                                <h3 class="pacote-wizard__panel-title" id="wizardPanelTitle4" tabindex="-1">Pacote Office</h3>
-                                <div id="wizardOfficeSlot"></div>
-                            </div>
-
-                            <div class="pacote-wizard__panel" data-wizard-panel="5" aria-labelledby="wizardPanelTitle5" hidden>
-                                <h3 class="pacote-wizard__panel-title" id="wizardPanelTitle5" tabindex="-1">Instalação de impressora</h3>
-                                <div id="wizardImpressoraSlot"></div>
-                            </div>
-
-                            <div class="pacote-wizard__panel" data-wizard-panel="6" aria-labelledby="wizardPanelTitle6" hidden>
-                                <h3 class="pacote-wizard__panel-title" id="wizardPanelTitle6" tabindex="-1">Forma de pagamento</h3>
-                                <div class="pacote-modal__payment">
-                                    <div class="payment-toggle" id="paymentToggleContainer"></div>
-                                    <div class="installment-options" id="pacoteInstallmentOptions" style="display: none;">
-                                        <label for="pacoteInstallmentCount">Número de Parcelas:</label>
-                                        <select id="pacoteInstallmentCount" class="installment-select">
-                                            <option value="2">2x</option>
-                                            <option value="3">3x</option>
-                                            <option value="4">4x</option>
-                                            <option value="5">5x</option>
-                                            <option value="6">6x</option>
-                                            <option value="7">7x</option>
-                                            <option value="8">8x</option>
-                                            <option value="9">9x</option>
-                                            <option value="10">10x</option>
-                                            <option value="11">11x</option>
-                                            <option value="12">12x</option>
-                                        </select>
-                                        <small class="installment-rate-note">Simulação estimada: de 2,00% a 3,00% ao mês, conforme o prazo. Não representa a tarifa de uma operadora específica.</small>
-                                    </div>
-                                </div>
-                                <div class="pacote-modal__action">
-                                    <button type="button" id="calcularPacoteBtn" class="btn btn--primary btn--pacote-calcular">
-                                        <i class="fa-solid fa-calculator"></i> Calcular orçamento
-                                    </button>
-                                </div>
-                                <div class="pacote-modal__base-info" id="baseInfoModal"></div>
-                                <div id="pacoteResultadoModal" class="pacote-modal__resultado" style="display:none;"></div>
-                            </div>
-
-                            <div class="pacote-wizard__navigation">
-                                <button type="button" id="pacoteWizardBack" class="btn btn--outline" disabled>
-                                    <i class="fa-solid fa-arrow-left"></i> Voltar
-                                </button>
-                                <span id="pacoteWizardStatus" class="pacote-wizard__status" aria-live="polite">Etapa 1 de 7</span>
-                                <button type="button" id="pacoteWizardNext" class="btn btn--primary">
-                                    Avançar <i class="fa-solid fa-arrow-right"></i>
-                                </button>
-                            </div>
-                        </div>
+            <div class="criacao-site__grid">
+                <div class="criacao-site__content">
+                    <span class="criacao-site__tag"><i class="fa-solid fa-desktop"></i> Formatação de computadores</span>
+                    <h2 class="criacao-site__title" id="homeFormatacaoTitle">
+                        Um novo começo
+                        <span class="criacao-site__highlight">para seu computador</span>
+                    </h2>
+                    <p class="criacao-site__desc">
+                        Instalação e configuração do sistema para estudos, trabalho ou jogos, com opções para diferentes necessidades e um atendimento cuidadoso.
+                    </p>
+                    <div class="criacao-site__grupo">
+                        <h3 class="criacao-site__grupo-titulo"><i class="fa-solid fa-bullseye"></i> Uma opção para cada perfil:</h3>
+                        <ul class="criacao-site__beneficios criacao-site__beneficios--grid-2">
+                            <li><i class="fa-solid fa-graduation-cap"></i> Estudos e tarefas do dia a dia</li>
+                            <li><i class="fa-solid fa-briefcase"></i> Trabalho e produtividade</li>
+                            <li><i class="fa-solid fa-gamepad"></i> Jogos e entretenimento</li>
+                            <li><i class="fa-solid fa-building"></i> Computadores de empresas</li>
+                        </ul>
+                    </div>
+                    <div class="criacao-site__grupo">
+                        <h3 class="criacao-site__grupo-titulo"><i class="fa-solid fa-list-check"></i> Escolha o que faz sentido para você:</h3>
+                        <ul class="criacao-site__beneficios criacao-site__beneficios--grid-2">
+                            <li><i class="fa-solid fa-sliders"></i> Diferentes tipos de configuração</li>
+                            <li><i class="fa-solid fa-desktop"></i> Opções para sistemas compatíveis</li>
+                            <li><i class="fa-solid fa-hard-drive"></i> Backup disponível em planos selecionados</li>
+                            <li><i class="fa-solid fa-cubes"></i> Planos individuais e para múltiplos computadores</li>
+                        </ul>
+                    </div>
+                    <p class="criacao-site__destaque">
+                        <i class="fa-solid fa-circle-info"></i> Consulte os planos disponíveis e selecione o sistema operacional e o tipo de formatação que combinam com seu equipamento.
+                    </p>
+                    <div class="criacao-site__actions">
+                        <a href="formatacao/formatacao.html#formatacao" class="btn btn--primary btn--lg">
+                            Conheça a formatação <i class="fa-solid fa-arrow-right"></i>
+                        </a>
                     </div>
                 </div>
-            </div>
-            <!-- ============================================================
-            FIM DO MODAL DO GERADOR DE PACOTE
-            ============================================================ -->
-
-            <!-- Mensagem corporativa -->
-            <div id="mensagemPlanosCorporativos" style="display: none; text-align: center; margin-top: 40px; padding: 24px; background: rgba(16, 185, 129, 0.05); border: 1px solid rgba(16, 185, 129, 0.15); border-radius: 12px;">
-                <p style="font-size: 1.1rem; color: var(--color-text-secondary);">
-                    <i class="fa-solid fa-building" style="color: var(--color-primary); margin-right: 8px;"></i>
-                    Precisa de planos corporativos ou pacotes <strong style="color: var(--color-primary-light);">"Enterprise"</strong> personalizados? 
-                    Entre em contato e descubra soluções sob medida para sua empresa.
-                </p>
-                <a href="https://wa.me/5548996446508?text=Olá!%20Gostaria%20de%20saber%20mais%20sobre%20planos%20corporativos%20de%20formatação." target="_blank" rel="noopener" class="btn btn--whatsapp" style="margin-top: 12px;">
-                    <i class="fa-brands fa-whatsapp"></i> Fale conosco
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- ============================================================
-    SEÇÃO: RECUPERAÇÃO DE DADOS
-    ============================================================ -->
-    <section class="recovery" id="recuperacao">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-header__tag">Recuperação de Dados</span>
-                <h2 class="section-header__title">Seus arquivos estão seguros conosco</h2>
-                <p class="section-header__desc">Oferecemos planos flexíveis para recuperação dos seus dados perdidos</p>
-            </div>
-            <div class="recovery-cards" id="recoveryGrid"></div>
-            <div class="recovery-extra">
-                <div class="recovery-extra__card">
-                    <span class="recovery-extra__icon"><i class="fa-solid fa-comment-dots"></i></span>
-                    <h3>Precisa recuperar mais de <strong>80 GB</strong>?</h3>
-                    <p>Entre em contato diretamente pelo WhatsApp para um orçamento personalizado.</p>
-                    <a href="https://wa.me/5548996446508?text=Olá!%20Preciso%20recuperar%20mais%20de%2080GB%20de%20dados.%20Pode%20me%20fazer%20um%20orçamento%3F" target="_blank" rel="noopener" class="btn btn--whatsapp">
-                        <i class="fa-brands fa-whatsapp"></i> Orçamento via WhatsApp
-                    </a>
+                <div class="criacao-site__image">
+                    <img
+                        src="img/formatacao/formatao-de-computadores.webp"
+                        alt="Formatação e configuração de computadores"
+                        class="criacao-site__image-img"
+                        loading="lazy"
+                        decoding="async"
+                    />
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ============================================================
-    SEÇÃO: LIMPEZA E MANUTENÇÃO (COM HTMX PARA DICAS)
-    ============================================================ -->
-    <section class="cleaning" id="limpeza">
+    <section class="criacao-site" id="recuperacao-de-dados" aria-labelledby="homeRecoveryTitle">
         <div class="container">
-            <div class="section-header">
-                <span class="section-header__tag">Limpeza e Manutenção</span>
-                <h2 class="section-header__title">Cuide do seu equipamento</h2>
-                <p class="section-header__desc">Serviços profissionais de limpeza e manutenção preventiva para aumentar a vida útil do seu computador</p>
-            </div>
-            <div class="recovery-cards" id="cleaningGrid"></div>
-            <div class="recovery-extra">
-                <div class="recovery-extra__card">
-                    <span class="recovery-extra__icon"><i class="fa-solid fa-lightbulb"></i></span>
-                    <h3>Dica de ouro</h3>
-                    <p>Realizar limpeza interna a cada 6 meses aumenta a vida útil do seu computador em até <strong>50%</strong>.</p>
-                    <a href="https://wa.me/5548996446508?text=Olá!%20Gostaria%20de%20agendar%20uma%20limpeza%20preventiva." target="_blank" rel="noopener" class="btn btn--whatsapp">
-                        <i class="fa-brands fa-whatsapp"></i> Agendar limpeza
-                    </a>
+            <div class="criacao-site__grid">
+                <div class="criacao-site__content">
+                    <span class="criacao-site__tag"><i class="fa-solid fa-database"></i> Recuperação de dados</span>
+                    <h2 class="criacao-site__title" id="homeRecoveryTitle">
+                        Seus arquivos merecem
+                        <span class="criacao-site__highlight">uma segunda chance</span>
+                    </h2>
+                    <p class="criacao-site__desc">
+                        Conheça as opções para recuperar fotos, documentos e outros arquivos importantes perdidos por exclusões acidentais ou falhas.
+                    </p>
+                    <div class="criacao-site__grupo">
+                        <h3 class="criacao-site__grupo-titulo"><i class="fa-solid fa-folder-open"></i> Arquivos que você pode buscar:</h3>
+                        <ul class="criacao-site__beneficios criacao-site__beneficios--grid-2">
+                            <li><i class="fa-solid fa-image"></i> Fotos e imagens</li>
+                            <li><i class="fa-solid fa-video"></i> Vídeos</li>
+                            <li><i class="fa-solid fa-file-lines"></i> Documentos</li>
+                            <li><i class="fa-solid fa-folder"></i> Outros arquivos pessoais</li>
+                        </ul>
+                    </div>
+                    <div class="criacao-site__grupo">
+                        <h3 class="criacao-site__grupo-titulo"><i class="fa-solid fa-list-check"></i> Encontre um plano adequado:</h3>
+                        <ul class="criacao-site__beneficios criacao-site__beneficios--grid-2">
+                            <li><i class="fa-solid fa-hard-drive"></i> Recuperação cobrada por gigabyte</li>
+                            <li><i class="fa-solid fa-box-archive"></i> Pacote de até 50 GB</li>
+                            <li><i class="fa-solid fa-box"></i> Pacote de até 80 GB</li>
+                            <li><i class="fa-solid fa-comments"></i> Orçamento personalizado para volumes maiores</li>
+                        </ul>
+                    </div>
+                    <p class="criacao-site__destaque">
+                        <i class="fa-solid fa-circle-info"></i> A quantidade de dados recuperada e as opções mais adequadas dependem do caso. Consulte os planos e converse antes de contratar.
+                    </p>
+                    <div class="criacao-site__actions">
+                        <a href="recuperacao-de-dados/recuperacao-de-dados.html#recuperacao" class="btn btn--primary btn--lg">
+                            Conheça a recuperação <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="criacao-site__image">
+                    <img
+                        src="img/recuperao-de-dados/recuperao-de-dados.webp"
+                        alt="Recuperação de arquivos e dados digitais"
+                        class="criacao-site__image-img"
+                        loading="lazy"
+                        decoding="async"
+                    />
                 </div>
             </div>
+        </div>
+    </section>
 
-            <!-- ============================================================
-            SEÇÃO DE DICAS CARREGADA VIA HTMX
-            ============================================================ -->
-            <div style="margin-top: 40px; text-align: center;">
-                <button id="carregarDicasBtn" class="btn btn--outline" type="button"
-                        onclick="carregarDicas()"
-                        style="margin-bottom: 16px;">
-                    <i class="fa-solid fa-lightbulb"></i> Ver dicas de manutenção
-                </button>
-                <div id="dicasContainer"></div>
+    <section class="criacao-site" id="limpeza" aria-labelledby="homeCleaningTitle">
+        <div class="container">
+            <div class="criacao-site__grid">
+                <div class="criacao-site__content">
+                    <span class="criacao-site__tag"><i class="fa-solid fa-broom"></i> Limpeza e manutenção</span>
+                    <h2 class="criacao-site__title" id="homeCleaningTitle">
+                        Mais cuidado e vida útil
+                        <span class="criacao-site__highlight">para seu equipamento</span>
+                    </h2>
+                    <p class="criacao-site__desc">
+                        A limpeza preventiva ajuda a reduzir o acúmulo de poeira e o superaquecimento, mantendo seu computador ou notebook funcionando melhor.
+                    </p>
+                    <div class="criacao-site__grupo">
+                        <h3 class="criacao-site__grupo-titulo"><i class="fa-solid fa-list-check"></i> Cuidados disponíveis:</h3>
+                        <ul class="criacao-site__beneficios criacao-site__beneficios--grid-2">
+                            <li><i class="fa-solid fa-fan"></i> Limpeza interna de ventoinhas e dissipadores</li>
+                            <li><i class="fa-solid fa-screwdriver-wrench"></i> Desmontagem e montagem nos planos Plus</li>
+                            <li><i class="fa-solid fa-temperature-half"></i> Aplicação de pasta térmica nova nos planos Plus</li>
+                            <li><i class="fa-solid fa-desktop"></i> Opções com limpeza física e serviços adicionais</li>
+                        </ul>
+                    </div>
+                    <p class="criacao-site__destaque">
+                        <i class="fa-solid fa-lightbulb"></i> A frequência ideal depende do uso e do ambiente. A página de limpeza também traz dicas para cuidar do equipamento no dia a dia.
+                    </p>
+                    <div class="criacao-site__actions">
+                        <a href="limpeza/limpeza.html#limpeza" class="btn btn--primary btn--lg">
+                            Conheça a limpeza <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="criacao-site__image">
+                    <img
+                        src="img/limpeza-de-computador/limpeza-de-computador.webp"
+                        alt="Limpeza e manutenção preventiva de computador"
+                        class="criacao-site__image-img"
+                        loading="lazy"
+                        decoding="async"
+                    />
+                </div>
             </div>
         </div>
     </section>
@@ -649,13 +497,93 @@
                         <a href="https://wa.me/5548996446508?text=Olá!%20Gostaria%20de%20um%20orçamento%20para%20criação%20de%20site." target="_blank" rel="noopener" class="btn btn--whatsapp btn--lg">
                             <i class="fa-brands fa-whatsapp"></i> Solicitar orçamento
                         </a>
-                        <a href="#servicos" class="btn btn--outline btn--lg">Ver outros serviços</a>
+                        <a href="servicos/servicos.html" class="btn btn--outline btn--lg">Ver outros serviços</a>
                     </div>
                 </div>
                 <div class="criacao-site__image">
                     <img src="img/Site Profissional.webp" alt="Site Profissional" class="criacao-site__image-img" loading="lazy" decoding="async" />
                 </div>
             </div>
+
+            <section class="criacao-site__grid criacao-site__grid--service" id="aulas-particulares" aria-labelledby="homeLessonsTitle">
+                <div class="criacao-site__content">
+                    <span class="criacao-site__tag"><i class="fa-solid fa-graduation-cap"></i> Aprenda no seu ritmo</span>
+                    <h2 class="criacao-site__title" id="homeLessonsTitle">
+                        Aulas particulares de informática
+                        <span class="criacao-site__highlight">com acompanhamento individual</span>
+                    </h2>
+                    <p class="criacao-site__desc">
+                        Aprenda a usar o computador e os recursos digitais do dia a dia com explicações simples e aulas planejadas de acordo com suas necessidades.
+                    </p>
+                    <div class="criacao-site__grupo">
+                        <h3 class="criacao-site__grupo-titulo"><i class="fa-solid fa-book-open"></i> O que você pode aprender:</h3>
+                        <ul class="criacao-site__beneficios criacao-site__beneficios--grid-2">
+                            <li><i class="fa-brands fa-windows"></i> Windows, Linux e organização de arquivos</li>
+                            <li><i class="fa-solid fa-globe"></i> Navegação na internet e pesquisas</li>
+                            <li><i class="fa-solid fa-envelope"></i> E-mail e compartilhamento de anexos</li>
+                            <li><i class="fa-solid fa-file-lines"></i> Editores de documentos</li>
+                            <li><i class="fa-solid fa-shield-halved"></i> Segurança digital e reconhecimento de golpes</li>
+                            <li><i class="fa-solid fa-keyboard"></i> Digitação e matemática básica</li>
+                        </ul>
+                    </div>
+                    <p class="criacao-site__destaque">
+                        <i class="fa-solid fa-user-check"></i> As aulas são individuais e o conteúdo acompanha suas dúvidas, seu nível de experiência e seus objetivos.
+                    </p>
+                    <div class="criacao-site__actions">
+                        <a href="aulas-particulares/aula-particular.html" class="btn btn--primary btn--lg">
+                            Conheça as aulas <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="criacao-site__image">
+                    <img
+                        src="img/aula-particular/aulas-particulares-leandro-stanger.webp"
+                        alt="Aulas particulares de informática com Leandro Stanger"
+                        class="criacao-site__image-img"
+                        loading="lazy"
+                        decoding="async"
+                    />
+                </div>
+            </section>
+
+            <section class="criacao-site__grid criacao-site__grid--service" id="acesso-remoto" aria-labelledby="homeRemoteTitle">
+                <div class="criacao-site__content">
+                    <span class="criacao-site__tag"><i class="fa-solid fa-headset"></i> Atendimento de onde você estiver</span>
+                    <h2 class="criacao-site__title" id="homeRemoteTitle">
+                        Suporte técnico
+                        <span class="criacao-site__highlight">sem sair de casa</span>
+                    </h2>
+                    <p class="criacao-site__desc">
+                        Receba ajuda à distância com configurações, instalação de programas e problemas do dia a dia no computador.
+                    </p>
+                    <div class="criacao-site__grupo">
+                        <h3 class="criacao-site__grupo-titulo"><i class="fa-solid fa-list-check"></i> Como o suporte pode ajudar:</h3>
+                        <ul class="criacao-site__beneficios criacao-site__beneficios--grid-2">
+                            <li><i class="fa-solid fa-screwdriver-wrench"></i> Identificação de problemas comuns</li>
+                            <li><i class="fa-solid fa-download"></i> Instalação e configuração de programas</li>
+                            <li><i class="fa-solid fa-sliders"></i> Ajustes nas configurações do sistema</li>
+                            <li><i class="fa-solid fa-wifi"></i> Atendimento remoto com conexão à internet</li>
+                        </ul>
+                    </div>
+                    <p class="criacao-site__destaque">
+                        <i class="fa-solid fa-shield-halved"></i> A conexão só acontece com sua autorização durante o atendimento combinado. Consulte a disponibilidade para o seu caso.
+                    </p>
+                    <div class="criacao-site__actions">
+                        <a href="suporte-remoto/suporte-remoto.html" class="btn btn--primary btn--lg">
+                            Conheça o acesso remoto <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="criacao-site__image">
+                    <img
+                        src="img/Suporte Remoto.webp"
+                        alt="Atendimento de suporte técnico remoto em um computador"
+                        class="criacao-site__image-img"
+                        loading="lazy"
+                        decoding="async"
+                    />
+                </div>
+            </section>
         </div>
     </section>
 
@@ -799,10 +727,10 @@
                 <div class="footer__links">
                     <h4>Links Rápidos</h4>
                     <ul>
-                        <li><a href="#servicos">Serviços</a></li>
-                        <li><a href="#formatacao">Formatação</a></li>
-                        <li><a href="#recuperacao">Recuperação</a></li>
-                        <li><a href="#limpeza">Limpeza</a></li>
+                        <li><a href="servicos/servicos.html">Serviços</a></li>
+                        <li><a href="formatacao/formatacao.html">Formatação</a></li>
+                        <li><a href="recuperacao-de-dados/recuperacao-de-dados.html">Recuperação</a></li>
+                        <li><a href="limpeza/limpeza.html">Limpeza</a></li>
                         <li><a href="#criacao-site">Criação de Sites</a></li>
                         <li><a href="#clientes">Clientes</a></li>
                         <li><a href="aulas-particulares/aula-particular.html">Aulas particulares</a></li>
@@ -935,55 +863,6 @@
                 console.warn('particles.js não carregado.');
             }
         });
-
-        // ============================================================
-        // CARREGAMENTO DAS DICAS EM FORMATO JSON
-        // ============================================================
-        window.carregarDicas = async function () {
-            const container = document.getElementById('dicasContainer');
-            const button = document.getElementById('carregarDicasBtn');
-
-            if (!container) return;
-
-            try {
-                const response = await fetch('servicos/dicas.json', { cache: 'no-store' });
-                if (!response.ok) throw new Error('Falha ao carregar dicas');
-
-                const dicas = await response.json();
-                const cards = Array.isArray(dicas) ? dicas : [];
-
-                if (!cards.length) {
-                    throw new Error('Nenhuma dica encontrada');
-                }
-
-                container.innerHTML = `
-                    <div class="dicas-grid">
-                        ${cards.map(dica => `
-                            <div class="dica-card">
-                                <div class="dica-card__icon"><i class="${dica.icon}"></i></div>
-                                <h4>${dica.title}</h4>
-                                <p>${dica.description}</p>
-                            </div>
-                        `).join('')}
-                    </div>
-                `;
-
-                if (button) {
-                    button.innerHTML = '<i class="fa-solid fa-check"></i> Dicas carregadas';
-                    button.disabled = true;
-                }
-            } catch (error) {
-                container.innerHTML = `
-                    <div class="dicas-grid">
-                        <div class="dica-card">
-                            <div class="dica-card__icon"><i class="fa-solid fa-circle-exclamation"></i></div>
-                            <h4>Não foi possível carregar as dicas</h4>
-                            <p>Verifique se o arquivo servicos/dicas.json está presente na pasta do site e tente novamente.</p>
-                        </div>
-                    </div>
-                `;
-            }
-        };
 
     </script>
 
