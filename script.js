@@ -171,6 +171,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let servicosExpandidos = false;
 
     const LOGOS_DISTRIBUICOES_LINUX = [
+        'img/formatacao/logo/logo-debian.webp',
         'img/formatacao/logo/logo-endless-os.webp',
         'img/formatacao/logo/logo-fedora.webp',
         'img/formatacao/logo/logo-linux-mint.webp',
