@@ -166,8 +166,17 @@ document.addEventListener('DOMContentLoaded', function() {
     let servicosGlobais = [];
     let tipoSelecionado = 'standard';
     let soSelecionado = 'windows';
+    let logoDistribuicaoLinuxSelecionado = '';
     let geradorConfigurado = false;
     let servicosExpandidos = false;
+
+    const LOGOS_DISTRIBUICOES_LINUX = [
+        'img/formatacao/logo/logo-endless-os.webp',
+        'img/formatacao/logo/logo-fedora.webp',
+        'img/formatacao/logo/logo-linux-mint.webp',
+        'img/formatacao/logo/logo-ubuntu.webp',
+        'img/formatacao/logo/logo-zorin-os.webp'
+    ];
 
     // IDs dos pacotes de jogos que NUNCA devem aparecer na seção de formatação
     const IDS_PACOTES_JOGOS = [72, 73, 74];
@@ -783,11 +792,25 @@ document.addEventListener('DOMContentLoaded', function() {
             `;
         }
 
+        const logosFormatacao = {
+            windows: 'img/formatacao/logo/logo-windows-11.webp',
+            linux: logoDistribuicaoLinuxSelecionado || 'img/formatacao/logo/logo-ubuntu.webp',
+            mac: 'img/formatacao/logo/logo-mac-os.webp',
+            biglinux: 'img/formatacao/logo/logo-biglinux.webp',
+            'steam-machine': 'img/formatacao/logo/logo-steam-os.webp',
+            'steam-deck': 'img/formatacao/logo/logo-steam-os.webp'
+        };
+        const logoFormatacao = tipo === 'formatacao' && logosFormatacao[servico.sistema]
+            ? '<img class="formatacao-card__logo' + (servico.sistema === 'windows' ? ' formatacao-card__logo--windows' : '') + '" src="' + logosFormatacao[servico.sistema] + '" alt="" aria-hidden="true" loading="lazy" decoding="async" />'
+            : '<span class="recovery-card__icon"><i class="' + servico.icone + '"></i></span>';
+
         card.innerHTML =
             '<div class="recovery-card__header">' +
-            '<span class="recovery-card__icon"><i class="' + servico.icone + '"></i></span>' +
+            logoFormatacao +
+            '<div class="formatacao-card__heading">' +
             '<h3>' + titulo + '</h3>' +
             tagHtml +
+            '</div>' +
             '</div>' +
             '<div class="recovery-card__body">' +
             '<p class="recovery-card__price-label">' + priceLabel + '</p>' +
@@ -1128,6 +1151,15 @@ document.addEventListener('DOMContentLoaded', function() {
     // 14. ATUALIZAR FORMAÇÃO (com filtro extra para pacotes de jogos)
     // ============================================================
     function atualizarFormatacao(servicos, tipo, so) {
+        if (so === 'linux') {
+            const logosDisponiveis = LOGOS_DISTRIBUICOES_LINUX.filter(function(logo) {
+                return logo !== logoDistribuicaoLinuxSelecionado;
+            });
+            logoDistribuicaoLinuxSelecionado = logosDisponiveis[
+                Math.floor(Math.random() * logosDisponiveis.length)
+            ];
+        }
+
         let servicosFiltrados = [];
         if (tipo === 'go') {
             servicosFiltrados = servicos.filter(function(s) {
@@ -1231,11 +1263,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     btn.className = 'filter-tab' + (sistema === soSelecionado ? ' filter-tab--active' : '');
                     btn.dataset.so = sistema;
                     if (sistema === 'windows') {
-                        btn.innerHTML = '<i class="fa-brands fa-windows"></i> Windows';
+                        btn.innerHTML = '<i class="fa-brands fa-windows" aria-hidden="true"></i> Windows';
                     } else if (sistema === 'linux') {
-                        btn.innerHTML = '<i class="fa-brands fa-linux"></i> Linux';
+                        btn.innerHTML = '<i class="fa-brands fa-linux" aria-hidden="true"></i> Linux';
                     } else if (sistema === 'mac') {
-                        btn.innerHTML = '<i class="fa-brands fa-apple"></i> Mac OS';
+                        btn.innerHTML = '<i class="fa-brands fa-apple" aria-hidden="true"></i> macOS';
                     } else if (sistema === 'steam-machine') {
                         btn.innerHTML = '<i class="fa-brands fa-steam"></i> Steam Machine';
                     } else if (sistema === 'steam-deck') {
