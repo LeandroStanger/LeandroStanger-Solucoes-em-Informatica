@@ -701,6 +701,9 @@ document.addEventListener('DOMContentLoaded', function() {
             isPopular = true;
         }
         card.className = 'recovery-card' + (isPopular ? ' recovery-card--popular' : '');
+        if (tipo === 'dados' || tipo === 'limpeza') {
+            card.classList.add('recovery-plan');
+        }
         if (servico.badge === '⭐ Mais escolhido') {
             card.classList.add('recovery-card--mais-escolhido');
         }
@@ -793,8 +796,12 @@ document.addEventListener('DOMContentLoaded', function() {
             `;
         }
 
+        const windowsLogos = [
+            'img/formatacao/logo/logo-windows-10.webp',
+            'img/formatacao/logo/logo-windows-11.webp'
+        ];
         const logosFormatacao = {
-            windows: 'img/formatacao/logo/logo-windows-11.webp',
+            windows: windowsLogos[Math.floor(Math.random() * windowsLogos.length)],
             linux: logoDistribuicaoLinuxSelecionado || 'img/formatacao/logo/logo-ubuntu.webp',
             mac: 'img/formatacao/logo/logo-mac-os.webp',
             biglinux: 'img/formatacao/logo/logo-biglinux.webp',
