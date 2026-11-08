@@ -469,18 +469,42 @@
     }
 
     .remote-hero {
-        grid-template-columns: 1fr;
-        gap: 28px;
+        display: flex;
+        flex-direction: column;
+        gap: 0;
     }
 
     .remote-hero__content {
+        display: contents;
         max-width: none;
     }
 
     .remote-hero__image-wrap {
+        order: 2;
         width: 100%;
         max-width: 600px;
         margin: 0 auto;
+        margin-bottom: 28px;
+    }
+
+    .remote-hero__tag {
+        order: 0;
+    }
+
+    .remote-hero h1 {
+        order: 1;
+    }
+
+    .remote-hero__intro {
+        order: 3;
+    }
+
+    .remote-hero__actions {
+        order: 4;
+    }
+
+    .remote-payment {
+        order: 5;
     }
 
     .remote-details__grid {
