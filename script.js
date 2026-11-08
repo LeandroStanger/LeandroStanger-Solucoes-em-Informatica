@@ -169,6 +169,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let logoDistribuicaoLinuxSelecionado = '';
     let geradorConfigurado = false;
     let servicosExpandidos = false;
+    let buscaServicos = '';
 
     const LOGOS_DISTRIBUICOES_LINUX = [
         'img/formatacao/logo/logo-debian.webp',
@@ -514,8 +515,17 @@ document.addEventListener('DOMContentLoaded', function() {
         if (servicesGrid) {
             servicesGrid.innerHTML = '';
             const servicosVisiveis = servicos.filter(function(s) {
-                return s.exibir !== false && IDS_PACOTES_JOGOS.indexOf(s.id) === -1;
+                const ehFormatacaoStandardOculta = s.categoria === 'formatacao' &&
+                    /^Formatação Standard(?: Plus Prime)?\s*\(/i.test(s.titulo);
+                return s.exibir !== false &&
+                    IDS_PACOTES_JOGOS.indexOf(s.id) === -1 &&
+                    !ehFormatacaoStandardOculta;
             });
+            for (let i = servicosVisiveis.length - 1; i > 0; i--) {
+                const indiceAleatorio = Math.floor(Math.random() * (i + 1));
+                [servicosVisiveis[i], servicosVisiveis[indiceAleatorio]] =
+                    [servicosVisiveis[indiceAleatorio], servicosVisiveis[i]];
+            }
             servicosVisiveis.forEach(function(servico) {
                 const card = criarCardServico(servico);
                 servicesGrid.appendChild(card);
@@ -601,14 +611,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 else if (item.toLowerCase().includes('garantia')) icone = 'fa-shield-check';
                 else if (item.toLowerCase().includes('impressora')) icone = 'fa-print';
                 else if (item.toLowerCase().includes('limpeza')) icone = 'fa-broom';
-                return '<span><i class="fa-solid ' + icone + '" style="color: var(--color-primary-light); margin-right: 4px;"></i> ' + item + '</span>';
+                return '<span><i class="fa-solid ' + icone + '"></i> ' + item + '</span>';
             }).join('');
             brindesHtml = `
-                <div style="margin-top: 8px; padding: 6px 10px; background: rgba(16,185,129,0.06); border-radius: 6px; border-left: 2px solid var(--color-primary-light); text-align: left; font-size: 0.75rem; color: var(--color-text-secondary);">
-                    <div style="font-weight: 600; color: var(--color-primary-light); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 2px;">
-                        <i class="fa-solid fa-gift" style="margin-right: 4px;"></i> Brindes exclusivos
+                <div class="service-card__gift">
+                    <div class="service-card__gift-title">
+                        <i class="fa-solid fa-gift"></i> Brindes exclusivos
                     </div>
-                    <div style="display: flex; flex-direction: column; gap: 2px;">
+                    <div class="service-card__gift-list">
                         ${itens}
                     </div>
                 </div>
@@ -631,18 +641,26 @@ document.addEventListener('DOMContentLoaded', function() {
             : '';
 
         card.innerHTML =
-            '<div class="service-card__icon"><i class="' + servico.icone + '"></i></div>' +
-            '<h3 class="service-card__title">' + titulo + '</h3>' +
-            '<p class="service-card__desc">' + servico.descricao + '</p>' +
-            jogosHtml +
-            '<span class="service-card__price">' + servico.preco + '</span>' +
-            badgeHtml +
-            brindesHtml +
+            '<div class="service-card__header">' +
+                '<span class="service-card__icon"><i class="' + servico.icone + '"></i></span>' +
+                '<div class="service-card__heading">' +
+                    '<h3 class="service-card__title">' + titulo + '</h3>' +
+                    badgeHtml +
+                '</div>' +
+            '</div>' +
+            '<div class="service-card__body">' +
+                '<p class="service-card__desc">' + servico.descricao + '</p>' +
+                jogosHtml +
+                brindesHtml +
+            '</div>' +
+            '<div class="service-card__footer">' +
+                '<span class="service-card__price">' + servico.preco + '</span>' +
             suporteRemotoLink +
             aulasParticularesLink +
             '<a href="https://wa.me/5548996446508?text=' + encodeURIComponent(servico.whatsapp) + '" target="_blank" rel="noopener" class="service-card__btn btn btn--outline btn--sm">' +
             '<i class="fa-brands fa-whatsapp"></i> Falar no WhatsApp' +
-            '</a>';
+            '</a>' +
+            '</div>';
 
         return card;
     }
@@ -1006,35 +1024,19 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ============================================================
-    // 11. PAGINAÇÃO (duas linhas por largura disponível)
+    // 11. PAGINAÇÃO DOS SERVIÇOS
     // ============================================================
-    function calcularCardsPorLinha(grid) {
-        const cards = grid.querySelectorAll('.service-card');
-        if (!cards.length) return 1;
-
-        const estilo = window.getComputedStyle(grid);
-        const gap = parseFloat(estilo.columnGap || estilo.gap || 0) || 0;
-        const cardWidth = cards[0].getBoundingClientRect().width || parseFloat(
-            window.getComputedStyle(document.documentElement).getPropertyValue('--card-min-width')
-        ) || 240;
-
-        const cardsPorLinha = Math.max(1, Math.floor((grid.clientWidth + gap) / (cardWidth + gap)));
-        grid.style.gridTemplateColumns = 'repeat(' + cardsPorLinha + ', minmax(0, 1fr))';
-        return cardsPorLinha;
-    }
-
     function aplicarPaginacao() {
         const grid = document.getElementById('servicesGrid');
         if (!grid) return;
 
-        const cardsPorLinha = calcularCardsPorLinha(grid);
         const cards = grid.querySelectorAll('.service-card');
         const cardsVisiveis = Array.from(cards).filter(function(card) {
             return card.dataset.filteredVisible !== 'false';
         });
-        const limiteAtual = servicosExpandidos
+        const limiteAtual = servicosExpandidos || buscaServicos
             ? cardsVisiveis.length
-            : cardsPorLinha * 2;
+            : 5;
 
         const btnContainer = document.getElementById('btnVerTodosContainer');
         if (btnContainer) {
@@ -1042,7 +1044,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         cardsVisiveis.forEach(function(card, index) {
-            card.style.display = index < limiteAtual ? 'flex' : 'none';
+            card.style.display = index < limiteAtual ? 'grid' : 'none';
         });
         cards.forEach(function(card) {
             if (card.dataset.filteredVisible === 'false') {
@@ -1058,7 +1060,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             const btn = document.createElement('button');
             btn.className = 'btn btn--primary';
-            btn.textContent = 'Ver mais ' + (cardsVisiveis.length - limiteAtual) + ' serviços';
+            btn.textContent = 'Ver mais serviços';
             btn.addEventListener('click', function() {
                 servicosExpandidos = true;
                 aplicarPaginacao();
@@ -1075,41 +1077,48 @@ document.addEventListener('DOMContentLoaded', function() {
     function configurarFiltros() {
         const filterTabs = document.querySelectorAll('#filterTabs .filter-tab');
         const servicesGrid = document.getElementById('servicesGrid');
+        const serviceSearch = document.getElementById('serviceSearch');
+        const clearServiceSearch = document.getElementById('clearServiceSearch');
+        const emptyState = document.getElementById('servicesEmptyState');
 
         if (!servicesGrid) return;
 
         const categoriasFormatacao = ['formatacao', 'pro', 'educacional', 'enterprise', 'premium'];
-        let redimensionamentoPaginacao;
-
-        window.addEventListener('resize', function() {
-            window.clearTimeout(redimensionamentoPaginacao);
-            redimensionamentoPaginacao = window.setTimeout(aplicarPaginacao, 120);
-        });
+        let categoriaSelecionada = 'all';
 
         function filterServices(category) {
+            categoriaSelecionada = category;
+            const termosBusca = buscaServicos
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '')
+                .toLocaleLowerCase('pt-BR')
+                .trim()
+                .split(/\s+/)
+                .filter(Boolean);
             const cards = servicesGrid.querySelectorAll('.service-card');
+            let quantidadeEncontrada = 0;
             cards.forEach(function(card) {
                 const cardCategory = card.dataset.category;
-                let mostrar = false;
-                if (category === 'all') {
-                    mostrar = true;
-                } else if (category === 'formatacao') {
-                    if (categoriasFormatacao.indexOf(cardCategory) !== -1) {
-                        mostrar = true;
-                    }
-                } else if (category === 'limpeza') {
-                    if (cardCategory === 'limpeza' || cardCategory === 'limpeza_destaque') {
-                        mostrar = true;
-                    }
-                } else {
-                    if (cardCategory === category) {
-                        mostrar = true;
-                    }
-                }
+                const correspondeCategoria = category === 'all' ||
+                    (category === 'formatacao'
+                        ? categoriasFormatacao.indexOf(cardCategory) !== -1
+                        : category === 'limpeza'
+                            ? cardCategory === 'limpeza' || cardCategory === 'limpeza_destaque'
+                            : cardCategory === category);
+                const textoCard = card.textContent
+                    .normalize('NFD')
+                    .replace(/[\u0300-\u036f]/g, '')
+                    .toLocaleLowerCase('pt-BR');
+                const correspondeBusca = termosBusca.every(function(termo) {
+                    return textoCard.includes(termo);
+                });
+                const mostrar = correspondeCategoria && correspondeBusca;
+                if (mostrar) quantidadeEncontrada++;
                 card.dataset.filteredVisible = mostrar ? 'true' : 'false';
-                card.style.display = mostrar ? 'flex' : 'none';
+                card.style.display = mostrar ? 'grid' : 'none';
             });
             servicosExpandidos = false;
+            if (emptyState) emptyState.hidden = quantidadeEncontrada > 0;
             aplicarPaginacao();
         }
 
@@ -1121,6 +1130,24 @@ document.addEventListener('DOMContentLoaded', function() {
                 filterServices(filter);
             });
         });
+
+        if (serviceSearch) {
+            serviceSearch.addEventListener('input', function() {
+                buscaServicos = serviceSearch.value;
+                if (clearServiceSearch) clearServiceSearch.hidden = !buscaServicos;
+                filterServices(categoriaSelecionada);
+            });
+        }
+
+        if (serviceSearch && clearServiceSearch) {
+            clearServiceSearch.addEventListener('click', function() {
+                serviceSearch.value = '';
+                buscaServicos = '';
+                clearServiceSearch.hidden = true;
+                filterServices(categoriaSelecionada);
+                serviceSearch.focus();
+            });
+        }
 
         filterServices('all');
     }
