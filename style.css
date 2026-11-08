@@ -3566,6 +3566,30 @@ strong {
         --header-height: 64px;
     }
 
+    .criacao-site__grid {
+        row-gap: 20px;
+    }
+
+    .criacao-site__content {
+        display: contents;
+    }
+
+    .criacao-site__tag {
+        order: 0;
+    }
+
+    .criacao-site__title {
+        order: 1;
+    }
+
+    .criacao-site__image {
+        order: 2;
+    }
+
+    .criacao-site__content > :not(.criacao-site__tag):not(.criacao-site__title) {
+        order: 3;
+    }
+
     .hero {
         min-height: 90vh;
         padding: 80px 20px 60px;
