@@ -192,12 +192,12 @@
 }
 
 .remote-hero__image-wrap {
-    padding: 10px;
-    overflow: hidden;
-    background: linear-gradient(145deg, rgba(52, 211, 153, 0.25), rgba(28, 33, 40, 0.9));
-    border: 1px solid rgba(52, 211, 153, 0.25);
-    border-radius: var(--radius-xl);
-    box-shadow: var(--shadow-lg), var(--shadow-glow);
+    padding: 0;
+    overflow: visible;
+    background: none;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
 }
 
 .remote-hero__image {
@@ -551,12 +551,11 @@
     }
 
     .remote-hero__image-wrap {
-        padding: 6px;
-        border-radius: var(--radius-lg);
+        padding: 0;
     }
 
     .remote-hero__image {
-        border-radius: calc(var(--radius-lg) - 6px);
+        border-radius: var(--radius-lg);
     }
 
     .remote-hero__actions {
