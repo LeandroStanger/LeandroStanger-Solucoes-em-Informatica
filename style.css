@@ -849,6 +849,39 @@ strong {
         gap: 28px;
     }
 
+    .recuperacao-hero__content,
+    .limpeza-hero__content {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .recuperacao-hero__text,
+    .limpeza-hero__text {
+        display: contents;
+    }
+
+    .recuperacao-hero__text > .section-header__tag,
+    .limpeza-hero__text > .section-header__tag {
+        order: 0;
+    }
+
+    .recuperacao-hero__text > .section-header__title,
+    .limpeza-hero__text > .section-header__title {
+        order: 1;
+    }
+
+    .recuperacao-hero__image,
+    .limpeza-hero__image {
+        order: 2;
+        margin-bottom: 28px;
+    }
+
+    .recuperacao-hero__text > p,
+    .limpeza-hero__text > p {
+        order: 3;
+    }
+
     .recuperacao-arquivos__image,
     .limpeza-info__image {
         order: 0;
@@ -1057,6 +1090,74 @@ strong {
     color: var(--color-text-secondary);
     font-size: 1.02rem;
     line-height: 1.8;
+}
+
+@media (max-width: 768px) {
+    .recuperacao-arquivos__content {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .recuperacao-arquivos__text {
+        display: contents;
+    }
+
+    .recuperacao-arquivos__text > .section-header__tag {
+        order: 0;
+    }
+
+    .recuperacao-arquivos__text > .section-header__title {
+        order: 1;
+    }
+
+    .recuperacao-arquivos__image {
+        order: 2;
+        margin-bottom: 28px;
+    }
+
+    .recuperacao-arquivos__text > p {
+        order: 3;
+    }
+
+    .recuperacao-arquivos__text > .recuperacao-arquivos__lista {
+        order: 4;
+    }
+
+    .limpeza-info__content {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .limpeza-info__text {
+        display: contents;
+    }
+
+    .limpeza-info__text > .section-header__tag {
+        order: 0;
+    }
+
+    .limpeza-info__text > .section-header__title {
+        order: 1;
+    }
+
+    .limpeza-info__image {
+        order: 2;
+        margin-bottom: 28px;
+    }
+
+    .limpeza-info__text > p:first-of-type {
+        order: 3;
+    }
+
+    .limpeza-info__text > .limpeza-info__lista {
+        order: 4;
+    }
+
+    .limpeza-info__text > p:last-of-type {
+        order: 5;
+    }
 }
 
 .recuperacao-arquivos__lista,
