@@ -70,6 +70,46 @@
     gap: 6px;
 }
 
+.remote-payment__packages {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 6px;
+    margin-bottom: 10px;
+}
+
+.remote-payment__package {
+    display: flex;
+    min-height: 48px;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2px;
+    padding: 6px;
+    color: var(--color-text-secondary);
+    background: transparent;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    font: inherit;
+    cursor: pointer;
+    transition: color var(--transition), background-color var(--transition), border-color var(--transition);
+}
+
+.remote-payment__package:hover {
+    color: var(--color-white);
+    border-color: var(--color-primary);
+}
+
+.remote-payment__package.is-active {
+    color: var(--color-bg);
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+    font-weight: 700;
+}
+
+.remote-payment__package small {
+    font-size: 0.68rem;
+}
+
 .remote-payment__method {
     min-height: 40px;
     padding: 8px 6px;

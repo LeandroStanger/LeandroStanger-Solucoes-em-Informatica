@@ -4303,6 +4303,52 @@ strong {
     line-height: 1.7;
 }
 
+.services-grid .service-card__lesson-packages {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px;
+}
+
+.services-grid .service-card__lesson-package {
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    flex-direction: column;
+    gap: 2px;
+    padding: 8px 5px;
+    color: var(--color-text-secondary);
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    font: inherit;
+    font-size: 0.78rem;
+    cursor: pointer;
+    transition: color var(--transition), background-color var(--transition), border-color var(--transition);
+}
+
+.services-grid .service-card__lesson-package:hover,
+.services-grid .service-card__lesson-package.is-active {
+    color: var(--color-primary-light);
+    background: rgba(16, 185, 129, 0.1);
+    border-color: var(--color-primary);
+}
+
+.services-grid .service-card__lesson-package.is-active {
+    font-weight: 700;
+}
+
+.services-grid .service-card__lesson-package small {
+    color: inherit;
+    font-size: 0.68rem;
+}
+
+.services-grid .service-card__lesson-package-detail {
+    min-height: 1.2em;
+    color: var(--color-text-secondary);
+    font-size: 0.75rem;
+    line-height: 1.5;
+}
+
 .services-grid .service-card__footer {
     display: flex;
     flex-direction: column;

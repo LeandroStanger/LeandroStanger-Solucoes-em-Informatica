@@ -70,6 +70,32 @@
                         <a href="#conteudo" class="btn btn--outline">Ver o que você pode aprender</a>
                     </div>
                     <div class="remote-payment" id="remotePayment" data-price="45">
+                        <div class="remote-payment__packages" role="group" aria-label="Escolha a quantidade de aulas">
+                            <button class="remote-payment__package is-active" type="button" data-lessons="1" data-discount="0" aria-pressed="true">
+                                <span>1 aula</span>
+                                <small>R$ 45,00</small>
+                            </button>
+                            <button class="remote-payment__package" type="button" data-lessons="10" data-discount="0.15" aria-pressed="false">
+                                <span>10 aulas</span>
+                                <small>15% de desconto</small>
+                            </button>
+                            <button class="remote-payment__package" type="button" data-lessons="20" data-discount="0.17" aria-pressed="false">
+                                <span>20 aulas</span>
+                                <small>17% de desconto</small>
+                            </button>
+                            <button class="remote-payment__package" type="button" data-lessons="30" data-discount="0.19" aria-pressed="false">
+                                <span>30 aulas</span>
+                                <small>19% de desconto</small>
+                            </button>
+                            <button class="remote-payment__package" type="button" data-lessons="40" data-discount="0.22" aria-pressed="false">
+                                <span>40 aulas</span>
+                                <small>22% de desconto</small>
+                            </button>
+                            <button class="remote-payment__package" type="button" data-lessons="50" data-discount="0.25" aria-pressed="false">
+                                <span>50 aulas</span>
+                                <small>25% de desconto</small>
+                            </button>
+                        </div>
                         <div class="remote-payment__methods" role="group" aria-label="Forma de pagamento">
                             <button class="remote-payment__method is-active" type="button" data-payment="cash" aria-pressed="true">À vista</button>
                             <button class="remote-payment__method" type="button" data-payment="installment" aria-pressed="false">Parcelado</button>
@@ -95,7 +121,7 @@
                         </div>
                         <div class="remote-payment__display" aria-live="polite">
                             <strong class="remote-payment__total">Valor do serviço: R$ 45,00</strong>
-                            <span class="remote-payment__detail">À vista por hora</span>
+                            <span class="remote-payment__detail">À vista · 1 aula · R$ 45,00 por aula</span>
                         </div>
                     </div>
                 </div>

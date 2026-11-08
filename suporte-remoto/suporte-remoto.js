@@ -37,8 +37,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     atualizarOpcoesParcelamento(payment);
 
-    const price = Number(payment.dataset.price);
+    let price = Number(payment.dataset.price);
     const methodButtons = payment.querySelectorAll('.remote-payment__method');
+    const packageButtons = payment.querySelectorAll('.remote-payment__package');
     const installmentOptions = payment.querySelector('.remote-payment__installments');
     const installmentSelect = payment.querySelector('#remoteInstallmentCount');
     const totalDisplay = payment.querySelector('.remote-payment__total');
@@ -54,6 +55,30 @@ document.addEventListener('DOMContentLoaded', function() {
         }).format(amount);
     };
 
+    function getServiceSummary() {
+        const selectedPackage = payment.querySelector('.remote-payment__package.is-active');
+        if (!selectedPackage) return 'por hora';
+
+        const lessonCount = Number(selectedPackage.dataset.lessons);
+        const discount = Number(selectedPackage.dataset.discount);
+        const lessonLabel = lessonCount === 1 ? '1 aula' : lessonCount + ' aulas';
+        const pricePerLesson = formatCurrency(price / lessonCount);
+
+        if (discount === 0) return lessonLabel + ' · ' + pricePerLesson + ' por aula';
+
+        const discountLabel = new Intl.NumberFormat('pt-BR', {
+            style: 'percent',
+            maximumFractionDigits: 0
+        }).format(discount);
+        const savings = Number(payment.dataset.price) * lessonCount - price;
+        return lessonLabel + ' · ' + discountLabel + ' de desconto (economia ' +
+            formatCurrency(savings) + ') · ' + pricePerLesson + ' por aula';
+    }
+
+    function formatServiceDetail(detail) {
+        return packageButtons.length ? detail + ' · ' + getServiceSummary() : detail + ' por hora';
+    }
+
     function setPaymentDisplay(total, detail, isError) {
         totalDisplay.textContent = total;
         detailDisplay.textContent = detail;
@@ -66,9 +91,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
         setPaymentDisplay(
             'Total parcelado: ' + formatCurrency(result.valorTotalParcelado),
-            numberOfInstallments + 'x de ' + formatCurrency(result.valorParcela) +
+            formatServiceDetail(numberOfInstallments + 'x de ' + formatCurrency(result.valorParcela) +
                 ' (juros: ' + formatCurrency(result.jurosTotal) + ' | taxa estimada: ' +
-                formatarTaxaJurosMensal(result.taxaJurosMensal) + ' ao mês) por hora',
+                formatarTaxaJurosMensal(result.taxaJurosMensal) + ' ao mês)'),
             false
         );
     }
@@ -99,13 +124,14 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     async function updateCryptoDisplay(method) {
+        const selectedPrice = price;
         setPaymentDisplay('Consultando cotação…', 'Aguarde um instante.', false);
         try {
             const rates = await getCryptoRates();
-            if (activeMethod !== method) return;
+            if (activeMethod !== method || price !== selectedPrice) return;
 
             const isBitcoin = method === 'bitcoin';
-            const amount = price / rates[method];
+            const amount = selectedPrice / rates[method];
             const formattedAmount = new Intl.NumberFormat('pt-BR', {
                 minimumFractionDigits: isBitcoin ? 8 : 6,
                 maximumFractionDigits: isBitcoin ? 8 : 6
@@ -114,7 +140,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
             setPaymentDisplay(
                 formattedAmount + ' ' + currencyLabel,
-                'Valor do serviço: ≈ ' + formatCurrency(price) + ' por hora, pela cotação atual',
+                formatServiceDetail('Valor do serviço: ≈ ' + formatCurrency(selectedPrice)) +
+                    ', pela cotação atual',
                 false
             );
         } catch (error) {
@@ -138,9 +165,29 @@ document.addEventListener('DOMContentLoaded', function() {
         } else if (method === 'bitcoin' || method === 'ethereum') {
             updateCryptoDisplay(method);
         } else {
-            setPaymentDisplay('Valor do serviço: ' + formatCurrency(price), 'À vista por hora', false);
+            setPaymentDisplay(
+                'Valor do serviço: ' + formatCurrency(price),
+                formatServiceDetail('À vista'),
+                false
+            );
         }
     }
+
+    packageButtons.forEach(function(button) {
+        button.addEventListener('click', function() {
+            const lessonCount = Number(button.dataset.lessons);
+            const discount = Number(button.dataset.discount);
+            price = Math.round(Number(payment.dataset.price) * lessonCount * (1 - discount) * 100) / 100;
+
+            packageButtons.forEach(function(packageButton) {
+                const isActive = packageButton === button;
+                packageButton.classList.toggle('is-active', isActive);
+                packageButton.setAttribute('aria-pressed', String(isActive));
+            });
+
+            selectMethod(activeMethod);
+        });
+    });
 
     methodButtons.forEach(function(button) {
         button.addEventListener('click', function() {

@@ -639,6 +639,39 @@ document.addEventListener('DOMContentLoaded', function() {
         const aulasParticularesLink = servico.id === 52
             ? '<a href="aulas-particulares/aula-particular.html" class="service-card__btn btn btn--outline btn--sm">Conheça as aulas particulares</a>'
             : '';
+        const pacotesAula = servico.id === 52
+            ? [
+                { aulas: 1, desconto: 0 },
+                { aulas: 10, desconto: 0.15 },
+                { aulas: 20, desconto: 0.17 },
+                { aulas: 30, desconto: 0.19 },
+                { aulas: 40, desconto: 0.22 },
+                { aulas: 50, desconto: 0.25 }
+            ]
+            : [];
+        const precoPorAula = pacotesAula.length
+            ? parseFloat(servico.preco.replace(/[^0-9,]/g, '').replace(',', '.'))
+            : 0;
+        const pacotesAulaHtml = pacotesAula.length
+            ? '<div class="service-card__lesson-packages" role="group" aria-label="Pacotes de aulas particulares">' +
+                pacotesAula.map(function(pacote) {
+                    const total = Math.round(precoPorAula * pacote.aulas * (1 - pacote.desconto) * 100) / 100;
+                    const selecionada = pacote.aulas === 1;
+                    const detalhePreco = pacote.desconto === 0
+                        ? formatarMoeda(total)
+                        : formatarMoeda(total) + ' · ' +
+                            new Intl.NumberFormat('pt-BR', { style: 'percent', maximumFractionDigits: 0 }).format(pacote.desconto) +
+                            ' de desconto';
+                    return '<button class="service-card__lesson-package' +
+                        (selecionada ? ' is-active' : '') + '" type="button" data-lessons="' +
+                        pacote.aulas + '" data-discount="' + pacote.desconto + '" aria-pressed="' +
+                        selecionada + '">' +
+                        '<span>' + pacote.aulas + (pacote.aulas === 1 ? ' aula' : ' aulas') + '</span>' +
+                        '<small>' + detalhePreco + '</small></button>';
+                }).join('') +
+                '</div>' +
+                '<span class="service-card__lesson-package-detail" data-lesson-package-detail aria-live="polite"></span>'
+            : '';
 
         card.innerHTML =
             '<div class="service-card__header">' +
@@ -650,17 +683,57 @@ document.addEventListener('DOMContentLoaded', function() {
             '</div>' +
             '<div class="service-card__body">' +
                 '<p class="service-card__desc">' + servico.descricao + '</p>' +
+                pacotesAulaHtml +
                 jogosHtml +
                 brindesHtml +
             '</div>' +
             '<div class="service-card__footer">' +
-                '<span class="service-card__price">' + servico.preco + '</span>' +
+                '<span class="service-card__price"' + (pacotesAula.length ? ' data-lesson-package-price' : '') + '>' + servico.preco + '</span>' +
             suporteRemotoLink +
             aulasParticularesLink +
-            '<a href="https://wa.me/5548996446508?text=' + encodeURIComponent(servico.whatsapp) + '" target="_blank" rel="noopener" class="service-card__btn btn btn--outline btn--sm">' +
+            '<a href="https://wa.me/5548996446508?text=' + encodeURIComponent(servico.whatsapp) + '"' +
+                (pacotesAula.length ? ' data-lesson-package-link' : '') +
+                ' target="_blank" rel="noopener" class="service-card__btn btn btn--outline btn--sm">' +
             '<i class="fa-brands fa-whatsapp"></i> Falar no WhatsApp' +
             '</a>' +
             '</div>';
+
+        if (pacotesAula.length) {
+            const priceDisplay = card.querySelector('[data-lesson-package-price]');
+            const detailDisplay = card.querySelector('[data-lesson-package-detail]');
+            const whatsappLink = card.querySelector('[data-lesson-package-link]');
+
+            function selecionarPacote(button) {
+                const aulas = Number(button.dataset.lessons);
+                const desconto = Number(button.dataset.discount);
+                const total = Math.round(precoPorAula * aulas * (1 - desconto) * 100) / 100;
+                const economia = Math.round(precoPorAula * aulas * desconto * 100) / 100;
+                const precoUnitario = total / aulas;
+
+                card.querySelectorAll('.service-card__lesson-package').forEach(function(opcao) {
+                    const selecionada = opcao === button;
+                    opcao.classList.toggle('is-active', selecionada);
+                    opcao.setAttribute('aria-pressed', String(selecionada));
+                });
+
+                priceDisplay.textContent = formatarMoeda(total);
+                detailDisplay.textContent = aulas + (aulas === 1 ? ' aula' : ' aulas') +
+                    ' · ' + formatarMoeda(precoUnitario) + ' por aula' +
+                    (desconto > 0 ? ' · economia de ' + formatarMoeda(economia) : '');
+                const mensagem = 'Olá! Gostaria de contratar ' +
+                    (aulas === 1 ? '1 aula particular' : 'o pacote de ' + aulas + ' aulas particulares') +
+                    ' por ' + formatarMoeda(total) +
+                    (desconto > 0 ? ', com ' + Math.round(desconto * 100) + '% de desconto.' : '.');
+                whatsappLink.href = 'https://wa.me/5548996446508?text=' + encodeURIComponent(mensagem);
+            }
+
+            card.querySelectorAll('.service-card__lesson-package').forEach(function(button) {
+                button.addEventListener('click', function() {
+                    selecionarPacote(button);
+                });
+            });
+            selecionarPacote(card.querySelector('.service-card__lesson-package[data-lessons="1"]'));
+        }
 
         return card;
     }
