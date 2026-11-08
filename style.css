@@ -1682,9 +1682,16 @@ strong {
 }
 
 .map-container {
-    width: 100%;
+    width: calc(100% + 100px);
     border-radius: 8px;
     overflow: hidden;
+}
+
+.map-container iframe {
+    display: block;
+    width: 100%;
+    height: 230px;
+    border: 0;
 }
 
 .contact-form-wrapper {
