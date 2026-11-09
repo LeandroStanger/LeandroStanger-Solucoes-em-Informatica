@@ -794,7 +794,8 @@ strong {
    ============================================================ */
 .formatacao-hero,
 .recuperacao-hero,
-.limpeza-hero {
+.limpeza-hero,
+.analise-dados-hero {
     padding: calc(var(--header-height) + 48px) 0 64px;
     background:
         radial-gradient(ellipse at 75% 35%, rgba(16, 185, 129, 0.12) 0%, transparent 58%),
@@ -803,7 +804,8 @@ strong {
 
 .formatacao-hero__content,
 .recuperacao-hero__content,
-.limpeza-hero__content {
+.limpeza-hero__content,
+.analise-dados-hero__content {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
     align-items: center;
@@ -812,18 +814,21 @@ strong {
 
 .formatacao-hero__image,
 .recuperacao-hero__image,
-.limpeza-hero__image {
+.limpeza-hero__image,
+.analise-dados-hero__image {
     order: 0;
 }
 
 .recuperacao-arquivos__image,
-.limpeza-info__image {
+.limpeza-info__image,
+.analise-dados-info__image {
     order: 2;
 }
 
 .formatacao-hero__image,
 .recuperacao-hero__image,
-.limpeza-hero__image {
+.limpeza-hero__image,
+.analise-dados-hero__image {
     display: block;
     width: 100%;
     aspect-ratio: 16 / 9;
@@ -841,19 +846,22 @@ strong {
 
 .formatacao-hero__text .section-header__tag,
 .recuperacao-hero__text .section-header__tag,
-.limpeza-hero__text .section-header__tag {
+.limpeza-hero__text .section-header__tag,
+.analise-dados-hero__text .section-header__tag {
     margin-bottom: 20px;
 }
 
 .formatacao-hero__text .section-header__title,
 .recuperacao-hero__text .section-header__title,
-.limpeza-hero__text .section-header__title {
+.limpeza-hero__text .section-header__title,
+.analise-dados-hero__text .section-header__title {
     margin-bottom: 16px;
 }
 
 .formatacao-hero__text p,
 .recuperacao-hero__text p,
-.limpeza-hero__text p {
+.limpeza-hero__text p,
+.analise-dados-hero__text p {
     max-width: 560px;
     color: var(--color-text-secondary);
     font-size: 1.05rem;
@@ -863,13 +871,15 @@ strong {
 @media (max-width: 768px) {
     .formatacao-hero,
     .recuperacao-hero,
-    .limpeza-hero {
+    .limpeza-hero,
+    .analise-dados-hero {
         padding: calc(var(--header-height) + 32px) 0 48px;
     }
 
     .formatacao-hero__content,
     .recuperacao-hero__content,
     .limpeza-hero__content,
+    .analise-dados-hero__content,
     .recuperacao-arquivos__content,
     .limpeza-info__content {
         grid-template-columns: 1fr;
@@ -1070,7 +1080,8 @@ strong {
 }
 
 .recuperacao-arquivos,
-.limpeza-info {
+.limpeza-info,
+.analise-dados-info {
     padding: 80px 0;
     background: #0d1117;
     border-top: 1px solid var(--color-border);
@@ -1078,7 +1089,8 @@ strong {
 }
 
 .recuperacao-arquivos__content,
-.limpeza-info__content {
+.limpeza-info__content,
+.analise-dados-info__content {
     display: grid;
     grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
     align-items: center;
@@ -1086,7 +1098,8 @@ strong {
 }
 
 .recuperacao-arquivos__image,
-.limpeza-info__image {
+.limpeza-info__image,
+.analise-dados-info__image {
     display: block;
     width: 100%;
     max-height: 420px;
@@ -1098,25 +1111,45 @@ strong {
 }
 
 .recuperacao-arquivos__text,
-.limpeza-info__text {
+.limpeza-info__text,
+.analise-dados-info__text {
     max-width: 640px;
 }
 
 .recuperacao-arquivos__text .section-header__tag,
-.limpeza-info__text .section-header__tag {
+.limpeza-info__text .section-header__tag,
+.analise-dados-info__text .section-header__tag {
     margin-bottom: 20px;
 }
 
 .recuperacao-arquivos__text .section-header__title,
-.limpeza-info__text .section-header__title {
+.limpeza-info__text .section-header__title,
+.analise-dados-info__text .section-header__title {
     margin-bottom: 16px;
 }
 
 .recuperacao-arquivos__text p,
-.limpeza-info__text p {
+.limpeza-info__text p,
+.analise-dados-info__text p {
     color: var(--color-text-secondary);
     font-size: 1.02rem;
     line-height: 1.8;
+}
+
+.analise-dados-info__text .analise-dados-info__actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    width: 100%;
+}
+
+.analise-dados-info__text .analise-dados-info__actions .btn {
+    width: 100%;
+    min-width: 0;
+    padding: 12px 8px;
+    gap: 4px;
+    font-size: clamp(0.62rem, 1.2vw, 0.9rem);
+    white-space: nowrap;
 }
 
 @media (max-width: 768px) {
@@ -1126,7 +1159,17 @@ strong {
         gap: 0;
     }
 
+    .analise-dados-info__content {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+    }
+
     .recuperacao-arquivos__text {
+        display: contents;
+    }
+
+    .analise-dados-info__text {
         display: contents;
     }
 
@@ -1149,6 +1192,44 @@ strong {
 
     .recuperacao-arquivos__text > .recuperacao-arquivos__lista {
         order: 4;
+    }
+
+    .analise-dados-info__text > .section-header__tag {
+        order: 0;
+    }
+
+    .analise-dados-info__text > .section-header__title {
+        order: 1;
+    }
+
+    .analise-dados-info__image {
+        order: 2;
+        margin-bottom: 28px;
+    }
+
+    .analise-dados-info__text > p:first-of-type {
+        order: 3;
+    }
+
+    .analise-dados-info__text > .analise-dados-info__lista {
+        order: 4;
+    }
+
+    .analise-dados-info__text > p:last-of-type {
+        order: 5;
+    }
+
+    .analise-dados-info__text > .criacao-site__actions {
+        order: 6;
+    }
+
+    .analise-dados-info__text .analise-dados-info__actions {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .analise-dados-info__text .analise-dados-info__actions .btn {
+        padding: 10px 6px;
+        font-size: clamp(0.56rem, 2.4vw, 0.75rem);
     }
 
     .limpeza-info__content {
@@ -1188,7 +1269,8 @@ strong {
 }
 
 .recuperacao-arquivos__lista,
-.limpeza-info__lista {
+.limpeza-info__lista,
+.analise-dados-info__lista {
     display: grid;
     gap: 12px;
     margin-top: 20px;
@@ -1197,7 +1279,8 @@ strong {
 }
 
 .recuperacao-arquivos__lista li,
-.limpeza-info__lista li {
+.limpeza-info__lista li,
+.analise-dados-info__lista li {
     display: flex;
     align-items: flex-start;
     gap: 10px;
@@ -1206,7 +1289,8 @@ strong {
 }
 
 .recuperacao-arquivos__lista i,
-.limpeza-info__lista i {
+.limpeza-info__lista i,
+.analise-dados-info__lista i {
     flex: 0 0 auto;
     margin-top: 5px;
     color: var(--color-primary);

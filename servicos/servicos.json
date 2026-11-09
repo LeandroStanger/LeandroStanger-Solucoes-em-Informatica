@@ -1010,6 +1010,18 @@
       ]
     },
     {
+      "id": 75,
+      "categoria": "analise_dados",
+      "sistema": null,
+      "titulo": "Análise de Dados e Dashboards",
+      "descricao": "Organização e análise de dados para transformar informações em resultados claros.<br>Relatórios, visualizações e dashboards definidos conforme os objetivos do projeto.<br>Escopo e orçamento personalizados após avaliação dos dados disponíveis.",
+      "preco": "Sob Consulta",
+      "badge": "Destaque",
+      "icone": "fa-solid fa-chart-line",
+      "whatsapp": "Olá! Gostaria de um orçamento para um serviço de análise de dados.",
+      "brindes": []
+    },
+    {
       "id": 72,
       "categoria": "gamer",
       "sistema": null,
