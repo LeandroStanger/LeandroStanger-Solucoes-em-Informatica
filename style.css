@@ -286,9 +286,40 @@ strong {
     left: 0;
     width: 0;
     height: 2px;
-    background-color: var(--color-primary);
+    background-color: var(--nav-link-accent, var(--color-primary));
     border-radius: 2px;
     transition: width var(--transition);
+}
+
+.nav__link[href*="formatacao/formatacao.html"] {
+    --nav-link-accent: #60a5fa;
+}
+
+.nav__link[href*="recuperacao-de-dados/recuperacao-de-dados.html"] {
+    --nav-link-accent: #c084fc;
+}
+
+.nav__link[href*="limpeza/limpeza.html"] {
+    --nav-link-accent: #fbbf24;
+}
+
+.nav__link[href*="analise-de-dados/analise-de-dados.html"] {
+    --nav-link-accent: #818cf8;
+}
+
+.nav__link[href*="suporte-remoto/suporte-remoto.html"] {
+    --nav-link-accent: #22d3ee;
+}
+
+.nav__link[href*="aulas-particulares/aula-particular.html"] {
+    --nav-link-accent: #fb923c;
+}
+
+.nav__link[href*="criacao-site"],
+.nav__link[href*="#clientes"],
+.nav__link[href*="servicos/servicos.html"],
+.nav__link[href*="#contato"] {
+    --nav-link-accent: #10b981;
 }
 
 .nav__link:hover {
