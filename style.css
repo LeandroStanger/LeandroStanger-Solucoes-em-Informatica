@@ -924,8 +924,15 @@ strong {
         gap: 0;
     }
 
+    .analise-dados-hero__content {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+    }
+
     .recuperacao-hero__text,
-    .limpeza-hero__text {
+    .limpeza-hero__text,
+    .analise-dados-hero__text {
         display: contents;
     }
 
@@ -937,6 +944,23 @@ strong {
     .recuperacao-hero__text > .section-header__title,
     .limpeza-hero__text > .section-header__title {
         order: 1;
+    }
+
+    .analise-dados-hero__text > .section-header__tag {
+        order: 0;
+    }
+
+    .analise-dados-hero__text > .section-header__title {
+        order: 1;
+    }
+
+    .analise-dados-hero__image {
+        order: 2;
+        margin-bottom: 28px;
+    }
+
+    .analise-dados-hero__text > p {
+        order: 3;
     }
 
     .recuperacao-hero__image,
