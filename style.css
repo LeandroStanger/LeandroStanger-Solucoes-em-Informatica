@@ -2245,6 +2245,10 @@ strong {
     text-align: left;
 }
 
+.recovery-plans .recovery-card__price-label {
+    text-align: center;
+}
+
 .recovery-plans .payment-options,
 #formatacaoCardsGrid .payment-options {
     background: linear-gradient(145deg, rgba(28, 33, 40, 0.96), rgba(13, 17, 23, 0.94));
@@ -2297,20 +2301,14 @@ strong {
 }
 
 .recovery-plans .payment-display {
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: baseline;
-    gap: 8px;
-    text-align: right;
-}
-
-.recovery-plans .payment-total {
-    font-size: 1.08rem;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
 }
 
 .recovery-plans .payment-detail {
     color: var(--color-text-secondary);
-    text-align: right;
+    text-align: center;
 }
 
 .recovery-plans .recovery-card__info {
