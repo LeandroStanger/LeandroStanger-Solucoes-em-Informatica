@@ -2,7 +2,7 @@
     min-height: 100vh;
     padding: calc(var(--header-height) + 56px) 0 72px;
     background:
-        radial-gradient(ellipse at 78% 15%, rgba(16, 185, 129, 0.12), transparent 36%),
+        radial-gradient(ellipse at 78% 15%, rgba(var(--page-theme-rgb, 16, 185, 129), 0.12), transparent 36%),
         #0a0e14;
 }
 
@@ -23,8 +23,8 @@
     gap: 8px;
     padding: 8px 14px;
     color: var(--color-primary-light);
-    background: rgba(16, 185, 129, 0.1);
-    border: 1px solid rgba(16, 185, 129, 0.25);
+    background: rgba(var(--page-theme-rgb, 16, 185, 129), 0.1);
+    border: 1px solid rgba(var(--page-theme-rgb, 16, 185, 129), 0.25);
     border-radius: 50px;
     font-size: 0.88rem;
     font-weight: 600;
@@ -260,7 +260,7 @@
     margin: 24px auto 0;
     padding: 16px 20px;
     color: var(--color-text-secondary);
-    background: rgba(16, 185, 129, 0.06);
+    background: rgba(var(--page-theme-rgb, 16, 185, 129), 0.06);
     border-left: 3px solid var(--color-primary);
     border-radius: var(--radius-sm);
     font-size: 0.9rem;
@@ -378,7 +378,7 @@
 
 .remote-downloads__table thead th {
     color: var(--color-white);
-    background: rgba(16, 185, 129, 0.08);
+    background: rgba(var(--page-theme-rgb, 16, 185, 129), 0.08);
     font-weight: 700;
 }
 
