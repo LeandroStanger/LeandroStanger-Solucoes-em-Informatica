@@ -800,7 +800,13 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         const titulo = renomearTitulo(servico.titulo, servico.categoria, servico.sistema);
-        const tagHtml = servico.badge ? '<span class="recovery-card__tag">' + servico.badge + '</span>' : '';
+        const tagHtml = servico.badge
+            ? '<span class="recovery-card__tag">' +
+                (servico.badge === '⭐ Mais escolhido'
+                    ? '<i class="fa-solid fa-star" aria-hidden="true"></i> Mais escolhido'
+                    : servico.badge) +
+                '</span>'
+            : '';
 
         const priceLabel = servico.preco.includes('/GB') ? 'Apenas' : 'A partir de';
 

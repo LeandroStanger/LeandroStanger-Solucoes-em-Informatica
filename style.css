@@ -2112,8 +2112,8 @@ strong {
 
 .recovery-plans .recovery-plan.recovery-card--mais-escolhido,
 .recovery-plans .recovery-plan.recovery-card--mais-escolhido:hover {
-    background: linear-gradient(100deg, rgba(16, 185, 129, 0.14), rgba(16, 185, 129, 0.035) 68%, transparent);
-    box-shadow: inset 4px 0 0 var(--color-primary), inset 0 1px 0 rgba(16, 185, 129, 0.22), inset 0 -1px 0 rgba(16, 185, 129, 0.22);
+    background: linear-gradient(100deg, rgba(var(--page-theme-rgb), 0.14), rgba(var(--page-theme-rgb), 0.035) 68%, transparent);
+    box-shadow: inset 4px 0 0 var(--color-primary), inset 0 1px 0 rgba(var(--page-theme-rgb), 0.22), inset 0 -1px 0 rgba(var(--page-theme-rgb), 0.22);
 }
 
 .recovery-plans .recovery-card__header {
@@ -2152,12 +2152,25 @@ strong {
 }
 
 .recovery-plans .recovery-card--mais-escolhido .recovery-card__tag {
-    padding: 6px 12px;
-    color: #062b1d;
-    background: var(--color-primary-light);
-    border: 1px solid rgba(167, 243, 208, 0.8);
-    box-shadow: 0 4px 14px rgba(16, 185, 129, 0.2);
-    font-weight: 800;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 16px;
+    color: var(--color-primary-light);
+    background: rgba(var(--page-theme-rgb), 0.1);
+    border: 1px solid rgba(var(--page-theme-rgb), 0.2);
+    border-radius: 50px;
+    box-shadow: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+}
+
+.recovery-plans .recovery-card--mais-escolhido .recovery-card__tag .fa-star,
+#formatacaoCardsGrid .recovery-card--mais-escolhido .recovery-card__tag .fa-star {
+    color: #fbbf24;
+    filter: none;
+    text-shadow: none;
 }
 
 .recovery-plans .recovery-card--mais-escolhido .recovery-card__header h3 {
@@ -4333,17 +4346,23 @@ strong {
 
 #formatacaoCardsGrid .recovery-card--mais-escolhido,
 #formatacaoCardsGrid .recovery-card--mais-escolhido:hover {
-    background: linear-gradient(100deg, rgba(16, 185, 129, 0.14), rgba(16, 185, 129, 0.035) 68%, transparent);
-    box-shadow: inset 4px 0 0 var(--color-primary), inset 0 1px 0 rgba(16, 185, 129, 0.22), inset 0 -1px 0 rgba(16, 185, 129, 0.22);
+    background: linear-gradient(100deg, rgba(var(--page-theme-rgb), 0.14), rgba(var(--page-theme-rgb), 0.035) 68%, transparent);
+    box-shadow: inset 4px 0 0 var(--color-primary), inset 0 1px 0 rgba(var(--page-theme-rgb), 0.22), inset 0 -1px 0 rgba(var(--page-theme-rgb), 0.22);
 }
 
 #formatacaoCardsGrid .recovery-card--mais-escolhido .recovery-card__tag {
-    padding: 6px 12px;
-    color: #062b1d;
-    background: var(--color-primary-light);
-    border: 1px solid rgba(167, 243, 208, 0.8);
-    box-shadow: 0 4px 14px rgba(16, 185, 129, 0.2);
-    font-weight: 800;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 16px;
+    color: var(--color-primary-light);
+    background: rgba(var(--page-theme-rgb), 0.1);
+    border: 1px solid rgba(var(--page-theme-rgb), 0.2);
+    border-radius: 50px;
+    box-shadow: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
 }
 
 #formatacaoCardsGrid .recovery-card--mais-escolhido .recovery-card__header h3 {
@@ -4833,6 +4852,36 @@ body.theme-cleaning .section-header__tag,
 body.theme-analysis .section-header__tag {
     background-color: rgba(var(--page-theme-rgb), 0.1);
     border-color: rgba(var(--page-theme-rgb), 0.2);
+}
+
+body.theme-cleaning #cleaningGrid .recovery-plan.recovery-card--mais-escolhido,
+body.theme-cleaning #cleaningGrid .recovery-plan.recovery-card--mais-escolhido:hover {
+    background: linear-gradient(110deg, rgba(251, 191, 36, 0.16), rgba(251, 191, 36, 0.07) 68%, rgba(251, 191, 36, 0.035));
+    border: 1px solid rgba(251, 191, 36, 0.48);
+    border-radius: 14px;
+    box-shadow: inset 4px 0 0 #fbbf24, 0 8px 26px rgba(251, 191, 36, 0.1);
+}
+
+body.theme-cleaning #cleaningGrid .recovery-card--mais-escolhido .recovery-card__icon {
+    color: #fcd34d;
+    background: rgba(251, 191, 36, 0.16);
+    border-color: rgba(251, 191, 36, 0.45);
+}
+
+body.theme-cleaning #cleaningGrid .recovery-card--mais-escolhido .recovery-card__tag {
+    gap: 6px;
+    color: #fcd34d;
+    background: rgba(120, 53, 15, 0.42);
+    border: 1px solid rgba(251, 191, 36, 0.58);
+    box-shadow: 0 4px 14px rgba(251, 191, 36, 0.16);
+}
+
+body.theme-cleaning #cleaningGrid .recovery-card--mais-escolhido .recovery-card__tag .fa-star {
+    color: #fbbf24;
+}
+
+body.theme-cleaning #cleaningGrid .recovery-card--mais-escolhido .recovery-card__header h3 {
+    color: #fcd34d;
 }
 
 ::-moz-selection {
