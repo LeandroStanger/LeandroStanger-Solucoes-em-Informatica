@@ -2703,6 +2703,30 @@ document.addEventListener('DOMContentLoaded', function() {
         // ============================================================
         // FUNÇÃO PARA ATUALIZAR A DESCRIÇÃO DOS JOGOS
         // ============================================================
+        function obterNomeJogo(imagem) {
+            const palavras = (imagem || '')
+                .split(/[\\/]/).pop()
+                .replace(/\.[^.]+$/, '')
+                .split(/[-_\s]+/)
+                .filter(function(palavra) { return palavra && palavra.toLowerCase() !== 'logo'; });
+            const nomeNormalizado = palavras.join(' ').toLowerCase();
+            const nomesOficiais = {
+                'bomba patch': 'Bomba Patch',
+                'bombapatch': 'Bomba Patch',
+                'gta san andreas': 'Grand Theft Auto: San Andreas',
+                'grand theft auto vice city': 'Grand Theft Auto: Vice City',
+                'hollow knight silksong': 'Hollow Knight: Silksong',
+                'rise of nations extended edition': 'Rise of Nations: Extended Edition'
+            };
+            if (nomesOficiais[nomeNormalizado]) return nomesOficiais[nomeNormalizado];
+
+            return palavras.map(function(palavra, indice) {
+                const minuscula = palavra.toLowerCase();
+                if (indice > 0 && ['at', 'for', 'of', 'the'].includes(minuscula)) return minuscula;
+                return minuscula.charAt(0).toUpperCase() + minuscula.slice(1);
+            }).join(' ');
+        }
+
         function atualizarDescricaoJogos() {
             if (!jogosDescricaoContainer) return;
             const nivel = jogosNivelAtual || 'nivel1';
@@ -2712,12 +2736,23 @@ document.addEventListener('DOMContentLoaded', function() {
                 jogosDescricaoContainer.style.display = 'none';
                 return;
             }
-            let html = '<div class="jogos-descricao-grid">';
+            const grid = document.createElement('div');
+            grid.className = 'jogos-descricao-grid';
             jogos.forEach(function(jogo) {
-                html += '<div class="jogo-descricao-item"><img src="' + jogo.imagem + '" alt="Jogo" loading="lazy" /></div>';
+                const imagem = jogo.imagem || '';
+                const nomeJogo = obterNomeJogo(imagem);
+                const item = document.createElement('div');
+                item.className = 'jogo-descricao-item';
+
+                const img = document.createElement('img');
+                img.src = imagem;
+                img.alt = nomeJogo;
+                img.title = nomeJogo;
+                img.loading = 'lazy';
+                item.appendChild(img);
+                grid.appendChild(item);
             });
-            html += '</div>';
-            jogosDescricaoContainer.innerHTML = html;
+            jogosDescricaoContainer.replaceChildren(grid);
             jogosDescricaoContainer.style.display = (jogosIndicador.textContent === 'Sim') ? 'block' : 'none';
         }
 
