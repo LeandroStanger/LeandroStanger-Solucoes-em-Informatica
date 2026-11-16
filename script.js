@@ -211,10 +211,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         } catch (error) {
             console.warn('Erro ao obter cotação do Bitcoin:', error);
-            if (!cotacaoBitcoinCache) {
-                cotacaoBitcoinCache = 250000.00; // fallback
-            }
-            return cotacaoBitcoinCache;
+            throw error;
         }
     }
 
@@ -239,10 +236,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         } catch (error) {
             console.warn('Erro ao obter cotação do Ethereum:', error);
-            if (!cotacaoEthereumCache) {
-                cotacaoEthereumCache = 8500.00; // fallback
-            }
-            return cotacaoEthereumCache;
+            throw error;
         }
     }
 
@@ -490,6 +484,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (data && data.servicos) {
                     servicosGlobais = data.servicos;
                     renderizarTodosOsCards(servicosGlobais);
+                    configurarOrcamentoServicos(servicosGlobais);
                     console.log('✅ Serviços carregados com sucesso! Total: ' + servicosGlobais.length);
                     configurarGeradorPacote();
                     return servicosGlobais;
@@ -584,6 +579,21 @@ document.addEventListener('DOMContentLoaded', function() {
         return titulo;
     }
 
+    function obterIconeBrinde(item) {
+        const gift = String(item).toLowerCase();
+        if (gift.includes('ms office') || gift.includes('office')) return 'fa-file-word';
+        if (gift.includes('kaspersky')) return 'fa-shield-halved';
+        if (gift.includes('softwares')) return 'fa-download';
+        if (gift.includes('suporte')) return 'fa-headset';
+        if (gift.includes('instrução')) return 'fa-graduation-cap';
+        if (gift.includes('desconto')) return 'fa-percent';
+        if (gift.includes('atendimento')) return 'fa-clock';
+        if (gift.includes('garantia')) return 'fa-shield-check';
+        if (gift.includes('impressora')) return 'fa-print';
+        if (gift.includes('limpeza')) return 'fa-broom';
+        return 'fa-gift';
+    }
+
     // ============================================================
     // 7. CRIAR CARD PEQUENO (SERVIÇOS GERAIS) - SEM CRIPTO
     // ============================================================
@@ -600,18 +610,7 @@ document.addEventListener('DOMContentLoaded', function() {
         let brindesHtml = '';
         if (servico.brindes && servico.brindes.length > 0) {
             const itens = servico.brindes.map(function(item) {
-                let icone = 'fa-gift';
-                if (item.toLowerCase().includes('ms office') || item.toLowerCase().includes('office')) icone = 'fa-file-word';
-                else if (item.toLowerCase().includes('kaspersky')) icone = 'fa-shield-halved';
-                else if (item.toLowerCase().includes('softwares')) icone = 'fa-download';
-                else if (item.toLowerCase().includes('suporte')) icone = 'fa-headset';
-                else if (item.toLowerCase().includes('instrução')) icone = 'fa-graduation-cap';
-                else if (item.toLowerCase().includes('desconto')) icone = 'fa-percent';
-                else if (item.toLowerCase().includes('atendimento')) icone = 'fa-clock';
-                else if (item.toLowerCase().includes('garantia')) icone = 'fa-shield-check';
-                else if (item.toLowerCase().includes('impressora')) icone = 'fa-print';
-                else if (item.toLowerCase().includes('limpeza')) icone = 'fa-broom';
-                return '<span><i class="fa-solid ' + icone + '"></i> ' + item + '</span>';
+                return '<span><i class="fa-solid ' + obterIconeBrinde(item) + '"></i> ' + item + '</span>';
             }).join('');
             brindesHtml = `
                 <div class="service-card__gift">
@@ -693,10 +692,34 @@ document.addEventListener('DOMContentLoaded', function() {
             aulasParticularesLink +
             '<a href="https://wa.me/5548996446508?text=' + encodeURIComponent(servico.whatsapp) + '"' +
                 (pacotesAula.length ? ' data-lesson-package-link' : '') +
-                ' target="_blank" rel="noopener" class="service-card__btn btn btn--outline btn--sm">' +
+                ' data-quote-whatsapp target="_blank" rel="noopener" class="service-card__btn btn btn--outline btn--sm">' +
             '<i class="fa-brands fa-whatsapp"></i> Falar no WhatsApp' +
             '</a>' +
             '</div>';
+
+        if (document.getElementById('quoteCart')) {
+            const addQuoteButton = document.createElement('button');
+            addQuoteButton.className = 'btn btn--primary btn--sm service-card__quote-button';
+            addQuoteButton.type = 'button';
+            addQuoteButton.dataset.quoteAddService = String(servico.id);
+            addQuoteButton.dataset.quoteDefaultLabel = 'Adicionar ' + titulo + ' ao orçamento';
+            addQuoteButton.setAttribute('aria-label', addQuoteButton.dataset.quoteDefaultLabel);
+            addQuoteButton.title = addQuoteButton.dataset.quoteDefaultLabel;
+            addQuoteButton.innerHTML = '<i class="fa-solid fa-plus" aria-hidden="true"></i>';
+
+            const giftNote = document.createElement('span');
+            giftNote.className = 'service-card__gift-note';
+            giftNote.id = 'quote-gift-note-' + servico.id;
+            giftNote.textContent = 'Esse produto já está disponível em forma de brinde.';
+            giftNote.hidden = true;
+            addQuoteButton.setAttribute('aria-describedby', giftNote.id);
+
+            const footer = card.querySelector('.service-card__footer');
+            const actions = document.createElement('div');
+            actions.className = 'service-card__actions';
+            actions.append(addQuoteButton, footer.querySelector('[data-quote-whatsapp]'));
+            footer.append(actions, giftNote);
+        }
 
         if (pacotesAula.length) {
             const priceDisplay = card.querySelector('[data-lesson-package-price]');
@@ -736,6 +759,613 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         return card;
+    }
+
+    function configurarOrcamentoServicos(servicos) {
+        const grid = document.getElementById('servicesGrid');
+        const panel = document.getElementById('quoteCart');
+        if (!grid || !panel) return;
+
+        const countElement = document.getElementById('quoteCartCount');
+        const itemsElement = document.getElementById('quoteCartItems');
+        const noteElement = document.getElementById('quoteCartNote');
+        const totalElement = document.getElementById('quoteCartTotal');
+        const statusElement = document.getElementById('quoteCartStatus');
+        const launcher = document.getElementById('quoteLauncher');
+        const launcherLabel = document.getElementById('quoteLauncherLabel');
+        const generateButton = document.getElementById('quoteGeneratePdf');
+        const paymentSelect = document.getElementById('quotePaymentMethod');
+        const installmentsGroup = document.getElementById('quoteInstallmentsGroup');
+        const installmentsSelect = document.getElementById('quoteInstallments');
+        const paymentPreview = document.getElementById('quotePaymentPreview');
+        const paymentPreviewSummary = document.getElementById('quotePaymentPreviewSummary');
+        const paymentPreviewDetails = document.getElementById('quotePaymentPreviewDetails');
+        const serviceById = new Map(servicos.map(function(servico) {
+            return [String(servico.id), servico];
+        }));
+        const quoteItems = new Map();
+        let pdfLibraryPromise = null;
+        let selectedPayment = null;
+        let paymentDetails = null;
+        let paymentPreviewRequestId = 0;
+        const giftMappings = [
+            { pattern: /ms office/i, serviceIds: ['67'] },
+            { pattern: /kaspersky premium/i, serviceIds: ['66'] },
+            { pattern: /softwares?\s*\(avançado\)/i, serviceIds: ['64'] },
+            { pattern: /suporte remoto/i, serviceIds: ['53'] },
+            { pattern: /instruç(?:ão|ões)/i, serviceIds: ['52'] },
+            { pattern: /instalação de impressora|impressora/i, serviceIds: ['70'] },
+            { pattern: /pacote de jogos nível 1/i, serviceIds: ['72'] },
+            { pattern: /pacote de jogos nível 2/i, serviceIds: ['73'] },
+            { pattern: /pacote de jogos nível 3/i, serviceIds: ['74'] }
+        ];
+
+        function parsePrice(priceText) {
+            const match = String(priceText).match(/R\$\s*([\d.]+,\d{2})/);
+            if (!match) return null;
+            return Number(match[1].replace(/\./g, '').replace(',', '.'));
+        }
+
+        function formatCurrency(value) {
+            return new Intl.NumberFormat('pt-BR', {
+                style: 'currency',
+                currency: 'BRL'
+            }).format(value);
+        }
+
+        function getQuoteTotals() {
+            const entries = Array.from(quoteItems.values());
+            return {
+                entries: entries,
+                knownTotal: entries.reduce(function(total, item) {
+                    return total + (item.unitPrice === null ? 0 : item.unitPrice * item.quantity);
+                }, 0),
+                hasConsultationPrice: entries.some(function(item) {
+                    return item.unitPrice === null;
+                })
+            };
+        }
+
+        function getItemGifts(item) {
+            const service = serviceById.get(item.serviceId);
+            if (!service || !Array.isArray(service.brindes)) return [];
+            return service.brindes.filter(function(gift) {
+                return typeof gift === 'string' && gift.trim();
+            });
+        }
+
+        function getGiftedServiceSources() {
+            const sources = new Map();
+            quoteItems.forEach(function(item) {
+                const sourceService = serviceById.get(item.serviceId);
+                if (!sourceService || !Array.isArray(sourceService.brindes)) return;
+
+                sourceService.brindes.forEach(function(gift) {
+                    giftMappings.forEach(function(mapping) {
+                        if (!mapping.pattern.test(gift)) return;
+                        mapping.serviceIds.forEach(function(giftedServiceId) {
+                            if (!serviceById.has(giftedServiceId)) return;
+                            if (!sources.has(giftedServiceId)) sources.set(giftedServiceId, new Set());
+                            sources.get(giftedServiceId).add(item.title);
+                        });
+                    });
+                });
+            });
+            return sources;
+        }
+
+        function renderQuote() {
+            const quoteTotals = getQuoteTotals();
+            const entries = quoteTotals.entries;
+            const giftedServiceSources = getGiftedServiceSources();
+            const serviceCount = entries.reduce(function(total, item) {
+                return total + item.quantity;
+            }, 0);
+            const knownTotal = quoteTotals.knownTotal;
+
+            countElement.textContent = serviceCount
+                ? serviceCount + (serviceCount === 1 ? ' serviço adicionado' : ' serviços adicionados')
+                : 'Nenhum serviço adicionado';
+            totalElement.textContent = formatCurrency(knownTotal);
+            paymentSelect.disabled = entries.length === 0;
+            installmentsSelect.disabled = entries.length === 0;
+            launcherLabel.textContent = serviceCount + (serviceCount === 1 ? ' serviço' : ' serviços') +
+                ' · ' + formatCurrency(knownTotal);
+            noteElement.hidden = !quoteTotals.hasConsultationPrice;
+            noteElement.textContent = quoteTotals.hasConsultationPrice
+                ? 'Total parcial: inclui apenas serviços com preço definido. Itens sob consulta serão avaliados separadamente.'
+                : '';
+            itemsElement.replaceChildren();
+
+            entries.forEach(function(item) {
+                const row = document.createElement('li');
+                row.className = 'quote-cart__item';
+
+                const name = document.createElement('span');
+                name.className = 'quote-cart__item-name';
+                name.textContent = item.title;
+
+                const linePrice = document.createElement('span');
+                linePrice.className = 'quote-cart__item-price';
+                linePrice.textContent = item.unitPrice === null
+                    ? 'Sob consulta'
+                    : formatCurrency(item.unitPrice) + ' cada · total ' + formatCurrency(item.unitPrice * item.quantity);
+
+                const controls = document.createElement('div');
+                controls.className = 'quote-cart__item-controls';
+                const decreaseButton = document.createElement('button');
+                decreaseButton.className = 'quote-cart__quantity-button';
+                decreaseButton.type = 'button';
+                decreaseButton.dataset.quoteQuantityAction = 'decrease';
+                decreaseButton.dataset.quoteItemKey = item.key;
+                decreaseButton.setAttribute('aria-label', 'Diminuir quantidade de ' + item.title);
+                decreaseButton.textContent = '−';
+                const quantity = document.createElement('span');
+                quantity.textContent = item.quantity + ' ' + item.unitLabel;
+                const increaseButton = document.createElement('button');
+                increaseButton.className = 'quote-cart__quantity-button';
+                increaseButton.type = 'button';
+                increaseButton.dataset.quoteQuantityAction = 'increase';
+                increaseButton.dataset.quoteItemKey = item.key;
+                increaseButton.setAttribute('aria-label', 'Aumentar quantidade de ' + item.title);
+                increaseButton.textContent = '+';
+                controls.append(decreaseButton, quantity, increaseButton);
+
+                const removeButton = document.createElement('button');
+                removeButton.className = 'quote-cart__remove';
+                removeButton.type = 'button';
+                removeButton.dataset.quoteRemoveItem = item.key;
+                removeButton.setAttribute('aria-label', 'Remover ' + item.title + ' do orçamento');
+                removeButton.innerHTML = '<i class="fa-solid fa-trash" aria-hidden="true"></i>';
+
+                row.append(name, linePrice, controls, removeButton);
+                const gifts = getItemGifts(item);
+                if (gifts.length) {
+                    const giftBox = document.createElement('div');
+                    giftBox.className = 'quote-cart__item-gifts';
+
+                    const giftTitle = document.createElement('strong');
+                    giftTitle.className = 'quote-cart__item-gifts-title';
+                    const giftTitleIcon = document.createElement('i');
+                    giftTitleIcon.className = 'fa-solid fa-gift';
+                    giftTitleIcon.setAttribute('aria-hidden', 'true');
+                    giftTitle.append(giftTitleIcon, document.createTextNode(' Brindes exclusivos'));
+
+                    const giftList = document.createElement('ul');
+                    gifts.forEach(function(gift) {
+                        const giftRow = document.createElement('li');
+                        const giftIcon = document.createElement('i');
+                        giftIcon.className = 'fa-solid ' + obterIconeBrinde(gift);
+                        giftIcon.setAttribute('aria-hidden', 'true');
+                        const giftName = document.createElement('span');
+                        giftName.textContent = gift;
+                        giftRow.append(giftIcon, giftName);
+                        giftList.appendChild(giftRow);
+                    });
+                    giftBox.append(giftTitle, giftList);
+                    row.appendChild(giftBox);
+                }
+                itemsElement.appendChild(row);
+            });
+
+            grid.querySelectorAll('[data-quote-add-service]').forEach(function(button) {
+                const sources = giftedServiceSources.get(button.dataset.quoteAddService);
+                const isGifted = Boolean(sources && sources.size);
+                const message = 'Esse produto já está disponível em forma de brinde';
+                button.classList.toggle('is-gift-locked', isGifted);
+                button.disabled = isGifted;
+                button.setAttribute('aria-disabled', String(isGifted));
+                button.setAttribute('aria-label', isGifted ? message : button.dataset.quoteDefaultLabel);
+                button.title = isGifted ? message : button.dataset.quoteDefaultLabel;
+                const note = document.getElementById('quote-gift-note-' + button.dataset.quoteAddService);
+                if (note) note.hidden = !isGifted;
+            });
+
+            if (!entries.length && selectedPayment) {
+                selectedPayment = null;
+                paymentSelect.value = '';
+            }
+            refreshPaymentPreview();
+        }
+
+        async function refreshPaymentPreview() {
+            const requestId = ++paymentPreviewRequestId;
+            const quoteTotals = getQuoteTotals();
+            paymentDetails = null;
+            generateButton.hidden = true;
+            generateButton.disabled = true;
+            installmentsGroup.hidden = selectedPayment !== 'installment';
+
+            if (!selectedPayment || !quoteTotals.entries.length) {
+                paymentPreview.hidden = true;
+                return;
+            }
+
+            paymentPreview.hidden = false;
+            paymentPreviewSummary.textContent = 'Calculando prévia...';
+            paymentPreviewDetails.textContent = '';
+
+            try {
+                let details;
+                if (selectedPayment === 'cash') {
+                    details = {
+                        method: 'cash',
+                        label: 'À vista',
+                        summaryText: 'À vista: ' + formatCurrency(quoteTotals.knownTotal),
+                        detailText: 'Pagamento em uma única vez.',
+                        total: quoteTotals.knownTotal
+                    };
+                } else if (selectedPayment === 'installment') {
+                    const numberOfInstallments = Number(installmentsSelect.value);
+                    const result = calcularParcelamento(quoteTotals.knownTotal, numberOfInstallments);
+                    details = {
+                        method: 'installment',
+                        label: 'Parcelado',
+                        summaryText: numberOfInstallments + 'x de ' + formatarMoeda(result.valorParcela),
+                        detailText: 'Total parcelado: ' + formatarMoeda(result.valorTotalParcelado) +
+                            ' · juros: ' + formatarMoeda(result.jurosTotal) +
+                            ' · taxa estimada: ' + formatarTaxaJurosMensal(result.taxaJurosMensal) + ' ao mês.',
+                        total: result.valorTotalParcelado,
+                        installmentCount: numberOfInstallments,
+                        installmentAmount: result.valorParcela,
+                        interest: result.jurosTotal,
+                        monthlyRate: result.taxaJurosMensal
+                    };
+                } else {
+                    if (quoteTotals.knownTotal <= 0) {
+                        throw new Error('Não há valores definidos para converter para criptomoeda.');
+                    }
+
+                    const isBitcoin = selectedPayment === 'bitcoin';
+                    const exchangeRate = isBitcoin
+                        ? await obterCotacaoBitcoin()
+                        : await obterCotacaoEthereum();
+                    if (!Number.isFinite(exchangeRate) || exchangeRate <= 0) {
+                        throw new Error('A cotação recebida é inválida. Tente novamente.');
+                    }
+                    const cryptoAmount = quoteTotals.knownTotal / exchangeRate;
+                    details = isBitcoin
+                        ? {
+                            method: 'bitcoin',
+                            label: 'Bitcoin (BTC)',
+                            summaryText: formatarBitcoin(cryptoAmount) + ' BTC',
+                            detailText: 'Cotação de referência: ' + formatCurrency(exchangeRate) +
+                                ' por BTC · equivalente a ' + formatCurrency(quoteTotals.knownTotal) + '.',
+                            total: quoteTotals.knownTotal,
+                            cryptoAmount: cryptoAmount,
+                            exchangeRate: exchangeRate
+                        }
+                        : {
+                            method: 'ethereum',
+                            label: 'Ethereum (ETH)',
+                            summaryText: formatarEthereum(cryptoAmount) + ' ETH',
+                            detailText: 'Cotação de referência: ' + formatCurrency(exchangeRate) +
+                                ' por ETH · equivalente a ' + formatCurrency(quoteTotals.knownTotal) + '.',
+                            total: quoteTotals.knownTotal,
+                            cryptoAmount: cryptoAmount,
+                            exchangeRate: exchangeRate
+                        };
+                }
+
+                if (requestId !== paymentPreviewRequestId) return;
+                if (quoteTotals.hasConsultationPrice) {
+                    details.detailText += ' Serviços sob consulta não estão incluídos na prévia.';
+                }
+                details.hasConsultationPrice = quoteTotals.hasConsultationPrice;
+                paymentDetails = details;
+                paymentPreviewSummary.textContent = details.summaryText;
+                paymentPreviewDetails.textContent = details.detailText;
+                generateButton.hidden = false;
+                generateButton.disabled = false;
+            } catch (error) {
+                if (requestId !== paymentPreviewRequestId) return;
+                paymentPreviewSummary.textContent = 'Não foi possível calcular a prévia.';
+                paymentPreviewDetails.textContent = error.message || 'Verifique sua conexão e tente novamente.';
+                statusElement.textContent = error.message || 'Não foi possível calcular a prévia do pagamento.';
+            }
+        }
+
+        function addService(service, card) {
+            const giftSources = getGiftedServiceSources().get(String(service.id));
+            if (giftSources && giftSources.size) {
+                statusElement.textContent = 'Esse produto já está disponível em forma de brinde.';
+                panel.hidden = false;
+                launcher.hidden = true;
+                launcher.setAttribute('aria-expanded', 'true');
+                return;
+            }
+
+            let title = renomearTitulo(service.titulo, service.categoria, service.sistema);
+            let unitPrice = parsePrice(service.preco);
+            let quantity = 1;
+            let unitLabel = /\/h\b/i.test(service.preco)
+                ? 'hora(s)'
+                : /\/GB\b/i.test(service.preco)
+                    ? 'GB'
+                    : 'serviço(s)';
+            let key = String(service.id);
+
+            if (service.id === 52 && card) {
+                const selectedPackage = card.querySelector('.service-card__lesson-package.is-active');
+                if (selectedPackage) {
+                    const lessons = Number(selectedPackage.dataset.lessons);
+                    const discount = Number(selectedPackage.dataset.discount);
+                    const basePrice = parsePrice(service.preco);
+                    const packageTotal = Math.round(basePrice * lessons * (1 - discount) * 100) / 100;
+                    title += ' — pacote de ' + lessons + (lessons === 1 ? ' aula' : ' aulas');
+                    unitPrice = packageTotal;
+                    unitLabel = 'pacote(s)';
+                    key += ':aulas-' + lessons;
+                }
+            }
+
+            const existing = quoteItems.get(key);
+            if (existing) {
+                existing.quantity += quantity;
+            } else {
+                quoteItems.set(key, {
+                    key: key,
+                    serviceId: String(service.id),
+                    title: title,
+                    unitPrice: unitPrice,
+                    quantity: quantity,
+                    unitLabel: unitLabel
+                });
+            }
+
+            const giftedServices = getGiftedServiceSources();
+            const hasAvailableGifts = Array.from(giftedServices.values()).some(function(sources) {
+                return sources.has(title);
+            });
+            statusElement.textContent = title + ' adicionado ao orçamento.' +
+                (hasAvailableGifts ? ' Produtos incluídos já estão disponíveis em forma de brinde e foram bloqueados.' : '');
+            panel.hidden = false;
+            launcher.hidden = true;
+            launcher.setAttribute('aria-expanded', 'true');
+            renderQuote();
+        }
+
+        function loadPdfLibrary() {
+            if (window.jspdf && window.jspdf.jsPDF) return Promise.resolve();
+            if (!pdfLibraryPromise) {
+                pdfLibraryPromise = new Promise(function(resolve, reject) {
+                    const script = document.createElement('script');
+                    script.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
+                    script.onload = resolve;
+                    script.onerror = function() {
+                        pdfLibraryPromise = null;
+                        reject(new Error('Não foi possível carregar a biblioteca necessária para gerar o PDF.'));
+                    };
+                    document.head.appendChild(script);
+                });
+            }
+            return pdfLibraryPromise;
+        }
+
+        function generateQuotePdf() {
+            const entries = Array.from(quoteItems.values()).map(function(item) {
+                return Object.assign({}, item);
+            });
+            if (!entries.length || !paymentDetails) return;
+            const paymentSnapshot = Object.assign({}, paymentDetails);
+            const pdfEntries = [];
+            entries.forEach(function(item) {
+                pdfEntries.push(item);
+                getItemGifts(item).forEach(function(gift) {
+                    pdfEntries.push({
+                        title: 'Brinde: ' + gift,
+                        quantity: item.quantity,
+                        unitLabel: 'brinde(s)',
+                        unitPrice: 0,
+                        isGift: true
+                    });
+                });
+            });
+            generateButton.disabled = true;
+            statusElement.textContent = 'Preparando o PDF do orçamento...';
+
+            loadPdfLibrary()
+                .then(function() {
+                    if (!window.jspdf || !window.jspdf.jsPDF) {
+                        throw new Error('A biblioteca de PDF foi carregada, mas não está disponível.');
+                    }
+
+                    const doc = new window.jspdf.jsPDF('p', 'mm', 'a4');
+                    const pageWidth = doc.internal.pageSize.getWidth();
+                    const pageHeight = doc.internal.pageSize.getHeight();
+                    const margin = 18;
+                    const rightEdge = pageWidth - margin;
+                    const quoteNumber = 'ORC-' + new Date().getFullYear() + '-' +
+                        String(Math.floor(Math.random() * 9000) + 1000);
+                    const issuedAt = new Date();
+                    const expiresAt = new Date(issuedAt);
+                    expiresAt.setDate(expiresAt.getDate() + 7);
+                    let currentY = 62;
+
+                    function drawTableHeader() {
+                        doc.setFillColor(235, 243, 240);
+                        doc.rect(margin, currentY, pageWidth - margin * 2, 9, 'F');
+                        doc.setFont('helvetica', 'bold');
+                        doc.setFontSize(8);
+                        doc.setTextColor(25, 55, 48);
+                        doc.text('Serviço', margin + 2, currentY + 6);
+                        doc.text('Qtd.', 123, currentY + 6, { align: 'right' });
+                        doc.text('Unitário', 158, currentY + 6, { align: 'right' });
+                        doc.text('Total', rightEdge - 2, currentY + 6, { align: 'right' });
+                        currentY += 9;
+                    }
+
+                    function nextPage() {
+                        doc.addPage();
+                        currentY = 20;
+                        drawTableHeader();
+                    }
+
+                    doc.setFillColor(18, 54, 48);
+                    doc.rect(0, 0, pageWidth, 34, 'F');
+                    doc.setTextColor(255, 255, 255);
+                    doc.setFont('helvetica', 'bold');
+                    doc.setFontSize(19);
+                    doc.text('Leandro Stanger', margin, 15);
+                    doc.setFont('helvetica', 'normal');
+                    doc.setFontSize(9);
+                    doc.text('SOLUÇÕES EM INFORMÁTICA', margin, 22);
+                    doc.setFontSize(8);
+                    doc.text('Nova Veneza - SC  |  WhatsApp (48) 99644-6508', rightEdge, 22, { align: 'right' });
+
+                    doc.setTextColor(30, 30, 30);
+                    doc.setFont('helvetica', 'bold');
+                    doc.setFontSize(18);
+                    doc.text('ORÇAMENTO DE SERVIÇOS', margin, 46);
+                    doc.setFont('helvetica', 'normal');
+                    doc.setFontSize(8);
+                    doc.setTextColor(100, 100, 100);
+                    doc.text('Nº ' + quoteNumber, rightEdge, 43, { align: 'right' });
+                    doc.text('Emissão: ' + issuedAt.toLocaleDateString('pt-BR'), rightEdge, 48, { align: 'right' });
+                    doc.text('Validade: ' + expiresAt.toLocaleDateString('pt-BR'), rightEdge, 53, { align: 'right' });
+
+                    drawTableHeader();
+                    doc.setFont('helvetica', 'normal');
+                    doc.setFontSize(8);
+                    pdfEntries.forEach(function(item, index) {
+                        const serviceLines = doc.splitTextToSize(item.title, 78);
+                        const rowHeight = Math.max(10, serviceLines.length * 4 + 4);
+                        if (currentY + rowHeight > pageHeight - 22) nextPage();
+
+                        if (item.isGift) {
+                            doc.setFillColor(239, 248, 242);
+                            doc.rect(margin, currentY, pageWidth - margin * 2, rowHeight, 'F');
+                        } else if (index % 2 === 1) {
+                            doc.setFillColor(250, 250, 250);
+                            doc.rect(margin, currentY, pageWidth - margin * 2, rowHeight, 'F');
+                        }
+                        doc.setTextColor(item.isGift ? 37 : 35, item.isGift ? 99 : 35, item.isGift ? 64 : 35);
+                        doc.text(serviceLines, margin + 2, currentY + 5);
+                        const quantityLabel = item.quantity + ' ' + item.unitLabel;
+                        doc.text(quantityLabel, 123, currentY + 5, { align: 'right' });
+                        doc.text(item.unitPrice === null ? 'Sob consulta' : formatCurrency(item.unitPrice), 158, currentY + 5, { align: 'right' });
+                        doc.text(item.unitPrice === null ? 'Sob consulta' : formatCurrency(item.unitPrice * item.quantity), rightEdge - 2, currentY + 5, { align: 'right' });
+                        currentY += rowHeight;
+                    });
+
+                    const knownTotal = entries.reduce(function(total, item) {
+                        return total + (item.unitPrice === null ? 0 : item.unitPrice * item.quantity);
+                    }, 0);
+                    const hasConsultationPrice = entries.some(function(item) {
+                        return item.unitPrice === null;
+                    });
+                    const paymentDetailLines = doc.splitTextToSize(
+                        paymentSnapshot.detailText,
+                        pageWidth - margin * 2
+                    );
+                    if (currentY + 45 > pageHeight - 15) {
+                        doc.addPage();
+                        currentY = 20;
+                    }
+                    currentY += 8;
+                    doc.setDrawColor(16, 185, 129);
+                    doc.line(margin, currentY, rightEdge, currentY);
+                    doc.setFont('helvetica', 'bold');
+                    doc.setFontSize(11);
+                    doc.setTextColor(25, 55, 48);
+                    doc.text(hasConsultationPrice ? 'Total parcial' : 'Total', margin, currentY + 8);
+                    doc.text(formatCurrency(knownTotal), rightEdge, currentY + 8, { align: 'right' });
+                    if (hasConsultationPrice) {
+                        doc.setFont('helvetica', 'normal');
+                        doc.setFontSize(8);
+                        doc.setTextColor(100, 100, 100);
+                        doc.text('Itens sob consulta não estão incluídos no total acima.', margin, currentY + 14);
+                    }
+
+                    const paymentY = currentY + (hasConsultationPrice ? 24 : 16);
+                    doc.setFont('helvetica', 'bold');
+                    doc.setFontSize(9);
+                    doc.setTextColor(25, 55, 48);
+                    doc.text('Forma de pagamento: ' + paymentSnapshot.label, margin, paymentY);
+                    doc.setFont('helvetica', 'normal');
+                    doc.setFontSize(8);
+                    doc.setTextColor(60, 60, 60);
+                    doc.text(paymentSnapshot.summaryText, margin, paymentY + 5);
+                    doc.text(paymentDetailLines, margin, paymentY + 9);
+
+                    const filenameDate = new Intl.DateTimeFormat('pt-BR').format(issuedAt).replace(/\//g, '-');
+                    const filenameTime = new Intl.DateTimeFormat('pt-BR', {
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        hourCycle: 'h23'
+                    }).format(issuedAt).replace(':', 'h');
+                    doc.save('Orçamento de serviço do dia ' + filenameDate + ' às ' + filenameTime + '.pdf');
+                    statusElement.textContent = 'PDF do orçamento gerado com sucesso.';
+                })
+                .catch(function(error) {
+                    console.error('Erro ao gerar PDF do orçamento:', error);
+                    statusElement.textContent = error.message || 'Não foi possível gerar o PDF. Tente novamente.';
+                })
+                .finally(function() {
+                    generateButton.disabled = !paymentDetails || quoteItems.size === 0;
+                });
+        }
+
+        grid.addEventListener('click', function(event) {
+            const addButton = event.target.closest('[data-quote-add-service]');
+            if (!addButton || !grid.contains(addButton)) return;
+            const service = serviceById.get(addButton.dataset.quoteAddService);
+            if (!service) {
+                console.error('Serviço não encontrado para adicionar ao orçamento.');
+                statusElement.textContent = 'Não foi possível adicionar este serviço ao orçamento.';
+                return;
+            }
+            addService(service, addButton.closest('.service-card'));
+        });
+
+        itemsElement.addEventListener('click', function(event) {
+            const removeButton = event.target.closest('[data-quote-remove-item]');
+            if (removeButton) {
+                const removedItem = quoteItems.get(removeButton.dataset.quoteRemoveItem);
+                quoteItems.delete(removeButton.dataset.quoteRemoveItem);
+                if (removedItem) statusElement.textContent = removedItem.title + ' removido do orçamento.';
+                renderQuote();
+                return;
+            }
+
+            const quantityButton = event.target.closest('[data-quote-quantity-action]');
+            if (!quantityButton) return;
+            const item = quoteItems.get(quantityButton.dataset.quoteItemKey);
+            if (!item) return;
+            const increased = quantityButton.dataset.quoteQuantityAction === 'increase';
+            item.quantity += increased ? 1 : -1;
+            if (item.quantity <= 0) {
+                quoteItems.delete(item.key);
+                statusElement.textContent = item.title + ' removido do orçamento.';
+            } else {
+                statusElement.textContent = 'Quantidade de ' + item.title + ' atualizada.';
+            }
+            renderQuote();
+        });
+
+        document.getElementById('quoteCartClose').addEventListener('click', function() {
+            panel.hidden = true;
+            launcher.hidden = quoteItems.size === 0;
+            launcher.setAttribute('aria-expanded', 'false');
+        });
+        document.getElementById('quoteAddMore').addEventListener('click', function() {
+            panel.hidden = true;
+            launcher.hidden = quoteItems.size === 0;
+            launcher.setAttribute('aria-expanded', 'false');
+            document.getElementById('servicesGrid').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+        launcher.addEventListener('click', function() {
+            panel.hidden = false;
+            launcher.hidden = true;
+            launcher.setAttribute('aria-expanded', 'true');
+        });
+        paymentSelect.addEventListener('change', function() {
+            selectedPayment = paymentSelect.value || null;
+            statusElement.textContent = '';
+            refreshPaymentPreview();
+        });
+        installmentsSelect.addEventListener('change', refreshPaymentPreview);
+        generateButton.addEventListener('click', generateQuotePdf);
     }
 
     // ============================================================
@@ -832,18 +1462,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (todosBrindes.length > 0) {
             const itensBrindeHtml = todosBrindes.map(function(item) {
-                let icone = 'fa-gift';
-                if (item.includes('MS Office')) icone = 'fa-file-word';
-                else if (item.includes('Kaspersky')) icone = 'fa-shield-halved';
-                else if (item.includes('Instalações de Softwares')) icone = 'fa-download';
-                else if (item.includes('suporte')) icone = 'fa-headset';
-                else if (item.includes('instruções')) icone = 'fa-graduation-cap';
-                else if (item.includes('Desconto')) icone = 'fa-percent';
-                else if (item.includes('Atendimento')) icone = 'fa-clock';
-                else if (item.includes('Garantia')) icone = 'fa-shield-check';
-                else if (item.includes('Impressora')) icone = 'fa-print';
-                else if (item.includes('Limpeza')) icone = 'fa-broom';
-                return '<span><i class="fa-solid ' + icone + '" style="color: var(--color-primary-light); margin-right: 4px;"></i> ' + item + '</span>';
+                return '<span><i class="fa-solid ' + obterIconeBrinde(item) + '" style="color: var(--color-primary-light); margin-right: 4px;"></i> ' + item + '</span>';
             }).join('');
 
             brindesHtml =

@@ -114,6 +114,67 @@
                 <p class="services-empty" id="servicesEmptyState" aria-live="polite" hidden>Nenhum serviço encontrado para essa busca.</p>
             </div>
         </section>
+
+        <button class="quote-launcher" id="quoteLauncher" type="button" aria-controls="quoteCart" aria-expanded="false" hidden>
+            <i class="fa-solid fa-cart-shopping" aria-hidden="true"></i>
+            <span id="quoteLauncherLabel">Ver orçamento</span>
+        </button>
+        <aside class="quote-cart" id="quoteCart" aria-labelledby="quoteCartTitle" hidden>
+            <div class="quote-cart__header">
+                <div>
+                    <h2 id="quoteCartTitle">Seu orçamento</h2>
+                    <p id="quoteCartCount" aria-live="polite">Nenhum serviço adicionado</p>
+                </div>
+                <button class="quote-cart__close" id="quoteCartClose" type="button" aria-label="Fechar orçamento">
+                    <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+                </button>
+            </div>
+            <ul class="quote-cart__items" id="quoteCartItems" aria-label="Serviços adicionados ao orçamento"></ul>
+            <p class="quote-cart__note" id="quoteCartNote" hidden></p>
+            <div class="quote-cart__total">
+                <span>Total</span>
+                <strong id="quoteCartTotal">R$ 0,00</strong>
+            </div>
+            <div class="quote-payment-method">
+                <label for="quotePaymentMethod">Forma de pagamento</label>
+                <select class="quote-payment-select" id="quotePaymentMethod" disabled>
+                    <option value="" selected disabled>Selecione uma forma de pagamento</option>
+                    <option value="cash">À vista</option>
+                    <option value="installment">Parcelado</option>
+                    <option value="bitcoin">Bitcoin</option>
+                    <option value="ethereum">Ethereum</option>
+                </select>
+            </div>
+            <div class="quote-cart__installments" id="quoteInstallmentsGroup" hidden>
+                <label for="quoteInstallments">Número de parcelas</label>
+                <select class="installment-select" id="quoteInstallments">
+                    <option value="2">2x</option>
+                    <option value="3">3x</option>
+                    <option value="4">4x</option>
+                    <option value="5">5x</option>
+                    <option value="6">6x</option>
+                    <option value="7">7x</option>
+                    <option value="8">8x</option>
+                    <option value="9">9x</option>
+                    <option value="10">10x</option>
+                    <option value="11">11x</option>
+                    <option value="12">12x</option>
+                </select>
+                <small class="installment-rate-note">Taxa estimada conforme o número de parcelas.</small>
+            </div>
+            <section class="quote-cart__preview" id="quotePaymentPreview" aria-live="polite" hidden>
+                <h3>Prévia do pagamento</h3>
+                <strong id="quotePaymentPreviewSummary"></strong>
+                <p id="quotePaymentPreviewDetails"></p>
+            </section>
+            <div class="quote-cart__actions">
+                <button class="btn btn--outline btn--sm" id="quoteAddMore" type="button">Adicionar mais serviços</button>
+                <button class="btn btn--primary btn--sm" id="quoteGeneratePdf" type="button" disabled hidden>
+                    <i class="fa-solid fa-file-pdf" aria-hidden="true"></i> Gerar PDF
+                </button>
+            </div>
+            <p class="quote-cart__status" id="quoteCartStatus" role="status" aria-live="polite"></p>
+        </aside>
     </main>
 
     <footer class="footer">
