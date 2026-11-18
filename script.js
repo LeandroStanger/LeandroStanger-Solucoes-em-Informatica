@@ -1525,7 +1525,7 @@ document.addEventListener('DOMContentLoaded', function() {
             'steam-deck': 'img/formatacao/logo/logo-steam-os.webp'
         };
         const logoFormatacao = tipo === 'formatacao' && logosFormatacao[servico.sistema]
-            ? '<img class="formatacao-card__logo' + (servico.sistema === 'windows' ? ' formatacao-card__logo--windows' : '') + '" src="' + logosFormatacao[servico.sistema] + '" alt="" aria-hidden="true" loading="lazy" decoding="async" />'
+            ? '<img class="formatacao-card__logo' + (servico.sistema === 'windows' ? ' formatacao-card__logo--windows' : '') + '" src="' + logosFormatacao[servico.sistema] + '" alt="" aria-hidden="true" loading="eager" />'
             : '<span class="recovery-card__icon"><i class="' + servico.icone + '"></i></span>';
 
         card.innerHTML =
