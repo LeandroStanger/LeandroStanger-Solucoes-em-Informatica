@@ -4440,10 +4440,6 @@ strong {
     border-radius: 12px;
 }
 
-.formatacao-card__logo--windows {
-    transform: scale(1.2);
-}
-
 .formatacao-card__heading {
     display: flex;
     flex-direction: column;
