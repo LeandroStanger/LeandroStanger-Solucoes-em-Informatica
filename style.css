@@ -4321,16 +4321,13 @@ strong {
    FORMATACAO - ABAS E LISTA DE PLANOS
    ============================================================ */
 .tipos-formatacao-section #tipoFormatacaoTabs {
-    width: auto;
-    max-width: 100%;
-    margin: 0 auto 28px;
-    padding: 0;
-    gap: 6px;
-    flex-wrap: nowrap;
-    justify-content: flex-start;
-    overflow-x: auto;
-    overflow-y: hidden;
-    scrollbar-width: thin;
+    width: 100vw;
+    max-width: 100vw;
+    margin: 0 0 28px calc(50% - 50vw);
+    padding: 0 8px;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 .tipos-formatacao-section #tipoFormatacaoTabs .filter-tab,
@@ -4342,15 +4339,6 @@ strong {
     border-color: rgba(255, 255, 255, 0.1);
     border-radius: 12px;
     font-weight: 600;
-}
-
-.tipos-formatacao-section #tipoFormatacaoTabs .filter-tab {
-    flex: 0 0 auto;
-    min-width: max-content;
-    gap: 6px;
-    padding: 8px 4px;
-    font-size: 0.75rem;
-    white-space: nowrap;
 }
 
 .tipos-formatacao-section #tipoFormatacaoTabs .filter-tab:hover,
@@ -5183,7 +5171,7 @@ strong {
 
 @media (max-width: 600px) {
     .tipos-formatacao-section #tipoFormatacaoTabs {
-        justify-content: flex-start;
+        justify-content: center;
         gap: 8px;
     }
 
