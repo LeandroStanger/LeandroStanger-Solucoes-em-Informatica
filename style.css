@@ -4715,10 +4715,6 @@ strong {
     font-size: 1.15rem;
 }
 
-.service-card__quote-button.is-gift-locked {
-    opacity: 0.55;
-}
-
 .service-card__gift-note {
     display: block;
     color: var(--color-primary-light);
@@ -4884,8 +4880,14 @@ strong {
 
 .quote-cart__item-gifts li {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
     gap: 6px;
+}
+
+.quote-cart__gift-extra {
+    margin-left: auto;
+    white-space: nowrap;
 }
 
 .quote-cart__item-gifts li i {
@@ -5186,6 +5188,14 @@ strong {
 }
 
 @media (max-width: 520px) {
+    .quote-price-selector__actions {
+        flex-direction: column;
+    }
+
+    .quote-price-selector__actions .btn {
+        width: 100%;
+    }
+
     .quote-cart {
         inset: 0;
         width: auto;
@@ -5219,6 +5229,11 @@ strong {
     .quote-cart__item-price {
         max-width: none;
         text-align: left;
+    }
+
+    .quote-cart__gift-extra {
+        width: 100%;
+        margin-left: 0;
     }
 
     .quote-cart__quantity-button,

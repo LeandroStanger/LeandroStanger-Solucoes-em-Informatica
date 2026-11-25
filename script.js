@@ -687,7 +687,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 brindesHtml +
             '</div>' +
             '<div class="service-card__footer">' +
-                '<span class="service-card__price"' + (pacotesAula.length ? ' data-lesson-package-price' : '') + '>' + servico.preco + '</span>' +
+                '<span class="service-card__price"' + (pacotesAula.length ? ' data-lesson-package-price' : '') + '></span>' +
             suporteRemotoLink +
             aulasParticularesLink +
             '<a href="https://wa.me/5548996446508?text=' + encodeURIComponent(servico.whatsapp) + '"' +
@@ -696,6 +696,16 @@ document.addEventListener('DOMContentLoaded', function() {
             '<i class="fa-brands fa-whatsapp"></i> Falar no WhatsApp' +
             '</a>' +
             '</div>';
+
+        const priceDisplay = card.querySelector('.service-card__price');
+        const priceParts = String(servico.preco).split('|');
+        priceDisplay.replaceChildren();
+        priceParts.forEach(function(pricePart, index) {
+            if (index > 0) {
+                priceDisplay.append(document.createElement('br'), document.createElement('br'));
+            }
+            priceDisplay.append(document.createTextNode(pricePart.trim()));
+        });
 
         if (document.getElementById('quoteCart')) {
             const addQuoteButton = document.createElement('button');
@@ -710,7 +720,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const giftNote = document.createElement('span');
             giftNote.className = 'service-card__gift-note';
             giftNote.id = 'quote-gift-note-' + servico.id;
-            giftNote.textContent = 'Esse produto já está disponível em forma de brinde.';
+            giftNote.textContent = 'Disponível como brinde. Clique para adicionar unidades pagas extras.';
             giftNote.hidden = true;
             addQuoteButton.setAttribute('aria-describedby', giftNote.id);
 
@@ -1062,6 +1072,116 @@ document.addEventListener('DOMContentLoaded', function() {
             return sources;
         }
 
+        function getGiftedServiceIds(gift) {
+            const serviceIds = new Set();
+            giftMappings.forEach(function(mapping) {
+                if (!mapping.pattern.test(gift)) return;
+                mapping.serviceIds.forEach(function(serviceId) {
+                    if (serviceById.has(serviceId)) serviceIds.add(serviceId);
+                });
+            });
+            return Array.from(serviceIds);
+        }
+
+        function openGiftQuantityPrompt(service, card, sources, returnFocusTarget) {
+            const overlay = document.createElement('div');
+            overlay.id = 'quoteGiftQuantityPrompt';
+            overlay.className = 'quote-price-selector';
+            overlay.setAttribute('role', 'dialog');
+            overlay.setAttribute('aria-modal', 'true');
+            overlay.setAttribute('aria-labelledby', 'quoteGiftQuantityTitle');
+
+            const dialog = document.createElement('div');
+            dialog.className = 'quote-price-selector__dialog';
+
+            const header = document.createElement('div');
+            header.className = 'quote-price-selector__header';
+            const title = document.createElement('h2');
+            title.id = 'quoteGiftQuantityTitle';
+            title.textContent = 'Produto disponível como brinde';
+            const closeButton = document.createElement('button');
+            closeButton.type = 'button';
+            closeButton.className = 'quote-price-selector__close';
+            closeButton.innerHTML = '<i class="fa-solid fa-xmark" aria-hidden="true"></i>';
+            closeButton.setAttribute('aria-label', 'Fechar');
+            header.append(title, closeButton);
+
+            const content = document.createElement('div');
+            content.className = 'quote-price-selector__content';
+            const hint = document.createElement('p');
+            hint.textContent = 'Este item já está incluído como brinde em ' +
+                Array.from(sources).join(', ') +
+                '. Você pode adicionar unidades extras, cobradas pelo preço normal.';
+            const priceNote = document.createElement('p');
+            priceNote.textContent = 'Preço normal: ' + service.preco;
+
+            const quantityLabel = document.createElement('label');
+            quantityLabel.className = 'quote-price-selector__value';
+            quantityLabel.textContent = 'Quantidade adicional (paga)';
+            const quantityInput = document.createElement('input');
+            quantityInput.type = 'number';
+            quantityInput.inputMode = 'numeric';
+            quantityInput.min = '1';
+            quantityInput.step = '1';
+            quantityInput.value = '1';
+            quantityInput.className = 'quote-price-selector__number';
+            quantityLabel.appendChild(quantityInput);
+            content.append(hint, priceNote, quantityLabel);
+
+            const actions = document.createElement('div');
+            actions.className = 'quote-price-selector__actions';
+            const cancelButton = document.createElement('button');
+            cancelButton.type = 'button';
+            cancelButton.className = 'btn btn--outline btn--sm';
+            cancelButton.textContent = 'Cancelar';
+            const confirmButton = document.createElement('button');
+            confirmButton.type = 'button';
+            confirmButton.className = 'btn btn--primary btn--sm';
+            confirmButton.textContent = 'Adicionar unidades pagas';
+            actions.append(cancelButton, confirmButton);
+
+            dialog.append(header, content, actions);
+            overlay.appendChild(dialog);
+            document.body.appendChild(overlay);
+            document.body.style.overflow = 'hidden';
+
+            function close() {
+                overlay.remove();
+                document.body.style.overflow = '';
+                document.removeEventListener('keydown', escapeHandler);
+                if (returnFocusTarget && returnFocusTarget.isConnected) {
+                    returnFocusTarget.focus();
+                } else if (card) {
+                    card.querySelector('[data-quote-add-service]')?.focus();
+                }
+            }
+
+            function escapeHandler(event) {
+                if (event.key === 'Escape') close();
+            }
+
+            closeButton.addEventListener('click', close);
+            cancelButton.addEventListener('click', close);
+            overlay.addEventListener('click', function(event) {
+                if (event.target === overlay) close();
+            });
+            confirmButton.addEventListener('click', function() {
+                const quantity = Number(quantityInput.value);
+                if (!quantityInput.value || !Number.isSafeInteger(quantity) || quantity < 1) {
+                    quantityInput.setCustomValidity('Informe uma quantidade inteira maior que zero.');
+                    quantityInput.reportValidity();
+                    return;
+                }
+                quantityInput.setCustomValidity('');
+                close();
+                addGiftedServiceAsPaid(service, card, quantity);
+            });
+            quantityInput.addEventListener('input', function() {
+                quantityInput.setCustomValidity('');
+            });
+            document.addEventListener('keydown', escapeHandler);
+        }
+
         function renderQuote() {
             const quoteTotals = getQuoteTotals();
             const entries = quoteTotals.entries;
@@ -1146,8 +1266,19 @@ document.addEventListener('DOMContentLoaded', function() {
                         giftIcon.className = 'fa-solid ' + obterIconeBrinde(gift);
                         giftIcon.setAttribute('aria-hidden', 'true');
                         const giftName = document.createElement('span');
-                        giftName.textContent = gift;
+                        giftName.textContent = gift + ' · ' + item.quantity +
+                            (item.quantity === 1 ? ' unidade grátis' : ' unidades grátis');
                         giftRow.append(giftIcon, giftName);
+                        getGiftedServiceIds(gift).forEach(function(serviceId) {
+                            const addExtraButton = document.createElement('button');
+                            addExtraButton.type = 'button';
+                            addExtraButton.className = 'btn btn--outline btn--sm quote-cart__gift-extra';
+                            addExtraButton.dataset.quoteAddGiftExtra = serviceId;
+                            addExtraButton.textContent = 'Adicionar unidade paga';
+                            addExtraButton.setAttribute('aria-label', 'Adicionar unidades pagas de ' +
+                                serviceById.get(serviceId).titulo + ', além do brinde');
+                            giftRow.appendChild(addExtraButton);
+                        });
                         giftList.appendChild(giftRow);
                     });
                     giftBox.append(giftTitle, giftList);
@@ -1159,10 +1290,7 @@ document.addEventListener('DOMContentLoaded', function() {
             grid.querySelectorAll('[data-quote-add-service]').forEach(function(button) {
                 const sources = giftedServiceSources.get(button.dataset.quoteAddService);
                 const isGifted = Boolean(sources && sources.size);
-                const message = 'Esse produto já está disponível em forma de brinde';
-                button.classList.toggle('is-gift-locked', isGifted);
-                button.disabled = isGifted;
-                button.setAttribute('aria-disabled', String(isGifted));
+                const message = 'Disponível como brinde. Clique para adicionar unidades extras pagas.';
                 button.setAttribute('aria-label', isGifted ? message : button.dataset.quoteDefaultLabel);
                 button.title = isGifted ? message : button.dataset.quoteDefaultLabel;
                 const note = document.getElementById('quote-gift-note-' + button.dataset.quoteAddService);
@@ -1276,10 +1404,12 @@ document.addEventListener('DOMContentLoaded', function() {
         function addService(service, card) {
             const giftSources = getGiftedServiceSources().get(String(service.id));
             if (giftSources && giftSources.size) {
-                statusElement.textContent = 'Esse produto já está disponível em forma de brinde.';
-                panel.hidden = false;
-                launcher.hidden = true;
-                launcher.setAttribute('aria-expanded', 'true');
+                openGiftQuantityPrompt(
+                    service,
+                    card,
+                    giftSources,
+                    card && card.querySelector('[data-quote-add-service]')
+                );
                 return;
             }
 
@@ -1300,10 +1430,31 @@ document.addEventListener('DOMContentLoaded', function() {
             );
         }
 
-        function addConfiguredService(service, card, configuredPrice, configuredUnit, keySuffix) {
+        function addGiftedServiceAsPaid(service, card, quantity) {
+            const rangeOptions = parsePriceOptions(service.preco);
+            if (rangeOptions.length) {
+                openPriceSelector(service, card, function(selectedPrice, selectedUnit, keySuffix) {
+                    addConfiguredService(service, card, selectedPrice, selectedUnit, keySuffix, quantity);
+                });
+                return;
+            }
+
+            addConfiguredService(
+                service,
+                card,
+                parsePrice(service.preco),
+                /\/h\b/i.test(service.preco) ? 'hora(s)' : 'serviço(s)',
+                '',
+                quantity
+            );
+        }
+
+        function addConfiguredService(service, card, configuredPrice, configuredUnit, keySuffix, requestedQuantity) {
             let title = renomearTitulo(service.titulo, service.categoria, service.sistema);
             let unitPrice = configuredPrice;
-            let quantity = 1;
+            let quantity = Number.isSafeInteger(requestedQuantity) && requestedQuantity > 0
+                ? requestedQuantity
+                : 1;
             let unitLabel = /\/GB\b/i.test(service.preco) ? 'GB' : configuredUnit;
             let key = String(service.id) + keySuffix;
 
@@ -1340,7 +1491,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 return sources.has(title);
             });
             statusElement.textContent = title + ' adicionado ao orçamento.' +
-                (hasAvailableGifts ? ' Produtos incluídos já estão disponíveis em forma de brinde e foram bloqueados.' : '');
+                (hasAvailableGifts ? ' Produtos incluídos também estão disponíveis como brinde; unidades extras podem ser adicionadas pelo botão do item.' : '');
             panel.hidden = false;
             launcher.hidden = true;
             launcher.setAttribute('aria-expanded', 'true');
@@ -1541,6 +1692,20 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
         itemsElement.addEventListener('click', function(event) {
+            const giftExtraButton = event.target.closest('[data-quote-add-gift-extra]');
+            if (giftExtraButton) {
+                const serviceId = giftExtraButton.dataset.quoteAddGiftExtra;
+                const service = serviceById.get(serviceId);
+                const sources = getGiftedServiceSources().get(serviceId);
+                if (!service || !sources || !sources.size) {
+                    console.error('Serviço de brinde não encontrado para adicionar unidades extras.');
+                    statusElement.textContent = 'Não foi possível adicionar unidades extras deste brinde.';
+                    return;
+                }
+                openGiftQuantityPrompt(service, null, sources, giftExtraButton);
+                return;
+            }
+
             const removeButton = event.target.closest('[data-quote-remove-item]');
             if (removeButton) {
                 const removedItem = quoteItems.get(removeButton.dataset.quoteRemoveItem);
