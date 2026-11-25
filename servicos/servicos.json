@@ -1022,199 +1022,339 @@
       "brindes": []
     },
     {
-      "id": 72,
-      "categoria": "gamer",
+      "id": 72, "categoria": "gamer", "sistema": null,
+      "titulo": "Pacote de Jogos Nível 1", "descricao": "Pacote com uma seleção de jogos do Nível 1. Instalação e configuração automática.",
+      "preco": "R$ 59,90", "badge": "⭐ Nível 1", "icone": "fa-solid fa-gamepad",
+      "whatsapp": "Olá! Gostaria de mais informações sobre o Pacote de Jogos Nível 1.", "brindes": [], "exibir": false,
+      "jogos": [
+        {"imagem": "img/Jogos/Hytale-Logo.webp"},
+        {"imagem": "img/Jogos/Meccha_Chameleon_Logo.webp"},
+        {"imagem": "img/Jogos/Super Mario 64.webp"},
+        {"imagem": "img/Jogos/Grand-Theft-Auto-I.webp"},
+        {"imagem": "img/Jogos/Grand Theft Auto: London 1969.webp"},
+        {"imagem": "img/Jogos/Grand Theft Auto 2.webp"},
+        {"imagem": "img/Jogos/Banjo-Tooie.webp"}
+      ]
+    },
+    {
+      "id": 73, "categoria": "gamer", "sistema": null,
+      "titulo": "Pacote de Jogos Nível 2", "descricao": "Pacote cumulativo com todos os jogos do Nível 1 mais os jogos do Nível 2. Instalação e configuração automática.",
+      "preco": "R$ 79,90", "badge": "⭐ Nível 2", "icone": "fa-solid fa-gamepad",
+      "whatsapp": "Olá! Gostaria de mais informações sobre o Pacote de Jogos Nível 2.", "brindes": [], "exibir": false,
+      "jogos": [
+        {"imagem": "img/Jogos/Hytale-Logo.webp"},
+        {"imagem": "img/Jogos/Meccha_Chameleon_Logo.webp"},
+        {"imagem": "img/Jogos/Super Mario 64.webp"},
+        {"imagem": "img/Jogos/Grand-Theft-Auto-I.webp"},
+        {"imagem": "img/Jogos/Grand Theft Auto: London 1969.webp"},
+        {"imagem": "img/Jogos/Grand Theft Auto 2.webp"},
+        {"imagem": "img/Jogos/Banjo-Tooie.webp"},
+        {"imagem": "img/Jogos/Farm & Feast.webp"},
+        {"imagem": "img/Jogos/Resident Evil CODE: Veronica X.webp"},
+        {"imagem": "img/Jogos/Shadow of the Colossus.webp"},
+        {"imagem": "img/Jogos/Grand_Theft_Auto_Vice_City_logo.webp"},
+        {"imagem": "img/Jogos/Vice City: Multiplayer.webp"},
+        {"imagem": "img/Jogos/Grand Theft Auto III.webp"},
+        {"imagem": "img/Jogos/Liberty Unleashed.webp"},
+        {"imagem": "img/Jogos/Rise_of_Nations_Extended_Edition.webp"},
+        {"imagem": "img/Jogos/Euro Truck Simulator 2.webp"}
+      ]
+    },
+    {
+      "id": 74, "categoria": "gamer", "sistema": null,
+      "titulo": "Pacote de Jogos Nível 3", "descricao": "Pacote cumulativo com todos os jogos dos níveis 1 e 2 mais os jogos do Nível 3. Instalação e configuração automática.",
+      "preco": "R$ 99,90", "badge": "⭐ Nível 3", "icone": "fa-solid fa-gamepad",
+      "whatsapp": "Olá! Gostaria de mais informações sobre o Pacote de Jogos Nível 3.", "brindes": [], "exibir": false,
+      "jogos": [
+        {"imagem": "img/Jogos/Hytale-Logo.webp"},
+        {"imagem": "img/Jogos/Meccha_Chameleon_Logo.webp"},
+        {"imagem": "img/Jogos/Super Mario 64.webp"},
+        {"imagem": "img/Jogos/Grand-Theft-Auto-I.webp"},
+        {"imagem": "img/Jogos/Grand Theft Auto: London 1969.webp"},
+        {"imagem": "img/Jogos/Grand Theft Auto 2.webp"},
+        {"imagem": "img/Jogos/Banjo-Tooie.webp"},
+        {"imagem": "img/Jogos/Farm & Feast.webp"},
+        {"imagem": "img/Jogos/Resident Evil CODE: Veronica X.webp"},
+        {"imagem": "img/Jogos/Shadow of the Colossus.webp"},
+        {"imagem": "img/Jogos/Grand_Theft_Auto_Vice_City_logo.webp"},
+        {"imagem": "img/Jogos/Vice City: Multiplayer.webp"},
+        {"imagem": "img/Jogos/Grand Theft Auto III.webp"},
+        {"imagem": "img/Jogos/Liberty Unleashed.webp"},
+        {"imagem": "img/Jogos/Rise_of_Nations_Extended_Edition.webp"},
+        {"imagem": "img/Jogos/Euro Truck Simulator 2.webp"},
+        {"imagem": "img/Jogos/Shift At Midnight.webp"},
+        {"imagem": "img/Jogos/Schedule-I-Logo.webp"},
+        {"imagem": "img/Jogos/Grand Theft Auto: Vice City Stories.webp"},
+        {"imagem": "img/Jogos/Grand Theft Auto: Liberty City Stories.webp"},
+        {"imagem": "img/Jogos/Gta_san_andreas_logo.webp"},
+        {"imagem": "img/Jogos/Multi Theft Auto.webp"},
+        {"imagem": "img/Jogos/God of War 1.webp"},
+        {"imagem": "img/Jogos/Hollow-Knight-Silksong-Logo.webp"}
+      ]
+    },
+    {
+      "id": 78, "categoria": "gamer", "sistema": null,
+      "titulo": "Pacote de Jogos Nível 4", "descricao": "Pacote cumulativo com todos os jogos dos níveis 1, 2 e 3 mais os jogos do Nível 4. Instalação e configuração automática.",
+      "preco": "R$ 119,90", "badge": "⭐ Nível 4", "icone": "fa-solid fa-gamepad",
+      "whatsapp": "Olá! Gostaria de mais informações sobre o Pacote de Jogos Nível 4.", "brindes": [], "exibir": false,
+      "jogos": [
+        {"imagem": "img/Jogos/Hytale-Logo.webp"},
+        {"imagem": "img/Jogos/Meccha_Chameleon_Logo.webp"},
+        {"imagem": "img/Jogos/Super Mario 64.webp"},
+        {"imagem": "img/Jogos/Grand-Theft-Auto-I.webp"},
+        {"imagem": "img/Jogos/Grand Theft Auto: London 1969.webp"},
+        {"imagem": "img/Jogos/Grand Theft Auto 2.webp"},
+        {"imagem": "img/Jogos/Banjo-Tooie.webp"},
+        {"imagem": "img/Jogos/Farm & Feast.webp"},
+        {"imagem": "img/Jogos/Resident Evil CODE: Veronica X.webp"},
+        {"imagem": "img/Jogos/Shadow of the Colossus.webp"},
+        {"imagem": "img/Jogos/Grand_Theft_Auto_Vice_City_logo.webp"},
+        {"imagem": "img/Jogos/Vice City: Multiplayer.webp"},
+        {"imagem": "img/Jogos/Grand Theft Auto III.webp"},
+        {"imagem": "img/Jogos/Liberty Unleashed.webp"},
+        {"imagem": "img/Jogos/Rise_of_Nations_Extended_Edition.webp"},
+        {"imagem": "img/Jogos/Euro Truck Simulator 2.webp"},
+        {"imagem": "img/Jogos/Shift At Midnight.webp"},
+        {"imagem": "img/Jogos/Schedule-I-Logo.webp"},
+        {"imagem": "img/Jogos/Grand Theft Auto: Vice City Stories.webp"},
+        {"imagem": "img/Jogos/Grand Theft Auto: Liberty City Stories.webp"},
+        {"imagem": "img/Jogos/Gta_san_andreas_logo.webp"},
+        {"imagem": "img/Jogos/Multi Theft Auto.webp"},
+        {"imagem": "img/Jogos/God of War 1.webp"},
+        {"imagem": "img/Jogos/Hollow-Knight-Silksong-Logo.webp"},
+        {"imagem": "img/Jogos/Stardew Valley.webp"},
+        {"imagem": "img/Jogos/Farm Together 2.webp"},
+        {"imagem": "img/Jogos/Need for Speed Undercover.webp"},
+        {"imagem": "img/Jogos/God of War 2.webp"},
+        {"imagem": "img/Jogos/logo-bombapatch.webp"},
+        {"imagem": "img/Jogos/Bully: Scholarship Edition.webp"},
+        {"imagem": "img/Jogos/Red-Dead-Redemption-Logo.webp"},
+        {"imagem": "img/Jogos/Grand Theft Auto: Chinatown Wars.webp"}
+      ]
+    },
+    {
+      "id": 79, "categoria": "gamer", "sistema": null,
+      "titulo": "Pacote de Jogos Nível 5", "descricao": "Pacote cumulativo com todos os jogos dos níveis 1, 2, 3 e 4 mais os jogos do Nível 5. Instalação e configuração automática.",
+      "preco": "R$ 139,90", "badge": "⭐ Nível 5", "icone": "fa-solid fa-gamepad",
+      "whatsapp": "Olá! Gostaria de mais informações sobre o Pacote de Jogos Nível 5.", "brindes": [], "exibir": false,
+      "jogos": [
+        {"imagem": "img/Jogos/Hytale-Logo.webp"},
+        {"imagem": "img/Jogos/Meccha_Chameleon_Logo.webp"},
+        {"imagem": "img/Jogos/Super Mario 64.webp"},
+        {"imagem": "img/Jogos/Grand-Theft-Auto-I.webp"},
+        {"imagem": "img/Jogos/Grand Theft Auto: London 1969.webp"},
+        {"imagem": "img/Jogos/Grand Theft Auto 2.webp"},
+        {"imagem": "img/Jogos/Banjo-Tooie.webp"},
+        {"imagem": "img/Jogos/Farm & Feast.webp"},
+        {"imagem": "img/Jogos/Resident Evil CODE: Veronica X.webp"},
+        {"imagem": "img/Jogos/Shadow of the Colossus.webp"},
+        {"imagem": "img/Jogos/Grand_Theft_Auto_Vice_City_logo.webp"},
+        {"imagem": "img/Jogos/Vice City: Multiplayer.webp"},
+        {"imagem": "img/Jogos/Grand Theft Auto III.webp"},
+        {"imagem": "img/Jogos/Liberty Unleashed.webp"},
+        {"imagem": "img/Jogos/Rise_of_Nations_Extended_Edition.webp"},
+        {"imagem": "img/Jogos/Euro Truck Simulator 2.webp"},
+        {"imagem": "img/Jogos/Shift At Midnight.webp"},
+        {"imagem": "img/Jogos/Schedule-I-Logo.webp"},
+        {"imagem": "img/Jogos/Grand Theft Auto: Vice City Stories.webp"},
+        {"imagem": "img/Jogos/Grand Theft Auto: Liberty City Stories.webp"},
+        {"imagem": "img/Jogos/Gta_san_andreas_logo.webp"},
+        {"imagem": "img/Jogos/Multi Theft Auto.webp"},
+        {"imagem": "img/Jogos/God of War 1.webp"},
+        {"imagem": "img/Jogos/Hollow-Knight-Silksong-Logo.webp"},
+        {"imagem": "img/Jogos/Stardew Valley.webp"},
+        {"imagem": "img/Jogos/Farm Together 2.webp"},
+        {"imagem": "img/Jogos/Need for Speed Undercover.webp"},
+        {"imagem": "img/Jogos/God of War 2.webp"},
+        {"imagem": "img/Jogos/logo-bombapatch.webp"},
+        {"imagem": "img/Jogos/Bully: Scholarship Edition.webp"},
+        {"imagem": "img/Jogos/Red-Dead-Redemption-Logo.webp"},
+        {"imagem": "img/Jogos/Dying Light.webp"},
+        {"imagem": "img/Jogos/Grand Theft Auto IV & Episodes From Liberty City.webp"},
+        {"imagem": "img/Jogos/IV  MP.webp"},
+        {"imagem": "img/Jogos/Palworld.webp"},
+        {"imagem": "img/Jogos/Cuphead.webp"},
+        {"imagem": "img/Jogos/elden_ring_logo.webp"},
+        {"imagem": "img/Jogos/Balatro.webp"},
+        {"imagem": "img/Jogos/Project Zomboid.webp"},
+        {"imagem": "img/Jogos/Grand Theft Auto: Chinatown Wars.webp"}
+      ]
+    },
+    {
+      "id": 80, "categoria": "gamer", "sistema": null,
+      "titulo": "Pacote de Jogos Nível 6", "descricao": "Pacote cumulativo com todos os jogos dos níveis 1, 2, 3, 4 e 5 mais os jogos do Nível 6. Instalação e configuração automática.",
+      "preco": "R$ 159,90", "badge": "⭐ Nível 6", "icone": "fa-solid fa-gamepad",
+      "whatsapp": "Olá! Gostaria de mais informações sobre o Pacote de Jogos Nível 6.", "brindes": [], "exibir": false,
+      "jogos": [
+        {"imagem": "img/Jogos/Hytale-Logo.webp"},
+        {"imagem": "img/Jogos/Meccha_Chameleon_Logo.webp"},
+        {"imagem": "img/Jogos/Super Mario 64.webp"},
+        {"imagem": "img/Jogos/Grand-Theft-Auto-I.webp"},
+        {"imagem": "img/Jogos/Grand Theft Auto: London 1969.webp"},
+        {"imagem": "img/Jogos/Grand Theft Auto 2.webp"},
+        {"imagem": "img/Jogos/Banjo-Tooie.webp"},
+        {"imagem": "img/Jogos/Farm & Feast.webp"},
+        {"imagem": "img/Jogos/Resident Evil CODE: Veronica X.webp"},
+        {"imagem": "img/Jogos/Shadow of the Colossus.webp"},
+        {"imagem": "img/Jogos/Grand_Theft_Auto_Vice_City_logo.webp"},
+        {"imagem": "img/Jogos/Vice City: Multiplayer.webp"},
+        {"imagem": "img/Jogos/Grand Theft Auto III.webp"},
+        {"imagem": "img/Jogos/Liberty Unleashed.webp"},
+        {"imagem": "img/Jogos/Rise_of_Nations_Extended_Edition.webp"},
+        {"imagem": "img/Jogos/Euro Truck Simulator 2.webp"},
+        {"imagem": "img/Jogos/Shift At Midnight.webp"},
+        {"imagem": "img/Jogos/Schedule-I-Logo.webp"},
+        {"imagem": "img/Jogos/Grand Theft Auto: Vice City Stories.webp"},
+        {"imagem": "img/Jogos/Grand Theft Auto: Liberty City Stories.webp"},
+        {"imagem": "img/Jogos/Gta_san_andreas_logo.webp"},
+        {"imagem": "img/Jogos/Multi Theft Auto.webp"},
+        {"imagem": "img/Jogos/God of War 1.webp"},
+        {"imagem": "img/Jogos/Hollow-Knight-Silksong-Logo.webp"},
+        {"imagem": "img/Jogos/Stardew Valley.webp"},
+        {"imagem": "img/Jogos/Farm Together 2.webp"},
+        {"imagem": "img/Jogos/Need for Speed Undercover.webp"},
+        {"imagem": "img/Jogos/God of War 2.webp"},
+        {"imagem": "img/Jogos/logo-bombapatch.webp"},
+        {"imagem": "img/Jogos/Bully: Scholarship Edition.webp"},
+        {"imagem": "img/Jogos/Red-Dead-Redemption-Logo.webp"},
+        {"imagem": "img/Jogos/Dying Light.webp"},
+        {"imagem": "img/Jogos/Grand Theft Auto IV & Episodes From Liberty City.webp"},
+        {"imagem": "img/Jogos/IV  MP.webp"},
+        {"imagem": "img/Jogos/Palworld.webp"},
+        {"imagem": "img/Jogos/Cuphead.webp"},
+        {"imagem": "img/Jogos/elden_ring_logo.webp"},
+        {"imagem": "img/Jogos/Balatro.webp"},
+        {"imagem": "img/Jogos/Project Zomboid.webp"},
+        {"imagem": "img/Jogos/minecraft-logo.webp"},
+        {"imagem": "img/Jogos/Legacy Launcher.webp"},
+        {"imagem": "img/Jogos/Grand-Theft-Auto-V-Logo.webp"},
+        {"imagem": "img/Jogos/Bloodborne.webp"},
+        {"imagem": "img/Jogos/Red Dead Redemption II.webp"},
+        {"imagem": "img/Jogos/Resident Evil Village.webp"},
+        {"imagem": "img/Jogos/Assassin's Creed IV: Black Flag.webp"},
+        {"imagem": "img/Jogos/Resident Evil Requiem.webp"},
+        {"imagem": "img/Jogos/Grand Theft Auto: Chinatown Wars.webp"}
+      ]
+    },
+    {
+      "id": 81,
+      "categoria": "suporte",
       "sistema": null,
-      "titulo": "Pacote de Jogos Nível 1",
-      "descricao": "Pacote com uma seleção de jogos variados para você se divertir. Instalação e configuração automática.",
+      "titulo": "Configuração básica de Roteadores",
+      "descricao": "Configuração básica de roteador, incluindo Wi-fi, repetidor e senha.",
       "preco": "R$ 59,90",
-      "badge": "⭐ Nível 1",
-      "icone": "fa-solid fa-gamepad",
-      "whatsapp": "Olá! Gostaria de mais informações sobre o Pacote de Jogos Nível 1.",
-      "brindes": [],
-      "exibir": false,
-      "jogos": [
-        {
-          "imagem": "img/Jogos/Hytale-Logo.webp"
-        },
-        {
-          "imagem": "img/Jogos/Meccha_Chameleon_Logo.webp"
-        },
-        {
-          "imagem": "img/Jogos/Rise_of_Nations_Extended_Edition.webp"
-        },
-        {
-          "imagem": "img/Jogos/Shift At Midnight.webp"
-        },
-        {
-          "imagem": "img/Jogos/Euro Truck Simulator 2.webp"
-        },
-        {
-          "imagem": "img/Jogos/Schedule-I-Logo.webp"
-        },
-        {
-          "imagem": "img/Jogos/Gta_san_andreas_logo.webp"
-        },
-        {
-          "imagem": "img/Jogos/Multi Theft Auto.webp"
-        },
-        {
-          "imagem": "img/Jogos/Grand_Theft_Auto_Vice_City_logo.webp"
-        }
-      ]
+      "badge": null,
+      "icone": "fa-solid fa-wifi",
+      "whatsapp": "Olá! Gostaria de mais informações sobre a Configuração básica de Roteadores.",
+      "brindes": []
     },
     {
-      "id": 73,
-      "categoria": "gamer",
+      "id": 82,
+      "categoria": "suporte",
       "sistema": null,
-      "titulo": "Pacote de Jogos Nível 2",
-      "descricao": "Pacote com todos os jogos do Nível 1 mais uma seleção de jogos adicionais. Instalação e configuração automática.",
-      "preco": "R$ 79,90",
-      "badge": "⭐ Nível 2",
-      "icone": "fa-solid fa-gamepad",
-      "whatsapp": "Olá! Gostaria de mais informações sobre o Pacote de Jogos Nível 2.",
-      "brindes": [],
-      "exibir": false,
-      "jogos": [
-        {
-          "imagem": "img/Jogos/Hytale-Logo.webp"
-        },
-        {
-          "imagem": "img/Jogos/Meccha_Chameleon_Logo.webp"
-        },
-        {
-          "imagem": "img/Jogos/Rise_of_Nations_Extended_Edition.webp"
-        },
-        {
-          "imagem": "img/Jogos/Shift At Midnight.webp"
-        },
-        {
-          "imagem": "img/Jogos/Euro Truck Simulator 2.webp"
-        },
-        {
-          "imagem": "img/Jogos/Schedule-I-Logo.webp"
-        },
-        {
-          "imagem": "img/Jogos/Gta_san_andreas_logo.webp"
-        },
-        {
-          "imagem": "img/Jogos/Multi Theft Auto.webp"
-        },
-        {
-          "imagem": "img/Jogos/Grand_Theft_Auto_Vice_City_logo.webp"
-        },
-        {
-          "imagem": "img/Jogos/Hollow-Knight-Silksong-Logo.webp"
-        },
-        {
-          "imagem": "img/Jogos/Stardew Valley.webp"
-        },
-        {
-          "imagem": "img/Jogos/Farm Together 2.webp"
-        },
-        {
-          "imagem": "img/Jogos/Need for Speed Undercover.webp"
-        },
-        {
-          "imagem": "img/Jogos/Red-Dead-Redemption-Logo.webp"
-        },
-        {
-          "imagem": "img/Jogos/logo-bombapatch.webp"
-        },
-        {
-          "imagem": "img/Jogos/Bully: Scholarship Edition.webp"
-        }
-      ]
+      "titulo": "Configuração avançada de Roteadores",
+      "descricao": "Configuração, redirecionamentos, liberação de portas, filtro de MAC e controle de banda.",
+      "preco": "R$ 89,90",
+      "badge": null,
+      "icone": "fa-solid fa-network-wired",
+      "whatsapp": "Olá! Gostaria de mais informações sobre a Configuração avançada de Roteadores.",
+      "brindes": []
     },
     {
-      "id": 74,
-      "categoria": "gamer",
+      "id": 83,
+      "categoria": "hardware",
       "sistema": null,
-      "titulo": "Pacote de Jogos Nível 3",
-      "descricao": "Pacote com todos os jogos do Nível 2 mais jogos adicionais. Instalação e configuração automática.",
-      "preco": "R$ 99,90",
-      "badge": "⭐ Nível 3",
-      "icone": "fa-solid fa-gamepad",
-      "whatsapp": "Olá! Gostaria de mais informações sobre o Pacote de Jogos Nível 3.",
-      "brindes": [],
-      "exibir": false,
-      "jogos": [
-        {
-          "imagem": "img/Jogos/Hytale-Logo.webp"
-        },
-        {
-          "imagem": "img/Jogos/Meccha_Chameleon_Logo.webp"
-        },
-        {
-          "imagem": "img/Jogos/Rise_of_Nations_Extended_Edition.webp"
-        },
-        {
-          "imagem": "img/Jogos/Shift At Midnight.webp"
-        },
-        {
-          "imagem": "img/Jogos/Euro Truck Simulator 2.webp"
-        },
-        {
-          "imagem": "img/Jogos/Schedule-I-Logo.webp"
-        },
-        {
-          "imagem": "img/Jogos/Gta_san_andreas_logo.webp"
-        },
-        {
-          "imagem": "img/Jogos/Multi Theft Auto.webp"
-        },
-        {
-          "imagem": "img/Jogos/Grand_Theft_Auto_Vice_City_logo.webp"
-        },
-        {
-          "imagem": "img/Jogos/Hollow-Knight-Silksong-Logo.webp"
-        },
-        {
-          "imagem": "img/Jogos/Stardew Valley.webp"
-        },
-        {
-          "imagem": "img/Jogos/Farm Together 2.webp"
-        },
-        {
-          "imagem": "img/Jogos/Need for Speed Undercover.webp"
-        },
-        {
-          "imagem": "img/Jogos/Red-Dead-Redemption-Logo.webp"
-        },
-        {
-          "imagem": "img/Jogos/logo-bombapatch.webp"
-        },
-        {
-          "imagem": "img/Jogos/Bully: Scholarship Edition.webp"
-        },
-        {
-          "imagem": "img/Jogos/Dying Light.webp"
-        },
-        {
-          "imagem": "img/Jogos/Grand-Theft-Auto-V-Logo.webp"
-        },
-        {
-          "imagem": "img/Jogos/Palworld.webp"
-        },
-        {
-          "imagem": "img/Jogos/Cuphead.webp"
-        },
-        {
-          "imagem": "img/Jogos/elden_ring_logo.webp"
-        },
-        {
-          "imagem": "img/Jogos/minecraft-logo.webp"
-        },
-        {
-          "imagem": "img/Jogos/Legacy Launcher.webp"
-        },
-        {
-          "imagem": "img/Jogos/Balatro.webp"
-        },
-        {
-          "imagem": "img/Jogos/Project Zomboid.webp"
-        }
-      ]
+      "titulo": "Cabeamento",
+      "descricao": "Crimpagem de cabo UTP – as duas pontas.",
+      "preco": "R$ 15,90",
+      "badge": null,
+      "icone": "fa-solid fa-ethernet",
+      "whatsapp": "Olá! Gostaria de mais informações sobre o serviço de Cabeamento.",
+      "brindes": []
+    },
+    {
+      "id": 84,
+      "categoria": "suporte",
+      "sistema": null,
+      "titulo": "Consultoria e Inventário",
+      "descricao": "Mapeamento do parque tecnológico, levantamento de configurações dos equipamentos e relatório de componentes. Valor por computador ou periférico gerenciável.",
+      "preco": "R$ 39,90",
+      "badge": null,
+      "icone": "fa-solid fa-list-check",
+      "whatsapp": "Olá! Gostaria de mais informações sobre Consultoria e Inventário.",
+      "brindes": []
+    },
+    {
+      "id": 85,
+      "categoria": "criacao_site",
+      "sistema": null,
+      "titulo": "Sites Institucionais",
+      "descricao": "Criação de sites simples para empresas, com poucas páginas e funcionalidades básicas.",
+      "preco": "R$ 1.500 - R$ 3.000 por projeto",
+      "badge": null,
+      "icone": "fa-solid fa-building",
+      "whatsapp": "Olá! Gostaria de um orçamento para criação de um site institucional.",
+      "brindes": []
+    },
+    {
+      "id": 86,
+      "categoria": "criacao_site",
+      "sistema": null,
+      "titulo": "Landing Pages",
+      "descricao": "Criação de páginas únicas com foco em conversão, como captura de leads ou vendas.",
+      "preco": "R$ 800 - R$ 1.500 por projeto",
+      "badge": null,
+      "icone": "fa-solid fa-bullseye",
+      "whatsapp": "Olá! Gostaria de um orçamento para criação de uma landing page.",
+      "brindes": []
+    },
+    {
+      "id": 87,
+      "categoria": "criacao_site",
+      "sistema": null,
+      "titulo": "E-Commerce",
+      "descricao": "Criação de lojas virtuais com funcionalidades de catálogo de produtos, carrinho de compras, pagamento e gestão de pedidos.",
+      "preco": "R$ 3.000 - R$ 8.000 por projeto",
+      "badge": null,
+      "icone": "fa-solid fa-cart-shopping",
+      "whatsapp": "Olá! Gostaria de um orçamento para criação de uma loja virtual.",
+      "brindes": []
+    },
+    {
+      "id": 88,
+      "categoria": "criacao_site",
+      "sistema": null,
+      "titulo": "Aplicativos Mobile",
+      "descricao": "Criação de aplicativos para smartphones e tablets, com design responsivo e funcionalidades específicas.",
+      "preco": "R$ 5.000 - R$ 15.000 por projeto",
+      "badge": null,
+      "icone": "fa-solid fa-mobile-screen-button",
+      "whatsapp": "Olá! Gostaria de um orçamento para criação de um aplicativo mobile.",
+      "brindes": []
+    },
+    {
+      "id": 89,
+      "categoria": "criacao_site",
+      "sistema": null,
+      "titulo": "Sistemas Web",
+      "descricao": "Criação de sistemas personalizados para empresas, com funcionalidades complexas e integração com outros sistemas.",
+      "preco": "R$ 5.000 - R$ 20.000 por projeto | R$ 50 - R$ 100 por hora",
+      "badge": null,
+      "icone": "fa-solid fa-laptop-code",
+      "whatsapp": "Olá! Gostaria de um orçamento para criação de um sistema web.",
+      "brindes": []
+    },
+    {
+      "id": 90,
+      "categoria": "criacao_site",
+      "sistema": null,
+      "titulo": "Manutenção Dos Projeto",
+      "descricao": "Correção de bugs, atualização de conteúdo, melhorias de desempenho e suporte técnico contínuo.",
+      "preco": "R$ 30 - R$ 1.000 por mês | R$ 30 - R$ 50 por hora",
+      "badge": null,
+      "icone": "fa-solid fa-screwdriver-wrench",
+      "whatsapp": "Olá! Gostaria de um orçamento para manutenção de projeto.",
+      "brindes": []
     }
   ]
 }

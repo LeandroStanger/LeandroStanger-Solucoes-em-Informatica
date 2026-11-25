@@ -181,7 +181,7 @@ document.addEventListener('DOMContentLoaded', function() {
     ];
 
     // IDs dos pacotes de jogos que NUNCA devem aparecer na seção de formatação
-    const IDS_PACOTES_JOGOS = [72, 73, 74];
+    const IDS_PACOTES_JOGOS = [72, 73, 74, 78, 79, 80];
 
     // Cache das cotações (BTC e ETH)
     let cotacaoBitcoinCache = null;
@@ -797,13 +797,221 @@ document.addEventListener('DOMContentLoaded', function() {
             { pattern: /instalação de impressora|impressora/i, serviceIds: ['70'] },
             { pattern: /pacote de jogos nível 1/i, serviceIds: ['72'] },
             { pattern: /pacote de jogos nível 2/i, serviceIds: ['73'] },
-            { pattern: /pacote de jogos nível 3/i, serviceIds: ['74'] }
+            { pattern: /pacote de jogos nível 3/i, serviceIds: ['74'] },
+            { pattern: /pacote de jogos nível 4/i, serviceIds: ['78'] },
+            { pattern: /pacote de jogos nível 5/i, serviceIds: ['79'] },
+            { pattern: /pacote de jogos nível 6/i, serviceIds: ['80'] }
         ];
 
         function parsePrice(priceText) {
-            const match = String(priceText).match(/R\$\s*([\d.]+,\d{2})/);
+            const match = String(priceText).match(/R\$\s*([\d.]+(?:,\d{1,2})?)/);
             if (!match) return null;
-            return Number(match[1].replace(/\./g, '').replace(',', '.'));
+            return parseNumberFromBrazilianText(match[1]);
+        }
+
+        function parseNumberFromBrazilianText(value) {
+            return Number(String(value).replace(/\./g, '').replace(',', '.'));
+        }
+
+        function parsePriceOptions(priceText) {
+            const text = String(priceText || '');
+            const options = [];
+            const rangePattern = /R\$\s*([\d.]+(?:,\d{1,2})?)\s*(?:-|a|até)\s*(?:R\$\s*)?([\d.]+(?:,\d{1,2})?)\s*(por\s+(projeto|projetos|hora|horas|mês|meses|mensal|mês))?/gi;
+            let match;
+
+            while ((match = rangePattern.exec(text)) !== null) {
+                const min = parseNumberFromBrazilianText(match[1]);
+                const max = parseNumberFromBrazilianText(match[2]);
+                const unitText = (match[3] || '').toLocaleLowerCase('pt-BR');
+
+                let unit = 'serviço(s)';
+                let unitKey = 'service';
+                if (/^por\s+(hora|horas)/.test(unitText)) {
+                    unit = 'hora(s)';
+                    unitKey = 'hour';
+                } else if (/^por\s+(projeto|projetos)/.test(unitText)) {
+                    unit = 'projeto(s)';
+                    unitKey = 'project';
+                } else if (/^por\s+(mês|meses|mensal)/.test(unitText)) {
+                    unit = 'mês(es)';
+                    unitKey = 'month';
+                }
+
+                options.push({
+                    min: min,
+                    max: max,
+                    unit: unit,
+                    unitKey: unitKey
+                });
+            }
+
+            return options;
+        }
+
+        function openPriceSelector(service, card, onConfirm) {
+            const options = parsePriceOptions(service.preco);
+            if (!options.length) {
+                onConfirm(parsePrice(service.preco), /\/h\b/i.test(service.preco) ? 'hora(s)' : 'serviço(s)', '');
+                return;
+            }
+
+            const existing = document.getElementById('quotePriceSelector');
+            if (existing) existing.remove();
+
+            const overlay = document.createElement('div');
+            overlay.id = 'quotePriceSelector';
+            overlay.className = 'quote-price-selector';
+            overlay.setAttribute('role', 'dialog');
+            overlay.setAttribute('aria-modal', 'true');
+            overlay.setAttribute('aria-labelledby', 'quotePriceSelectorTitle');
+
+            const dialog = document.createElement('div');
+            dialog.className = 'quote-price-selector__dialog';
+
+            const header = document.createElement('div');
+            header.className = 'quote-price-selector__header';
+            const title = document.createElement('h2');
+            title.id = 'quotePriceSelectorTitle';
+            title.textContent = renomearTitulo(service.titulo, service.categoria, service.sistema);
+            const closeButton = document.createElement('button');
+            closeButton.type = 'button';
+            closeButton.className = 'quote-price-selector__close';
+            closeButton.innerHTML = '<i class="fa-solid fa-xmark" aria-hidden="true"></i>';
+            closeButton.setAttribute('aria-label', 'Fechar seleção de preço');
+            header.append(title, closeButton);
+
+            const content = document.createElement('div');
+            content.className = 'quote-price-selector__content';
+            const hint = document.createElement('p');
+            hint.textContent = 'Escolha o valor aplicado ao orçamento.';
+            content.appendChild(hint);
+
+            let selectedOptionIndex = 0;
+            if (options.length > 1) {
+                const modes = document.createElement('div');
+                modes.className = 'quote-price-selector__modes';
+                options.forEach(function(option, index) {
+                    const modeLabel = document.createElement('label');
+                    modeLabel.className = 'quote-price-selector__mode';
+                    const radio = document.createElement('input');
+                    radio.type = 'radio';
+                    radio.name = 'quote-price-mode';
+                    radio.value = String(index);
+                    radio.checked = index === 0;
+                    const modeText = document.createElement('span');
+                    modeText.textContent = formatCurrency(option.min) + ' a ' + formatCurrency(option.max) + ' por ' +
+                        (option.unitKey === 'hour' ? 'hora' : option.unitKey === 'project' ? 'projeto' : option.unitKey === 'month' ? 'mês' : 'serviço');
+                    modeLabel.append(radio, modeText);
+                    modes.appendChild(modeLabel);
+                });
+                content.appendChild(modes);
+            }
+
+            const rangeLimits = document.createElement('div');
+            rangeLimits.className = 'quote-price-selector__limits';
+            const rangeInput = document.createElement('input');
+            rangeInput.type = 'range';
+            rangeInput.className = 'quote-price-selector__range';
+            rangeInput.step = '0.01';
+
+            const numberWrapper = document.createElement('label');
+            numberWrapper.className = 'quote-price-selector__value';
+            numberWrapper.textContent = 'Valor selecionado';
+            const numberInput = document.createElement('input');
+            numberInput.type = 'number';
+            numberInput.inputMode = 'decimal';
+            numberInput.className = 'quote-price-selector__number';
+            numberWrapper.appendChild(numberInput);
+            rangeLimits.append(rangeInput, numberWrapper);
+            content.appendChild(rangeLimits);
+
+            const preview = document.createElement('strong');
+            preview.className = 'quote-price-selector__preview';
+            content.appendChild(preview);
+
+            function updateOption() {
+                const option = options[selectedOptionIndex];
+                rangeInput.min = String(option.min);
+                rangeInput.max = String(option.max);
+                rangeInput.value = String(option.min);
+                numberInput.min = String(option.min);
+                numberInput.max = String(option.max);
+                numberInput.step = '0.01';
+                numberInput.value = String(option.min);
+                updatePreview();
+            }
+
+            function updatePreview() {
+                const option = options[selectedOptionIndex];
+                const enteredValue = Number(String(numberInput.value).replace(',', '.'));
+                const rawValue = Number.isFinite(enteredValue) ? enteredValue : option.min;
+                const value = Math.round(
+                    Math.min(option.max, Math.max(option.min, rawValue)) * 100
+                ) / 100;
+                numberInput.value = value.toFixed(2);
+                rangeInput.value = value.toFixed(2);
+                preview.textContent = formatCurrency(value) + ' por ' +
+                    (option.unitKey === 'hour' ? 'hora' : option.unitKey === 'project' ? 'projeto' : option.unitKey === 'month' ? 'mês' : 'serviço');
+            }
+
+            content.querySelectorAll('input[name="quote-price-mode"]').forEach(function(radio) {
+                radio.addEventListener('change', function() {
+                    selectedOptionIndex = Number(radio.value);
+                    updateOption();
+                });
+            });
+            rangeInput.addEventListener('input', function() {
+                numberInput.value = rangeInput.value;
+                updatePreview();
+            });
+            numberInput.addEventListener('input', updatePreview);
+
+            const actions = document.createElement('div');
+            actions.className = 'quote-price-selector__actions';
+            const cancelButton = document.createElement('button');
+            cancelButton.type = 'button';
+            cancelButton.className = 'btn btn--outline btn--sm';
+            cancelButton.textContent = 'Cancelar';
+            const confirmButton = document.createElement('button');
+            confirmButton.type = 'button';
+            confirmButton.className = 'btn btn--primary btn--sm';
+            confirmButton.innerHTML = '<i class="fa-solid fa-plus" aria-hidden="true"></i> Adicionar ao orçamento';
+            actions.append(cancelButton, confirmButton);
+
+            dialog.append(header, content, actions);
+            overlay.appendChild(dialog);
+            document.body.appendChild(overlay);
+            document.body.style.overflow = 'hidden';
+            updateOption();
+
+            function close() {
+                overlay.remove();
+                document.body.style.overflow = '';
+                if (card) card.querySelector('[data-quote-add-service]')?.focus();
+            }
+
+            closeButton.addEventListener('click', close);
+            cancelButton.addEventListener('click', close);
+            overlay.addEventListener('click', function(event) {
+                if (event.target === overlay) close();
+            });
+            confirmButton.addEventListener('click', function() {
+                const option = options[selectedOptionIndex];
+                const enteredValue = Number(String(numberInput.value).replace(',', '.'));
+                const rawValue = Number.isFinite(enteredValue) ? enteredValue : option.min;
+                const value = Math.round(
+                    Math.min(option.max, Math.max(option.min, rawValue)) * 100
+                ) / 100;
+                const keySuffix = ':' + option.unitKey + ':' + Math.round(value * 100);
+                close();
+                onConfirm(value, option.unit, keySuffix);
+            });
+            document.addEventListener('keydown', function escapeHandler(event) {
+                if (event.key === 'Escape') {
+                    close();
+                    document.removeEventListener('keydown', escapeHandler);
+                }
+            });
         }
 
         function formatCurrency(value) {
@@ -1075,15 +1283,29 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
 
+            const rangeOptions = parsePriceOptions(service.preco);
+            if (rangeOptions.length) {
+                openPriceSelector(service, card, function(selectedPrice, selectedUnit, keySuffix) {
+                    addConfiguredService(service, card, selectedPrice, selectedUnit, keySuffix);
+                });
+                return;
+            }
+
+            addConfiguredService(
+                service,
+                card,
+                parsePrice(service.preco),
+                /\/h\b/i.test(service.preco) ? 'hora(s)' : 'serviço(s)',
+                ''
+            );
+        }
+
+        function addConfiguredService(service, card, configuredPrice, configuredUnit, keySuffix) {
             let title = renomearTitulo(service.titulo, service.categoria, service.sistema);
-            let unitPrice = parsePrice(service.preco);
+            let unitPrice = configuredPrice;
             let quantity = 1;
-            let unitLabel = /\/h\b/i.test(service.preco)
-                ? 'hora(s)'
-                : /\/GB\b/i.test(service.preco)
-                    ? 'GB'
-                    : 'serviço(s)';
-            let key = String(service.id);
+            let unitLabel = /\/GB\b/i.test(service.preco) ? 'GB' : configuredUnit;
+            let key = String(service.id) + keySuffix;
 
             if (service.id === 52 && card) {
                 const selectedPackage = card.querySelector('.service-card__lesson-package.is-active');
@@ -2180,7 +2402,10 @@ document.addEventListener('DOMContentLoaded', function() {
         const precosJogos = {
             'nivel1': 59.90,
             'nivel2': 79.90,
-            'nivel3': 99.90
+            'nivel3': 99.90,
+            'nivel4': 119.90,
+            'nivel5': 139.90,
+            'nivel6': 159.90
         };
 
         const precosAntivirus = {
@@ -2380,7 +2605,10 @@ document.addEventListener('DOMContentLoaded', function() {
             const idMap = {
                 'nivel1': 72,
                 'nivel2': 73,
-                'nivel3': 74
+                'nivel3': 74,
+                'nivel4': 78,
+                'nivel5': 79,
+                'nivel6': 80
             };
             const id = idMap[nivel];
             if (!id) return [];
@@ -2436,10 +2664,13 @@ document.addEventListener('DOMContentLoaded', function() {
         // ============================================================
         function atualizarNivelUI() {
             if (!jogosNivelLabel) return;
-            const niveis = ['nivel1', 'nivel2', 'nivel3'];
+            const niveis = ['nivel1', 'nivel2', 'nivel3', 'nivel4', 'nivel5', 'nivel6'];
             const idx = niveis.indexOf(jogosNivelAtual);
             if (idx === -1) idx = 0;
-            const nomes = { 'nivel1': 'Nível 1', 'nivel2': 'Nível 2', 'nivel3': 'Nível 3' };
+            const nomes = {
+                'nivel1': 'Nível 1', 'nivel2': 'Nível 2', 'nivel3': 'Nível 3',
+                'nivel4': 'Nível 4', 'nivel5': 'Nível 5', 'nivel6': 'Nível 6'
+            };
             jogosNivelLabel.textContent = nomes[jogosNivelAtual] || 'Nível 1';
             if (jogosSetaEsq) {
                 jogosSetaEsq.style.visibility = (idx === 0) ? 'hidden' : 'visible';
@@ -2713,7 +2944,14 @@ document.addEventListener('DOMContentLoaded', function() {
             const nomesOficiais = {
                 'bomba patch': 'Bomba Patch',
                 'bombapatch': 'Bomba Patch',
+                'resident evil code: veronica x': 'Resident Evil CODE: Veronica X',
+                'grand theft auto i': 'Grand Theft Auto',
+                'grand theft auto iii': 'Grand Theft Auto III',
+                'grand theft auto iv & episodes from liberty city': 'Grand Theft Auto IV & Episodes From Liberty City',
+                'iv mp': 'IV MP',
+                'red dead redemption ii': 'Red Dead Redemption II',
                 'gta san andreas': 'Grand Theft Auto: San Andreas',
+                'grand theft auto san andreas': 'Grand Theft Auto: San Andreas',
                 'grand theft auto vice city': 'Grand Theft Auto: Vice City',
                 'hollow knight silksong': 'Hollow Knight: Silksong',
                 'rise of nations extended edition': 'Rise of Nations: Extended Edition'
@@ -2959,7 +3197,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // Eventos das setas de nível
             setaEsq.addEventListener('click', function() {
-                const niveis = ['nivel1', 'nivel2', 'nivel3'];
+                const niveis = ['nivel1', 'nivel2', 'nivel3', 'nivel4', 'nivel5', 'nivel6'];
                 const idx = niveis.indexOf(jogosNivelAtual);
                 if (idx > 0) {
                     jogosNivelAtual = niveis[idx - 1];
@@ -2969,7 +3207,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
 
             setaDir.addEventListener('click', function() {
-                const niveis = ['nivel1', 'nivel2', 'nivel3'];
+                const niveis = ['nivel1', 'nivel2', 'nivel3', 'nivel4', 'nivel5', 'nivel6'];
                 const idx = niveis.indexOf(jogosNivelAtual);
                 if (idx < niveis.length - 1) {
                     jogosNivelAtual = niveis[idx + 1];
@@ -3066,7 +3304,10 @@ document.addEventListener('DOMContentLoaded', function() {
             const nivel = jogosNivelAtual || 'nivel1';
             const preco = precosJogos[nivel] || 0;
 
-            const nomeNivel = { 'nivel1': 'Nível 1', 'nivel2': 'Nível 2', 'nivel3': 'Nível 3' }[nivel];
+            const nomeNivel = {
+                'nivel1': 'Nível 1', 'nivel2': 'Nível 2', 'nivel3': 'Nível 3',
+                'nivel4': 'Nível 4', 'nivel5': 'Nível 5', 'nivel6': 'Nível 6'
+            }[nivel];
 
             const isBrinde = (estado === 1 && qtd > 0 && jogosNivelBrinde && nivel === jogosNivelBrinde);
 
@@ -4866,7 +5107,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (qtdJogos > qtd) qtdJogos = qtd;
                 if (qtdJogos < 0) qtdJogos = 0;
                 const nivel = jogosNivelAtual || 'nivel1';
-                jogosNivel = { 'nivel1': 'Nível 1', 'nivel2': 'Nível 2', 'nivel3': 'Nível 3' }[nivel] || 'Nível 1';
+                jogosNivel = {
+                    'nivel1': 'Nível 1', 'nivel2': 'Nível 2', 'nivel3': 'Nível 3',
+                    'nivel4': 'Nível 4', 'nivel5': 'Nível 5', 'nivel6': 'Nível 6'
+                }[nivel] || 'Nível 1';
                 isJogosBrinde = (jogosNivelBrinde && nivel === jogosNivelBrinde);
                 if (isJogosBrinde) {
                     precoJogosSelecionado = 0;
