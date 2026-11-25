@@ -1084,6 +1084,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         function openGiftQuantityPrompt(service, card, sources, returnFocusTarget) {
+            const isGamePackage = IDS_PACOTES_JOGOS.indexOf(Number(service.id)) !== -1;
+            let selectedService = service;
             const overlay = document.createElement('div');
             overlay.id = 'quoteGiftQuantityPrompt';
             overlay.className = 'quote-price-selector';
@@ -1113,7 +1115,33 @@ document.addEventListener('DOMContentLoaded', function() {
                 Array.from(sources).join(', ') +
                 '. Você pode adicionar unidades extras, cobradas pelo preço normal.';
             const priceNote = document.createElement('p');
-            priceNote.textContent = 'Preço normal: ' + service.preco;
+            priceNote.textContent = 'Preço normal: ' + selectedService.preco;
+
+            content.appendChild(hint);
+            if (isGamePackage) {
+                const packageLabel = document.createElement('label');
+                packageLabel.className = 'quote-price-selector__value';
+                packageLabel.textContent = 'Nível do pacote de jogos';
+                const packageSelect = document.createElement('select');
+                packageSelect.className = 'quote-price-selector__number';
+                IDS_PACOTES_JOGOS.forEach(function(packageId) {
+                    const gamePackage = serviceById.get(String(packageId));
+                    if (!gamePackage) return;
+                    const option = document.createElement('option');
+                    option.value = String(gamePackage.id);
+                    option.textContent = gamePackage.titulo + ' — ' + gamePackage.preco;
+                    packageSelect.appendChild(option);
+                });
+                packageSelect.value = String(service.id);
+                packageSelect.addEventListener('change', function() {
+                    selectedService = serviceById.get(packageSelect.value);
+                    if (selectedService) {
+                        priceNote.textContent = 'Preço normal: ' + selectedService.preco;
+                    }
+                });
+                packageLabel.appendChild(packageSelect);
+                content.appendChild(packageLabel);
+            }
 
             const quantityLabel = document.createElement('label');
             quantityLabel.className = 'quote-price-selector__value';
@@ -1126,7 +1154,7 @@ document.addEventListener('DOMContentLoaded', function() {
             quantityInput.value = '1';
             quantityInput.className = 'quote-price-selector__number';
             quantityLabel.appendChild(quantityInput);
-            content.append(hint, priceNote, quantityLabel);
+            content.append(priceNote, quantityLabel);
 
             const actions = document.createElement('div');
             actions.className = 'quote-price-selector__actions';
@@ -1173,8 +1201,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     return;
                 }
                 quantityInput.setCustomValidity('');
+                if (!selectedService) {
+                    statusElement.textContent = 'Não foi possível identificar o nível do pacote de jogos.';
+                    return;
+                }
                 close();
-                addGiftedServiceAsPaid(service, card, quantity);
+                addGiftedServiceAsPaid(selectedService, card, quantity);
             });
             quantityInput.addEventListener('input', function() {
                 quantityInput.setCustomValidity('');
