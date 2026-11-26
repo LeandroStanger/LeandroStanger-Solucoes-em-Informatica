@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Criação de sites institucionais, landing pages, e-commerce, aplicativos mobile e sistemas web, além de manutenção de projetos." />
+    <title>Criação de Sites, Aplicativos e Sistemas — Leandro Stanger</title>
+
+    <base href="../" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.0/css/all.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link rel="icon" type="image/webp" href="img/Logo.webp" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body class="theme-website">
+    <header class="header" id="topo">
+        <nav class="nav" aria-label="Navegação principal">
+            <a href="index.html#inicio" class="nav__logo" id="logoLink">
+                <img src="img/Logo.webp" alt="Leandro Stanger Soluções em Informática" class="nav__logo-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+                <span class="nav__logo-fallback" style="display:none;">
+                    <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+                        <rect width="36" height="36" rx="8" fill="#10b981" />
+                        <text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" fill="#0d1117" font-weight="800" font-size="18" font-family="Inter,sans-serif">LS</text>
+                    </svg>
+                    <span class="nav__brand-text">Leandro Stanger</span>
+                </span>
+            </a>
+
+            <ul class="nav__links" id="navLinks">
+                <li><a href="formatacao/formatacao.html" class="nav__link">Formatação</a></li>
+                <li><a href="recuperacao-de-dados/recuperacao-de-dados.html" class="nav__link">Recuperação</a></li>
+                <li><a href="limpeza/limpeza.html" class="nav__link">Limpeza</a></li>
+                <li><a href="criacao-de-site/criacao-de-site.html#criacao-site" class="nav__link active-link" aria-current="page">Criação de Sites</a></li>
+                <li><a href="aulas-particulares/aula-particular.html" class="nav__link">Aulas particulares</a></li>
+                <li><a href="suporte-remoto/suporte-remoto.html" class="nav__link">Acesso remoto</a></li>
+                <li><a href="analise-de-dados/analise-de-dados.html" class="nav__link">Análise de Dados</a></li>
+                <li><a href="servicos/servicos.html" class="nav__link">Serviços</a></li>
+                <li><a href="index.html#clientes" class="nav__link">Clientes</a></li>
+                <li><a href="index.html#contato" class="nav__link">Contato</a></li>
+                <li>
+                    <a href="https://wa.me/5548996446508" target="_blank" rel="noopener" class="nav__cta-btn">
+                        <i class="fa-brands fa-whatsapp"></i> WhatsApp
+                    </a>
+                </li>
+            </ul>
+
+            <button class="nav__mobile-toggle" id="mobileToggle" type="button" aria-label="Abrir menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+
+    <main>
+        <section class="criacao-site" id="criacao-site" aria-labelledby="criacaoSiteTitle">
+            <div class="container">
+                <div class="criacao-site__grid">
+                    <div class="criacao-site__content">
+                        <span class="criacao-site__tag"><i class="fa-solid fa-rocket" aria-hidden="true"></i> Presença digital</span>
+                        <h1 class="criacao-site__title" id="criacaoSiteTitle">
+                            Soluções digitais para sua empresa.
+                            <span class="criacao-site__highlight">Do site ao sistema web.</span>
+                        </h1>
+                        <p class="criacao-site__desc">
+                            Desenvolvo sites, lojas virtuais, aplicativos mobile e sistemas web sob medida, além de cuidar da manutenção de projetos existentes.
+                        </p>
+
+                        <div class="criacao-site__actions">
+                            <a href="https://wa.me/5548996446508?text=Ol%C3%A1!%20Gostaria%20de%20um%20or%C3%A7amento%20para%20cria%C3%A7%C3%A3o%20de%20site." target="_blank" rel="noopener" class="btn btn--whatsapp btn--lg">
+                                <i class="fa-brands fa-whatsapp" aria-hidden="true"></i> Solicitar orçamento
+                            </a>
+                            <a href="#servicos-digitais" class="btn btn--outline btn--lg">Conhecer os serviços</a>
+                        </div>
+                    </div>
+                    <div class="criacao-site__image">
+                        <img src="img/Site Profissional.webp" alt="Exemplo de site profissional para uma empresa" class="criacao-site__image-img" fetchpriority="high" />
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="website-overview" aria-labelledby="websiteOverviewTitle">
+            <div class="container">
+                <header class="website-overview__header">
+                    <span class="section-header__tag">Sites e landing pages sob medida</span>
+                    <h2 class="section-header__title" id="websiteOverviewTitle">Sua ideia pode ganhar espaço na internet</h2>
+                    <p>Crio páginas para apresentar um negócio, divulgar um produto, promover um evento ou tirar um projeto pessoal do papel. O formato e os recursos são definidos de acordo com a ideia e o objetivo de cada projeto.</p>
+                </header>
+
+                <div class="website-overview__content">
+                    <div class="website-overview__copy">
+                        <h3>Site completo ou landing page?</h3>
+                        <p>Um site institucional pode reunir várias páginas para explicar quem você é, o que oferece e como entrar em contato. É uma opção para empresas, profissionais, organizações, lojas e projetos de diferentes áreas.</p>
+                        <p>Já uma landing page concentra as informações em uma página direta, ideal para apresentar uma oferta, campanha, produto, serviço ou evento e convidar o visitante a realizar uma ação.</p>
+                        <p>Mesmo que a ideia ainda esteja no começo, podemos conversar sobre o que você quer apresentar e definir uma estrutura adequada.</p>
+                    </div>
+
+                    <div class="website-overview__features">
+                        <h3>O que o projeto pode incluir</h3>
+                        <ul>
+                            <li><i class="fa-solid fa-building" aria-hidden="true"></i> Apresentação de empresa, profissional ou projeto</li>
+                            <li><i class="fa-solid fa-list-check" aria-hidden="true"></i> Páginas de serviços, produtos ou catálogo</li>
+                            <li><i class="fa-solid fa-images" aria-hidden="true"></i> Galeria de fotos, portfólio ou trabalhos</li>
+                            <li><i class="fa-solid fa-bullhorn" aria-hidden="true"></i> Conteúdo para campanhas e divulgação</li>
+                            <li><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> Contato por WhatsApp ou formulário</li>
+                            <li><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Endereço, mapa e informações de atendimento</li>
+                        </ul>
+                    </div>
+                </div>
+                <p class="website-overview__note">Layout, conteúdo e funcionalidades são combinados conforme a necessidade de cada ideia, sempre com atenção à visualização em celular, tablet e computador.</p>
+            </div>
+        </section>
+
+        <section class="website-services" id="servicos-digitais" aria-labelledby="websiteServicesTitle">
+            <div class="container">
+                <header class="website-services__header">
+                    <span class="section-header__tag">Serviços digitais</span>
+                    <h2 class="section-header__title" id="websiteServicesTitle">Encontre a solução certa para o seu projeto</h2>
+                    <p class="website-services__intro">Cada projeto é planejado conforme seus objetivos, funcionalidades e prazo. O orçamento é apresentado antes do início do trabalho.</p>
+                </header>
+
+                <div class="website-services__grid">
+                    <article class="website-service-card">
+                        <span class="website-service-card__icon"><i class="fa-solid fa-building" aria-hidden="true"></i></span>
+                        <h3>Site institucional</h3>
+                        <p>Apresente sua empresa, equipe, serviços e formas de contato em um site profissional que funciona em celulares, tablets e computadores.</p>
+                        <p class="website-service-card__price"><span>Por projeto</span><strong>R$ 1.500 a R$ 3.000</strong></p>
+                        <a href="https://wa.me/5548996446508?text=Ol%C3%A1!%20Gostaria%20de%20um%20or%C3%A7amento%20para%20um%20site%20institucional." target="_blank" rel="noopener" class="btn btn--outline website-service-card__button">Solicitar orçamento</a>
+                    </article>
+
+                    <article class="website-service-card">
+                        <span class="website-service-card__icon"><i class="fa-solid fa-bullseye" aria-hidden="true"></i></span>
+                        <h3>Landing page</h3>
+                        <p>Uma página objetiva para divulgar um produto, serviço ou campanha, com informações organizadas e chamadas para ação.</p>
+                        <p class="website-service-card__price"><span>Por projeto</span><strong>R$ 800 a R$ 1.500</strong></p>
+                        <a href="https://wa.me/5548996446508?text=Ol%C3%A1!%20Gostaria%20de%20um%20or%C3%A7amento%20para%20uma%20landing%20page." target="_blank" rel="noopener" class="btn btn--outline website-service-card__button">Solicitar orçamento</a>
+                    </article>
+
+                    <article class="website-service-card">
+                        <span class="website-service-card__icon"><i class="fa-solid fa-cart-shopping" aria-hidden="true"></i></span>
+                        <h3>E-commerce</h3>
+                        <p>Venda online com catálogo de produtos e recursos de compra definidos de acordo com a operação e as necessidades da sua loja.</p>
+                        <p class="website-service-card__price"><span>Por projeto</span><strong>R$ 3.000 a R$ 8.000</strong></p>
+                        <a href="https://wa.me/5548996446508?text=Ol%C3%A1!%20Gostaria%20de%20um%20or%C3%A7amento%20para%20um%20e-commerce." target="_blank" rel="noopener" class="btn btn--outline website-service-card__button">Solicitar orçamento</a>
+                    </article>
+
+                    <article class="website-service-card">
+                        <span class="website-service-card__icon"><i class="fa-solid fa-mobile-screen-button" aria-hidden="true"></i></span>
+                        <h3>Aplicativo mobile</h3>
+                        <p>Aplicativos para dispositivos móveis planejados a partir das funcionalidades, plataformas e integrações necessárias ao seu projeto.</p>
+                        <p class="website-service-card__price"><span>Por projeto</span><strong>R$ 5.000 a R$ 15.000</strong></p>
+                        <a href="https://wa.me/5548996446508?text=Ol%C3%A1!%20Gostaria%20de%20um%20or%C3%A7amento%20para%20um%20aplicativo%20mobile." target="_blank" rel="noopener" class="btn btn--outline website-service-card__button">Solicitar orçamento</a>
+                    </article>
+
+                    <article class="website-service-card">
+                        <span class="website-service-card__icon"><i class="fa-solid fa-gears" aria-hidden="true"></i></span>
+                        <h3>Sistema web</h3>
+                        <p>Sistemas acessados pelo navegador para organizar processos, informações e tarefas, com recursos definidos para a rotina do seu negócio.</p>
+                        <p class="website-service-card__price"><span>Por projeto</span><strong>R$ 5.000 a R$ 20.000</strong></p>
+                        <p class="website-service-card__price"><span>Por hora</span><strong>R$ 50 a R$ 100</strong></p>
+                        <a href="https://wa.me/5548996446508?text=Ol%C3%A1!%20Gostaria%20de%20um%20or%C3%A7amento%20para%20um%20sistema%20web." target="_blank" rel="noopener" class="btn btn--outline website-service-card__button">Solicitar orçamento</a>
+                    </article>
+
+                    <article class="website-service-card">
+                        <span class="website-service-card__icon"><i class="fa-solid fa-screwdriver-wrench" aria-hidden="true"></i></span>
+                        <h3>Manutenção de projetos</h3>
+                        <p>Atualizações, correções e melhorias em sites, aplicativos e sistemas existentes, conforme análise e escopo combinado.</p>
+                        <p class="website-service-card__price"><span>Por mês</span><strong>R$ 30 a R$ 1.000</strong></p>
+                        <p class="website-service-card__price"><span>Por hora</span><strong>R$ 30 a R$ 50</strong></p>
+                        <a href="https://wa.me/5548996446508?text=Ol%C3%A1!%20Gostaria%20de%20um%20or%C3%A7amento%20para%20manuten%C3%A7%C3%A3o%20de%20um%20projeto." target="_blank" rel="noopener" class="btn btn--outline website-service-card__button">Solicitar orçamento</a>
+                    </article>
+                </div>
+                <p class="website-services__note">Os valores seguem a tabela de Serviços. O orçamento final depende do escopo, das funcionalidades e das integrações necessárias; a proposta é apresentada para aprovação antes do início do trabalho.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__grid">
+                <div class="footer__brand">
+                    <img src="img/Logo.webp" alt="Leandro Stanger Soluções em Informática" class="footer__logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+                    <span class="footer__logo-fallback" style="display:none;">
+                        <svg width="32" height="32" viewBox="0 0 36 36" fill="none">
+                            <rect width="36" height="36" rx="8" fill="#10b981" />
+                            <text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" fill="#0d1117" font-weight="800" font-size="16" font-family="Inter,sans-serif">LS</text>
+                        </svg>
+                    </span>
+                    <p><strong>Leandro Stanger</strong><br />Soluções em Informática</p>
+                </div>
+                <div class="footer__links">
+                    <h4>Links Rápidos</h4>
+                    <ul>
+                        <li><a href="formatacao/formatacao.html">Formatação</a></li>
+                        <li><a href="recuperacao-de-dados/recuperacao-de-dados.html">Recuperação</a></li>
+                        <li><a href="limpeza/limpeza.html">Limpeza</a></li>
+                        <li><a href="criacao-de-site/criacao-de-site.html">Criação de Sites</a></li>
+                        <li><a href="index.html#clientes">Clientes</a></li>
+                        <li><a href="aulas-particulares/aula-particular.html">Aulas particulares</a></li>
+                        <li><a href="suporte-remoto/suporte-remoto.html">Acesso remoto</a></li>
+                        <li><a href="analise-de-dados/analise-de-dados.html">Análise de Dados</a></li>
+                        <li><a href="servicos/servicos.html">Serviços</a></li>
+                        <li><a href="index.html#contato">Contato</a></li>
+                    </ul>
+                </div>
+                <div class="footer__contact">
+                    <h4>Contato</h4>
+                    <ul>
+                        <li><a href="https://wa.me/5548996446508" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> +55 (48) 99644-6508</a></li>
+                        <li>Rua Francisco Ronchi, Nº 280</li>
+                        <li>Caravaggio, Nova Veneza - SC</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer__bottom">
+                <p>&copy; 2026 Leandro Stanger Soluções em Informática. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/5548996446508" target="_blank" rel="noopener" class="whatsapp-float" aria-label="Fale conosco pelo WhatsApp">
+        <i class="fa-brands fa-whatsapp"></i>
+        <span class="whatsapp-float__pulse"></span>
+    </a>
+
+    <script src="servicos/parcelamento.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
